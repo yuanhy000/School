@@ -1,0 +1,56 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}, {
+			"path": "pages/chat/chat",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}, {
+			"path": "pages/contacts/contacts",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}, {
+			"path": "pages/discovery/discovery",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"navigationStyle": "custom"
+	}
+	// "tabBar": {
+	// 	"selectedColor": "#8EA7C7",
+	// 	"backgroundColor": "#ffffff",
+	// 	"color": "#c7c7c7",
+	// 	"list": [{
+	// 			"pagePath": "pages/index/index",
+	// 			"text": "聊天",
+	// 			"iconPath": "/static/tabbar/chat.png",
+	// 			"selectedIconPath": "/static/tabbar/chat-on.png"
+	// 		},
+	// 		{
+	// 			"pagePath": "pages/contacts/contacts",
+	// 			"text": "联系人",
+	// 			"iconPath": "/static/tabbar/contacts.png",
+	// 			"selectedIconPath": "/static/tabbar/contacts-on.png"
+	// 		},
+	// 		{
+	// 			"pagePath": "pages/discovery/discovery",
+	// 			"text": "动态",
+	// 			"iconPath": "/static/tabbar/discovery.png",
+	// 			"selectedIconPath": "/static/tabbar/discovery-on.png"
+	// 		}
+	// 	]
+	// }
+}

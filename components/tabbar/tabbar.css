@@ -1,0 +1,25 @@
+.text-tabbar {
+	color: #AAAAAA;
+	font-size: 20rpx;
+}
+.text-addition {
+	color: #AAAAAA;
+	font-size: 20rpx;
+}
+
+.text-tabbar-on {
+	color: #8EA7C7;
+	font-size: 20rpx;
+}
+
+.tab-img {
+	width: 44rpx;
+	height: 44rpx;
+	margin-bottom: 10rpx;
+}
+
+.addition-button {
+	background-color: #8EA7C7;
+	color: #FFFFFF;
+	font-size: 60rpx;
+}
