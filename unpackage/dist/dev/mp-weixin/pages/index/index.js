@@ -141,17 +141,30 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
-      title: 'Fuck' };
+      CurrentPage: '' };
 
   },
   onLoad: function onLoad() {
 
   },
-  methods: {} };exports.default = _default;
+  methods: {
+    Toggle: function Toggle(e) {var _this = this;
+      var anmiaton = e.currentTarget.dataset.class;
+      this.animation = anmiaton;
+      setTimeout(function () {
+        _this.animation = '';
+      }, 1000);
+    },
+    NavChange: function NavChange(e) {
+      this.CurrentPage = e.page;
+    } } };exports.default = _default;
 
 /***/ })
 ],[[15,"common/runtime","common/vendor"]]]);

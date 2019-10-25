@@ -1,18 +1,16 @@
 <template>
-	<view>
-		
-	</view>
+	<view>discovery-view</view>
 </template>
 
 <script>
 	export default {
 		data() {
 			return {
-				
+
 			}
 		},
 		methods: {
-			
+
 		}
 	}
 </script>

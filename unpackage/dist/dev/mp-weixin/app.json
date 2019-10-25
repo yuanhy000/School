@@ -15,6 +15,9 @@
   },
   "usingComponents": {
     "cu-custom": "/colorui/components/cu-custom",
-    "tabbar": "/components/tabbar/tabbar"
+    "tabbar": "/components/tabbar/tabbar",
+    "chat": "/pages/chat/chat",
+    "contacts": "/pages/contacts/contacts",
+    "discovery": "/pages/discovery/discovery"
   }
 }

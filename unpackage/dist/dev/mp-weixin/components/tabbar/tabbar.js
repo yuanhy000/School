@@ -147,12 +147,23 @@ var _default =
 {
   data: function data() {
     return {
-      PageCur: 'chat' };
+      PageCur: 'chat',
+      animation: 'scale-up' };
 
   },
   methods: {
     NavChange: function NavChange(e) {
       this.PageCur = e.currentTarget.dataset.cur;
+      this.$emit('navigate', {
+        page: this.PageCur });
+
+    },
+    Toggle: function Toggle(e) {var _this = this;
+      var anmiaton = e.currentTarget.dataset.class;
+      this.animation = anmiaton;
+      setTimeout(function () {
+        _this.animation = '';
+      }, 1000);
     } } };exports.default = _default;
 
 /***/ })

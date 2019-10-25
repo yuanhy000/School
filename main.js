@@ -7,6 +7,15 @@ Vue.component('cu-custom', cuCustom)
 import tabbar from './components/tabbar/tabbar.vue'
 Vue.component('tabbar', tabbar)
 
+import chat from './pages/chat/chat.vue'
+Vue.component('chat', chat)
+
+import contacts from './pages/contacts/contacts.vue'
+Vue.component('contacts', contacts)
+
+import discovery from './pages/discovery/discovery.vue'
+Vue.component('discovery', discovery)
+
 Vue.config.productionTip = false
 
 App.mpType = 'app'

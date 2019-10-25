@@ -1,10 +1,13 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-blue-pink" :isBack="true">
+		<cu-custom bgColor="bg-gradual-blue-pink" :isBack="false">
 			<block slot="backText">返回</block>
 			<block slot="content">Chat</block>
 		</cu-custom>
-		<tabbar class="tabbar-position"></tabbar>
+		<chat v-if="CurrentPage=='chat'"></chat>
+		<contacts v-if="CurrentPage=='contacts'"></contacts>
+		<discovery v-if="CurrentPage=='discovery'"></discovery>
+		<tabbar class="tabbar-position" @navigate="NavChange"></tabbar>
 	</view>
 </template>
 
@@ -12,14 +15,23 @@
 	export default {
 		data() {
 			return {
-				title: 'Fuck'
+				CurrentPage: '',
 			}
 		},
 		onLoad() {
 
 		},
 		methods: {
-
+			Toggle(e) {
+				var anmiaton = e.currentTarget.dataset.class;
+				this.animation = anmiaton;
+				setTimeout(() => {
+					this.animation = '';
+				}, 1000)
+			},
+			NavChange(e) {
+				this.CurrentPage = e.page;
+			}
 		}
 	}
 </script>

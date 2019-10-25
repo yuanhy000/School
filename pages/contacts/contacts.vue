@@ -1,7 +1,6 @@
 <template>
-	<view>
-		
-	</view>
+	
+	<view>contacts-view</view>
 </template>
 
 <script>
