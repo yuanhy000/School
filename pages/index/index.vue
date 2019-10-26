@@ -7,6 +7,7 @@
 		<chat v-if="CurrentPage=='chat'"></chat>
 		<contacts v-if="CurrentPage=='contacts'"></contacts>
 		<discovery v-if="CurrentPage=='discovery'"></discovery>
+		<user v-if="CurrentPage=='user'"></user>
 		<tabbar class="tabbar-position" @navigate="NavChange"></tabbar>
 	</view>
 </template>
@@ -31,6 +32,7 @@
 			},
 			NavChange(e) {
 				this.CurrentPage = e.page;
+				console.log(this.CurrentPage)
 			}
 		}
 	}

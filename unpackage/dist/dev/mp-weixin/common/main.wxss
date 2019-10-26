@@ -4821,8 +4821,8 @@ scroll-view.cu-steps .cu-item {
 .animation-fade {
     -webkit-animation-name: fade;
             animation-name: fade;
-    -webkit-animation-duration: .8s;
-            animation-duration: .8s;
+    -webkit-animation-duration: .6s;
+            animation-duration: .6s;
     -webkit-animation-timing-function: linear;
             animation-timing-function: linear
 }

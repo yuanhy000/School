@@ -1,5 +1,7 @@
 <template>
-	<view>chat-view</view>
+	<view>
+		chat-view
+	</view>
 </template>
 
 <script>

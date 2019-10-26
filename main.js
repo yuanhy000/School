@@ -16,6 +16,9 @@ Vue.component('contacts', contacts)
 import discovery from './pages/discovery/discovery.vue'
 Vue.component('discovery', discovery)
 
+import user from './pages/user/user.vue'
+Vue.component('user', user)
+
 Vue.config.productionTip = false
 
 App.mpType = 'app'

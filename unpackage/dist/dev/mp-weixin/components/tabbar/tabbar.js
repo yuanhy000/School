@@ -163,7 +163,7 @@ var _default =
       this.animation = anmiaton;
       setTimeout(function () {
         _this.animation = '';
-      }, 1000);
+      }, 400);
     } } };exports.default = _default;
 
 /***/ })

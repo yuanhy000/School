@@ -104,11 +104,11 @@
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"components/tabbar/tabbar":1};
+/******/ 		var cssChunks = {"components/tabbar/tabbar":1,"pages/user/user":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"colorui/components/cu-custom":"colorui/components/cu-custom","components/tabbar/tabbar":"components/tabbar/tabbar"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"colorui/components/cu-custom":"colorui/components/cu-custom","components/tabbar/tabbar":"components/tabbar/tabbar","pages/user/user":"pages/user/user"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {

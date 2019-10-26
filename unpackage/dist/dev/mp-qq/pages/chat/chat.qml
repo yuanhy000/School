@@ -1,0 +1,1 @@
+<view>chat-view</view>

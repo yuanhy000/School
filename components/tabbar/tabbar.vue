@@ -1,13 +1,13 @@
 <template>
 	<view>
 		<view class="cu-bar tabbar bg-white">
-			<view class="action " @click="NavChange" data-cur="chat" @tap="Toggle" :data-class="'scale-up'" :class="[PageCur=='chat'?'animation-scale-up':'']">
+			<view class="action " @click="NavChange" data-cur="chat" @tap="Toggle" :data-class="'scale-up'" :class="[PageCur=='chat'?'animation-fade':'']">
 				<view>
 					<image :src="'/static/tabbar/chat' + [PageCur=='chat'?'-on':''] + '.png'" class="tab-img"></image>
 				</view>
 				<view :class="PageCur=='chat'?'text-tabbar-on':'text-tabbar'">聊天</view>
 			</view>
-			<view class="action " @click="NavChange" data-cur="contacts" @tap="Toggle" :data-class="'scale-up'" :class="[PageCur=='contacts'?'animation-scale-up':'']">
+			<view class="action " @click="NavChange" data-cur="contacts" @tap="Toggle" :data-class="'scale-up'" :class="[PageCur=='contacts'?'animation-fade':'']">
 				<view>
 					<image :src="'/static/tabbar/contacts' + [PageCur=='contacts'?'-on':''] + '.png'" class="tab-img">
 					</image>
@@ -56,7 +56,7 @@
 				this.animation = anmiaton;
 				setTimeout(() => {
 					this.animation = '';
-				}, 1000)
+				}, 400)
 			},
 		}
 	}
