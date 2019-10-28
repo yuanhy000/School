@@ -18,6 +18,7 @@
     "chat": "/pages/chat/chat",
     "contacts": "/pages/contacts/contacts",
     "discovery": "/pages/discovery/discovery",
-    "user": "/pages/user/user"
+    "user": "/pages/user/user",
+    "authorization": "/pages/authorization/authorization"
   }
 }

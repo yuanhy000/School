@@ -2,15 +2,24 @@
 	color: #AAAAAA;
 	font-size: 20rpx;
 }
-.text-addition {
-	color: #AAAAAA;
+
+.text-tabbar-on {
+	color: #467385;
 	font-size: 20rpx;
 }
 
-.text-tabbar-on {
-	color: #8EA7C7;
+.text-addition {
+	color: #AAAAAA;
 	font-size: 20rpx;
+	margin-top: 8rpx;
 }
+
+.text-addition-on {
+	color: #467385;
+	font-size: 20rpx;
+	margin-top: 8rpx;
+}
+
 
 .tab-img {
 	width: 44rpx;
@@ -19,7 +28,7 @@
 }
 
 .addition-button {
-	background-color: #8EA7C7;
+	background-image: linear-gradient(45deg, #467385, #343A4F);
 	color: #FFFFFF;
 	font-size: 60rpx;
 }

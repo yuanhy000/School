@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-blue-pink" :isBack="false">
+		<cu-custom bgColor="bg-gradual-tab" :isBack="false">
 			<block slot="backText">返回</block>
 			<block slot="content">Chat</block>
 		</cu-custom>
@@ -16,7 +16,7 @@
 	export default {
 		data() {
 			return {
-				CurrentPage: '',
+				CurrentPage: 'user',
 			}
 		},
 		onLoad() {

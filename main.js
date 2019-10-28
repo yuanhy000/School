@@ -19,6 +19,9 @@ Vue.component('discovery', discovery)
 import user from './pages/user/user.vue'
 Vue.component('user', user)
 
+import authorization from './pages/authorization/authorization.vue'
+Vue.component('authorization', authorization)
+
 Vue.config.productionTip = false
 
 App.mpType = 'app'
@@ -27,3 +30,5 @@ const app = new Vue({
 	...App
 })
 app.$mount()
+
+

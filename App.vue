@@ -1,5 +1,13 @@
 <script>
 	import Vue from 'vue'
+	import Request from './js_sdk/luch-request/request.js'
+	// import config from './utils/config.js'
+
+	Vue.prototype.http = new Request();
+	Vue.prototype.http.setConfig((config) => {
+		config.baseUrl = 'http://school.test/api';
+		return config
+	})
 
 	export default {
 		onLaunch: function() {
@@ -22,8 +30,15 @@
 					// #ifdef MP-QQ
 					Vue.prototype.StatusBar = e.statusBarHeight;
 					let QCustom = qq.getMenuButtonBoundingClientRect();
-					Vue.prototype.Custom = QCustom;
-					Vue.prototype.CustomBar = QCustom.bottom + QCustom.top - e.statusBarHeight + 5;
+					console.log(JSON.stringify(QCustom))
+					if (JSON.stringify(QCustom) != "{}") {
+						console.log('has')
+						Vue.prototype.Custom = QCustom;
+						Vue.prototype.CustomBar = QCustom.bottom + QCustom.top - e.statusBarHeight + 5;
+					} else {
+						console.log('null')
+						Vue.prototype.CustomBar = 70;
+					}
 					// #endif
 					// #ifdef MP-ALIPAY
 					Vue.prototype.StatusBar = e.statusBarHeight;
@@ -33,14 +48,16 @@
 			})
 		},
 		onShow: function() {
-			qq.getUserInfo({
-				success: res => {
-					console.log(res);
-				},
-			})
+			// qq.getUserInfo({
+			// 	success: res => {
+			// 		console.log(res);
+			// 	},
+			// })
 			qq.login({
 				success: res => {
-					console.log(res);
+					this.http.post('/token/get',res.code).then(res => {
+						console.log(res)
+					})
 				}
 			})
 		},

@@ -1,7 +1,5 @@
-.bg-gradual-blue-pink {
+.bg-gradual-tab {
 	background-image: linear-gradient(60deg, #343A4F, #467385);
-/* 	background-image: linear-gradient(60deg, #8EA7C7, #EECAC9); */
-	/* background-color: #8EA7C7; */
 	color: #ffffff;
 }
 

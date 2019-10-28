@@ -108,3 +108,18 @@ page {
 	/* background-image: linear-gradient(120deg, #8EA7C7, #EECAC9); */
 	background-color: #E7EBED;
 }
+
+.tabbar-height {
+	height: 120px;
+}
+
+.user-avatar-container {
+	height: 200rpx;
+	padding-top: 30rpx;
+	/* width: 100%; */
+}
+
+.avatar-button {
+	width: 128upx;
+	height: 128upx;
+}

@@ -2,13 +2,19 @@
 	color: #AAAAAA;
 	font-size: 20rpx;
 }
+.text-tabbar-on.data-v-3214a57a {
+	color: #467385;
+	font-size: 20rpx;
+}
 .text-addition.data-v-3214a57a {
 	color: #AAAAAA;
 	font-size: 20rpx;
+	margin-top: 8rpx;
 }
-.text-tabbar-on.data-v-3214a57a {
-	color: #8EA7C7;
+.text-addition-on.data-v-3214a57a {
+	color: #467385;
 	font-size: 20rpx;
+	margin-top: 8rpx;
 }
 .tab-img.data-v-3214a57a {
 	width: 44rpx;
@@ -16,7 +22,8 @@
 	margin-bottom: 10rpx;
 }
 .addition-button.data-v-3214a57a {
-	background-color: #8EA7C7;
+	background-image: -o-linear-gradient(45deg, #467385, #343A4F);
+	background-image: linear-gradient(45deg, #467385, #343A4F);
 	color: #FFFFFF;
 	font-size: 60rpx;
 }

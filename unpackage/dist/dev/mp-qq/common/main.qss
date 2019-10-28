@@ -3637,6 +3637,10 @@ scroll-view.cu-steps .cu-item {
 	-webkit-box-shadow: 6rpx 6rpx 8rpx rgba(26, 26, 26, 0.2);
 	        box-shadow: 6rpx 6rpx 8rpx rgba(26, 26, 26, 0.2);
 }
+.shadow[class*="-tab"] {
+	-webkit-box-shadow: 6rpx 6rpx 8rpx rgba(26, 26, 26, 0.2);
+	        box-shadow: 6rpx 6rpx 8rpx rgba(26, 26, 26, 0.2);
+}
 .text-shadow[class*="-red"] {
 	text-shadow: 6rpx 6rpx 8rpx rgba(204, 69, 59, 0.2);
 }

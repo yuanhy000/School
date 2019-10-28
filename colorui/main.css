@@ -3642,6 +3642,9 @@ scroll-view.cu-steps .cu-item {
 .shadow[class*="-white"] {
 	box-shadow: 6upx 6upx 8upx rgba(26, 26, 26, 0.2);
 }
+.shadow[class*="-tab"] {
+	box-shadow: 6upx 6upx 8upx rgba(26, 26, 26, 0.2);
+}
 
 .text-shadow[class*="-red"] {
 	text-shadow: 6upx 6upx 8upx rgba(204, 69, 59, 0.2);
