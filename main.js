@@ -1,6 +1,12 @@
 import Vue from 'vue'
 import App from './App'
 
+import Request from './js_sdk/pocky-request/index'
+Vue.prototype.$http = Request();
+
+import store from './store/index.js'
+Vue.prototype.$store = store
+
 import cuCustom from './colorui/components/cu-custom.vue'
 Vue.component('cu-custom', cuCustom)
 
@@ -30,5 +36,3 @@ const app = new Vue({
 	...App
 })
 app.$mount()
-
-

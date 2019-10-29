@@ -1,0 +1,1 @@
+<view>contacts-view</view>

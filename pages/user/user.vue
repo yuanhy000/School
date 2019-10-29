@@ -4,7 +4,7 @@
 			<view class="user-avatar-container">
 				<!-- 		<view class="cu-avatar xl round margin-left" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big25002.jpg);"></view> -->
 				<image-button @bindGetUserInfo="onGetUserInfo" :type="getUserInfo" class="avatar-button ">
-					<image class="cu-avatar xl round " slot="img" src="./../../static/user/click-me.png">
+					<image class="cu-avatar xl round avatar-shadow" slot="img" src="./../../static/user/click-me.png">
 					</image>
 				</image-button>
 			</view>
@@ -43,7 +43,7 @@
 
 <script>
 	import imageButton from '../../components/image-button/image-button.vue'
-	// import Request from '../../js_sdk/luch-request/request.js'
+	import Vue from 'vue'
 	export default {
 		data() {
 			return {
@@ -55,30 +55,13 @@
 		components: {
 			imageButton: imageButton
 		},
-		mounted() {
-			// this.http.post('/token/get').then(res => {
-			// 	console.log(res)
-			// })
-		},
 		methods: {
 			onGetUserInfo(event) {
 				const userInfo = event.info.userInfo
 				if (userInfo) {
 					this.userInfo = userInfo;
 					this.authorized = true;
-
-					const http = new Request();
-					http.post('school.test/api/user').then(res => {
-						console.log(res)
-					})
-					// User.submitUserInfo({
-					// 	nickName: userInfo.nickName,
-					// 	avatarUrl: userInfo.avatarUrl,
-					// 	sex: userInfo.gender
-					// }).then(res => {
-					// 	this.getUserInfoFromSever();
-					// });
-					// this.getUserInfoFromSever();
+					this.$store.dispatch('updateUserInfo', userInfo);
 				}
 			},
 			showModal(e) {

@@ -8489,344 +8489,876 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* 10 */,
 /* 11 */,
 /* 12 */
+/*!***********************************************!*\
+  !*** /Users/yuanhy/Desktop/Chat/utils/jwt.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  setToken: function setToken(token) {
+    uni.setStorageSync('jwt_token', token);
+  },
+
+  getToken: function getToken() {
+    return uni.getStorageSync('jwt_token');
+  },
+
+  setRefreshToken: function setRefreshToken(refresh_token) {
+    uni.setStorageSync('refresh_token', refresh_token);
+  },
+
+  getRefreshToken: function getRefreshToken() {
+    return uni.getStorageSync('refresh_token');
+  },
+
+  removeToken: function removeToken() {
+    uni.removeStorageSync('jwt_token');
+    uni.removeStorageSync('refresh_token');
+  } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-qq/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 13 */,
+/* 14 */,
+/* 15 */
+/*!********************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 16 */
+/*!****************************************************************!*\
+  !*** /Users/yuanhy/Desktop/Chat/js_sdk/pocky-request/index.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+
+var _index = _interopRequireDefault(__webpack_require__(/*! ./core/index */ 17));
+var _tools = _interopRequireDefault(__webpack_require__(/*! ./tools */ 20));
+var _config = __webpack_require__(/*! ./config */ 22);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /*
+                                                                                                                                 * @Description: uniapp request请求库 v2.0.3.4
+                                                                                                                                 * @Author: pocky
+                                                                                                                                 * @Email 2460392754@qq.com
+                                                                                                                                 * @Date: 2019-05-31 19:18:48
+                                                                                                                                 * @LastEditTime: 2019-10-17 16:07:57
+                                                                                                                                 * @instruction: https://www.yuque.com/pocky/aaeyux/pdik23
+                                                                                                                                 * @github: https://github.com/2460392754/uniapp-tools/tree/master/request
+                                                                                                                                 * @dcloud: https://ext.dcloud.net.cn/plugin?id=468
+                                                                                                                                 */function createInstance(defaultConfig) {var ctx = new _index.default(defaultConfig);var instance;instance = _index.default.prototype.request.bind(ctx);instance = _tools.default.extend(instance, _index.default.prototype, ctx);instance = _tools.default.extend(instance, ctx);
+  return instance;
+}
+
+function create() {
+  return createInstance(_config.config);
+}var _default =
+
+create;exports.default = _default;
+
+/***/ }),
+/* 17 */
+/*!*********************************************************************!*\
+  !*** /Users/yuanhy/Desktop/Chat/js_sdk/pocky-request/core/index.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _interceptor = _interopRequireDefault(__webpack_require__(/*! ./interceptor */ 18));
+var _mergeConfig = _interopRequireDefault(__webpack_require__(/*! ./mergeConfig */ 19));
+var _tools = _interopRequireDefault(__webpack_require__(/*! ../tools */ 20));
+var Network = _interopRequireWildcard(__webpack_require__(/*! ./network */ 21));
+var _config = __webpack_require__(/*! ../config */ 22);function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance");}function _iterableToArrayLimit(arr, i) {var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}
+
+function MyRequest(defaultConfig) {
+  this.defaultConfig = defaultConfig;
+  this.interceptors = {
+    scoped: {
+      request: new _interceptor.default(),
+      response: new _interceptor.default() },
+
+    global: _config.globalInterceptor };
+
+}
+
+/**
+   * 通用请求
+   * 支持请求格式 `request('example/url'[, config])`
+   * @param {Object} config [{}] 配置信息
+   */
+MyRequest.prototype.request = function () {var _this = this;var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  if (typeof config === 'string') {
+    config = arguments[1] || {};
+    config.url = arguments[0];
+  }
+
+  // 设置默认 config.method
+  if (!config.method && !this.defaultConfig.method) {
+    config.method = 'get';
+  }
+
+  var newConfig = (0, _mergeConfig.default)(this.defaultConfig, config);
+  var method = config.method.toLowerCase();
+  var networkType = ['upload', 'download'].includes(method) ? method : 'xhr';
+
+  var chain = [];
+  var promise = Promise.resolve(newConfig);
+
+  this.interceptors.global.request.forEach(function (interceptor) {
+    chain.push({ then: interceptor.fulfilled }, { catch: interceptor.rejected });
+  });
+
+  this.interceptors.scoped.request.forEach(function (interceptor) {
+    chain.push({ then: interceptor.fulfilled }, { catch: interceptor.rejected });
+  });
+
+  chain.push({ then: Network[networkType] });
+
+  this.interceptors.global.response.forEach(function (interceptor) {
+    chain.push({ then: interceptor.fulfilled }, { catch: interceptor.rejected });
+  });
+
+  this.interceptors.scoped.response.forEach(function (interceptor) {
+    chain.push({ then: interceptor.fulfilled }, { catch: interceptor.rejected });
+  });
+
+  /**
+       * 链式合并
+       * 合并顺序格式
+       * 
+       * ``` javascript
+       * Promise.resolve()
+       * .then(global_Request)
+       * .catch(global_Request)
+       * .then(scoped_Request)
+       * .catch(scoped_Request)
+       * .then(发送请求)
+       * .catch(请求错误、超时)
+       * .then(global_Response)
+       * .catch(global_Response)
+       * .then(scoped_Response)
+       * .catch(scoped_Response)
+       * .then(获取请求的返回值)
+       * .catch(拦截异常的返回值)
+       * ```
+       */
+  chain.forEach(function (item) {var _Object$entries =
+    Object.entries(item),_Object$entries2 = _slicedToArray(_Object$entries, 1),_Object$entries2$ = _slicedToArray(_Object$entries2[0], 2),type = _Object$entries2$[0],fn = _Object$entries2$[1];
+
+    if (typeof fn !== 'function') {
+      return true;
+    }
+
+    promise = promise[type](function (obj) {
+      var interceptorConfig = (0, _mergeConfig.default)(_this.defaultConfig, config);
+
+      var ret = fn(obj, interceptorConfig);
+
+      // return false 就会跳出promise的链式函数
+      if (ret === false) {
+        return _tools.default.breakPromise();
+      }
+
+      // return config(Object类型) 或 return Promise.reject('xx') 才会继续发送请求或回传数据
+      if (_tools.default.isType('Object', ret) || _tools.default.isType('Promise', ret)) {
+        return ret;
+      }
+    });
+  });
+
+  return promise;
+};
+
+// 在 MyRequest 的原型上添加其他方法
+var arr1 = ['delete', 'get', 'head', 'options', 'post', 'put', 'patch', 'upload', 'download'].forEach(function (method) {
+  MyRequest.prototype[method] = function (url) {var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var newConfig = _tools.default.deepCopy(config, {
+      url: url,
+      method: method });
+
+
+    return this.request(newConfig);
+  };
+});
+
+// 中断 发送中的请求
+MyRequest.prototype.abort = function (instance) {
+  try {
+    instance.example.abort();
+  } catch (e) {}
+};var _default =
+
+MyRequest;exports.default = _default;
+
+/***/ }),
+/* 18 */
+/*!***************************************************************************!*\
+  !*** /Users/yuanhy/Desktop/Chat/js_sdk/pocky-request/core/interceptor.js ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;} // 拦截器
+var Interceptor = /*#__PURE__*/function () {
+  function Interceptor() {_classCallCheck(this, Interceptor);
+    this.handlers = [];
+  }
+
+  /**
+     * 添加 拦截器
+     * @param {Function} fulfilled Promise.resolve里运行的函数
+     * @param {Function} rejected  Promise.reject里运行的函数
+     * @return {Number} 拦截器队列中注册的下标id
+     */_createClass(Interceptor, [{ key: "use", value: function use(
+    fulfilled, rejected) {
+      this.handlers.push({
+        fulfilled: fulfilled,
+        rejected: rejected });
+
+
+      return this.handlers.length - 1;
+    }
+
+    /**
+       * 注销 拦截器
+       * @param {Number} id 在拦截器队列中的下标id
+       */ }, { key: "eject", value: function eject(
+    id) {
+      this.handlers[id] && (this.handlers[id] = null);
+    }
+
+    /**
+       * 遍历所有的拦截器
+       * @param {Function} fn 
+       */ }, { key: "forEach", value: function forEach(
+    fn) {
+      this.handlers.forEach(function (item) {
+        item && fn(item);
+      });
+    } }]);return Interceptor;}();var _default =
+
+
+Interceptor;exports.default = _default;
+
+/***/ }),
+/* 19 */
+/*!***************************************************************************!*\
+  !*** /Users/yuanhy/Desktop/Chat/js_sdk/pocky-request/core/mergeConfig.js ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _tools = _interopRequireDefault(__webpack_require__(/*! ../tools */ 20));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance");}function _iterableToArray(iter) {if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) {for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {arr2[i] = arr[i];}return arr2;}}
+
+function mergeConfig(defaultConfig) {var instanceConfig = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var CONFIG_KEY_LIST = ['url', 'method', 'data', 'dataType', 'responseType', 'params', 'isProxy'];
+  var CONFIG_MERGE_DEEP_KEY_LIST = ['header'];
+  var CONFIG_OPTIONAL_KEY_LIST = ['baseURL'];
+  var CONFIG_ALL_KEY_LIST = [].concat(CONFIG_KEY_LIST, CONFIG_MERGE_DEEP_KEY_LIST, CONFIG_OPTIONAL_KEY_LIST);
+  var ARGS_ALL_KEY_LIST = _toConsumableArray(new Set([].concat(_toConsumableArray(Object.keys(instanceConfig)), _toConsumableArray(Object.keys(defaultConfig)))));
+  var REMAINDER_KEY_LIST = ARGS_ALL_KEY_LIST.filter(function (key) {return !CONFIG_ALL_KEY_LIST.includes(key);});
+  var newConfig = {};
+
+  // 必要参数
+  CONFIG_KEY_LIST.forEach(function (prop) {
+    var val = instanceConfig[prop] || defaultConfig[prop];
+
+    !_tools.default.isType('Undefined', val) && (newConfig[prop] = val);
+  });
+
+  // 必要深拷贝参数
+  CONFIG_MERGE_DEEP_KEY_LIST.forEach(function (prop) {
+    var defaultVal = defaultConfig[prop];
+    var instanceVal = instanceConfig[prop];
+
+    if (_tools.default.isType('Object', instanceVal)) {
+      newConfig[prop] = _tools.default.deepCopy(defaultVal, instanceVal);
+    } else if (_tools.default.isType('Object', defaultVal)) {
+      newConfig[prop] = _tools.default.deepCopy(defaultVal);
+    }
+  });
+
+  // 配置文件中可选参数
+  CONFIG_OPTIONAL_KEY_LIST.forEach(function (prop) {
+    var val = defaultConfig[prop];
+
+    if (!_tools.default.isType('Undefined', val)) {
+      newConfig[prop] = defaultConfig[prop];
+    }
+  });
+
+  // 合并未出现在上述列表中的参数
+  REMAINDER_KEY_LIST.forEach(function (prop) {
+    var defaultVal = defaultConfig[prop];
+    var instanceVal = instanceConfig[prop];
+
+    if (!_tools.default.isType('Undefined', instanceVal)) {
+      newConfig[prop] = instanceVal;
+    } else if (!_tools.default.isType('Undefined', defaultVal)) {
+      newConfig[prop] = defaultVal;
+    }
+  });
+
+  newConfig.instanceURL = instanceConfig.url;
+  newConfig.url = _tools.default.getFullURL(newConfig.baseURL, newConfig.url);
+  newConfig.url = _tools.default.paramsToURL(newConfig);
+  newConfig.header = _tools.default.adapterContentType(defaultConfig.header, instanceConfig.header, newConfig.header);
+
+  if (newConfig.method.toLowerCase() == 'upload') {
+    delete newConfig.header['content-type'];
+  }
+
+  return newConfig;
+}var _default =
+
+mergeConfig;exports.default = _default;
+
+/***/ }),
+/* 20 */
+/*!****************************************************************!*\
+  !*** /Users/yuanhy/Desktop/Chat/js_sdk/pocky-request/tools.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance");}function _iterableToArrayLimit(arr, i) {var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}var $ = {};
+
+/**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 类型判断
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * @param {String} type 值的类型
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * @param {Any} val 需要判断的值
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * @return {Boolean} 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
+$.isType = function (type, val) {
+  return Object.prototype.toString.call(val) === "[object ".concat(type, "]");
+};
+
+/**
+    * 简单对象的深拷贝
+    * @param {Array<Any>} args 参数列表
+    * @return {Object<Any>}
+    */
+$.deepCopy = function () {
+  var res = {};for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {args[_key] = arguments[_key];}
+
+  args.forEach(function (arg) {
+    for (var key in arg) {
+      res = assginValue(key, arg[key], res, $.deepCopy);
+    }
+  });
+
+  return res;
+};
+
+var assginValue = function assginValue(key, val, container, callback) {
+  var cTypeIsObj = $.isType('Object', container[key]);
+  var vTypeIsObj = $.isType('Object', val);
+
+  if (cTypeIsObj && vTypeIsObj) {
+    container[key] = callback(container[key], val);
+  } else if (vTypeIsObj) {
+    container[key] = callback({}, val);
+  } else {
+    container[key] = val;
+  }
+
+  return container;
+};
+
+/**
+    * 扩展对象的属性或方法
+    * @param {Object} a 需要扩展的对象
+    * @param {Object} b 被拷贝对象
+    * @param {Object} args 扩展函数继承的对象
+    * @return {Object}
+    */
+$.extend = function (a, b, args) {
+  for (var key in b) {
+    var val = b[key];
+
+    if (args && $.isType('Function', val)) {
+      a[key] = val.bind(args);
+    } else {
+      a[key] = val;
+    }
+  }
+
+  return a;
+};
+
+/**
+    * 获取完整的URL
+    * @param {String|Undefined} baseURL 基地址
+    * @param {String} requestURL 相对地址
+    * @return {String}
+    */
+$.getFullURL = function (baseURL, requestURL) {
+  if (baseURL && !isAbsoluteURL(requestURL)) {
+    return composeURL(baseURL, requestURL);
+  }
+
+  return requestURL;
+};
+
+/**
+    * 组合成绝对地址的 URL (基地址+相对地址)
+    * @param {String} baseURL 基地址
+    * @param {String} relativeURL 相对地址
+    * @return {String}
+    */
+var composeURL = function composeURL(baseURL, relativeURL) {
+  return relativeURL ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '') : baseURL;
+};
+
+/**
+    * 判断是否是绝对地址 (有 `://`或 `//` 就算是绝对地址)
+    * @param {String} url
+    * @return {Boolean}
+    */
+var isAbsoluteURL = function isAbsoluteURL(url) {
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+};
+
+/**
+    * url添加params参数
+    * @param {Object} o config
+    * @param {Object} o.url
+    * @param {Object} o.method
+    * @param {Object} o.data
+    * @param {Object} o.params
+    * @return {String}
+    */
+$.paramsToURL = function (_ref) {var url = _ref.url,method = _ref.method,data = _ref.data,params = _ref.params;
+  var newParams = params;
+  var newURL = url + (!~url.indexOf('?') ? '?' : '&');
+
+  if (method.toLowerCase() === 'get') {
+    newParams = data || params;
+  }var _arr =
+
+  Object.entries(newParams || {});for (var _i = 0; _i < _arr.length; _i++) {var _arr$_i = _slicedToArray(_arr[_i], 2),key = _arr$_i[0],val = _arr$_i[1];
+    newURL += "".concat(key, "=").concat(val, "&");
+  }
+
+  return newURL.substring(0, newURL.length - 1);
+};
+
+/**
+    * `content-type` 适配器
+    * @param {Object} defaultHeader [{}]
+    * @param {Object} instanceHeader [{}]
+    * @param {Object} configHeader
+    * @return {Object}
+    */
+$.adapterContentType = function () {var defaultHeader = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};var instanceHeader = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};var configHeader = arguments.length > 2 ? arguments[2] : undefined;
+  var LIST = ['content-type', 'Content-type', 'Content-Type', 'contentType', 'ContentType'];
+  var newConfigHeader = $.deepCopy(configHeader);
+  var val;var _arr2 =
+
+  Object.keys(defaultHeader);for (var _i2 = 0; _i2 < _arr2.length; _i2++) {var KEY = _arr2[_i2];
+    if (LIST.includes(KEY)) {
+      val = defaultHeader[KEY];
+      delete newConfigHeader[KEY];
+      break;
+    }
+  }var _arr3 =
+
+  Object.keys(instanceHeader);for (var _i3 = 0; _i3 < _arr3.length; _i3++) {var _KEY = _arr3[_i3];
+    if (LIST.includes(_KEY)) {
+      val = instanceHeader[_KEY];
+      delete newConfigHeader[_KEY];
+      break;
+    }
+  }
+
+  val && (newConfigHeader['content-type'] = val);
+
+  return newConfigHeader;
+};
+
+// 停止promise的链式操作
+$.breakPromise = function () {
+  return new Promise(function () {});
+};
+
+// 转换为 JSON 格式
+$.toJSON = function (anyVal) {
+  try {
+    return JSON.parse(anyVal);
+  } catch (e) {
+    return anyVal;
+  }
+};
+
+// 删除 url 上的参数
+// $.delURLQueryString = function (url) {
+//     return url.replace(/\?[\S|\s]+/, '');
+// }
+var _default =
+$;exports.default = _default;
+
+/***/ }),
+/* 21 */
+/*!***********************************************************************!*\
+  !*** /Users/yuanhy/Desktop/Chat/js_sdk/pocky-request/core/network.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.download = exports.upload = exports.xhr = void 0;var _tools = _interopRequireDefault(__webpack_require__(/*! ../tools */ 20));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+
+// 普通请求
+var xhr = function xhr(config) {
+  var promise, instance;
+
+  promise = new Promise(function (resolve, reject) {
+    instance = uni.request(_objectSpread({},
+    config, {
+      success: resolve,
+      fail: reject }));
+
+  });
+
+  promise.__proto__.example = instance;
+
+  return promise;
+};
+
+// 上传
+exports.xhr = xhr;var upload = function upload(config) {
+  var taskList = ['onProgressUpdate', 'onHeadersReceived', 'offProgressUpdate', 'offHeadersReceived'];
+  var promise, instance;
+
+  promise = new Promise(function (resolve, reject) {
+    instance = uni.uploadFile(_objectSpread({},
+    config, {
+      success: function success(res) {
+        res.data = _tools.default.toJSON(res.data);
+
+        resolve(res);
+      },
+      fail: reject }));
+
+
+    taskList.forEach(function (task) {
+      var fn = config[task];
+
+      typeof fn === 'function' && instance[task](fn);
+    });
+  });
+
+  promise.__proto__.example = instance;
+
+  return promise;
+};
+
+// 下载
+exports.upload = upload;var download = function download(config) {
+  var taskList = ['onProgressUpdate', 'onHeadersReceived', 'offProgressUpdate', 'offHeadersReceived'];
+  var promise, instance;
+
+  promise = new Promise(function (resolve, reject) {
+    instance = uni.downloadFile(_objectSpread({},
+    config, {
+      success: resolve,
+      fail: reject }));
+
+
+    taskList.forEach(function (task) {
+      var fn = config[task];
+
+      typeof fn === 'function' && instance[task](fn);
+    });
+  });
+
+  promise.__proto__.example = instance;
+
+  return promise;
+};exports.download = download;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-qq/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 22 */
 /*!*****************************************************************!*\
-  !*** /Users/yuanhy/Desktop/Chat/js_sdk/luch-request/request.js ***!
+  !*** /Users/yuanhy/Desktop/Chat/js_sdk/pocky-request/config.js ***!
   \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 13));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * Request 1.0.2
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @Class Request
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @description luch-request 1.0.2 http请求插件
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @Author lu-ch
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @Date 2019-10-14
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @Email webwork.s@qq.com
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * http://ext.dcloud.net.cn/plugin?id=392
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */var
-Request = /*#__PURE__*/function () {function Request() {var _this = this;_classCallCheck(this, Request);_defineProperty(this, "config",
-    {
-      baseUrl: '',
-      header: {
-        'content-type': 'application/json;charset=UTF-8' },
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.config = exports.globalInterceptor = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 23));var _interceptor = _interopRequireDefault(__webpack_require__(/*! ./core/interceptor */ 18));
+var _index = _interopRequireDefault(__webpack_require__(/*! ./index */ 16));
+var _jwt = _interopRequireDefault(__webpack_require__(/*! ./../../utils/jwt.js */ 12));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
+// import TokenApi from '../.././../api/token';
 
-      method: 'GET',
-      dataType: 'json',
-      responseType: 'text' });_defineProperty(this, "interceptor",
+var globalInterceptor = {
+  request: new _interceptor.default(),
+  response: new _interceptor.default() };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    {
-      /**
-       * @param {Request~requestCallback} cb - 请求之前拦截,接收一个函数（config, cancel）=> {return config}。第一个参数为全局config,第二个参数为函数，调用则取消本次请求。
-       */
-      request: function request(cb) {
-        if (cb) {
-          _this.requestBeforeFun = cb;
-        }
-      },
-      /**
-          * @param {Request~responseCallback} cb 响应拦截器，对响应数据做点什么
-          * @param {Request~responseErrCallback} ecb 响应拦截器，对响应错误做点什么
-          */
-      response: function response(cb, ecb) {
-        if (cb && ecb) {
-          _this.requestComFun = cb;
-          _this.requestComFail = ecb;
-        }
-      } });}_createClass(Request, [{ key: "requestBeforeFun", value: function requestBeforeFun(
-
-
-    config) {
-      return config;
-    } }, { key: "requestComFun", value: function requestComFun(
-
-    response) {
-      return response;
-    } }, { key: "requestComFail", value: function requestComFail(
-
-    response) {
-      return response;
-    }
-
-    /**
-       * 自定义验证器，如果返回true 则进入响应拦截器的响应成功函数(resolve)，否则进入响应拦截器的响应错误函数(reject)
-       * @param { Number } statusCode - 请求响应体statusCode（只读）
-       * @return { Boolean } 如果为true,则 resolve, 否则 reject
-       */ }, { key: "validateStatus", value: function validateStatus(
-    statusCode) {
-      return statusCode === 200;
-    }
-
-    /**
-       * @Function
-       * @param {Request~setConfigCallback} f - 设置全局默认配置
-       */ }, { key: "setConfig", value: function setConfig(
-    f) {
-      this.config = f(this.config);
-    }
-
-    /**
-       * @Function
-       * @param {Object} options - 请求配置项
-       * @prop {String} options.url - 请求路径
-       * @prop {Object} options.data - 请求参数
-       * @prop {Object} [options.responseType = config.responseType] [text|arraybuffer] - 响应的数据类型
-       * @prop {Object} [options.dataType = config.dataType] - 如果设为 json，会尝试对返回的数据做一次 JSON.parse
-       * @prop {Object} [options.header = config.header] - 请求header
-       * @prop {Object} [options.method = config.method] - 请求方法
-       * @returns {Promise<unknown>}
-       */ }, { key: "request", value: function () {var _request = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _this2 = this;var options,_args = arguments;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-                options = _args.length > 0 && _args[0] !== undefined ? _args[0] : {};
-                options.baseUrl = this.config.baseUrl;
-                options.dataType = options.dataType || this.config.dataType;
-                options.responseType = options.responseType || this.config.responseType;
-                options.url = options.url || '';
-                options.data = options.data || {};
-                options.params = options.params || {};
-                options.header = options.header || this.config.header;
-                options.method = options.method || this.config.method;return _context.abrupt("return",
-                new Promise(function (resolve, reject) {
-                  var next = true;
-
-                  var handleRe = {};
-                  options.complete = function (response) {
-                    response.config = handleRe;
-                    if (_this2.validateStatus(response.statusCode)) {// 成功
-                      response = _this2.requestComFun(response);
-                      resolve(response);
-                    } else {
-                      response = _this2.requestComFail(response);
-                      reject(response);
-                    }
-                  };
-                  var cancel = function cancel() {var t = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'handle cancel';var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : options;
-                    var err = {
-                      errMsg: t,
-                      config: config };
-
-                    reject(err);
-                    next = false;
-                  };
-
-                  handleRe = _objectSpread({}, _this2.requestBeforeFun(options, cancel));
-                  var _config = _objectSpread({}, handleRe);
-                  if (!next) return;
-
-                  var mergeUrl = Request.posUrl(options.url) ? options.url : options.baseUrl + options.url;
-                  if (JSON.stringify(options.params) !== '{}') {
-                    var paramsH = Request.addQueryString(options.params);
-                    mergeUrl += mergeUrl.indexOf('?') === -1 ? "?".concat(paramsH) : "&".concat(paramsH);
-                  }
-                  _config.url = mergeUrl;
-                  uni.request(_config);
-                }));case 10:case "end":return _context.stop();}}}, _callee, this);}));function request() {return _request.apply(this, arguments);}return request;}() }, { key: "get", value: function get(
-
-
-    url) {var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      return this.request(_objectSpread({
-        url: url,
-        method: 'GET' },
-      options));
-
-    } }, { key: "post", value: function post(
-
-    url, data) {var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-      return this.request(_objectSpread({
-        url: url,
-        data: data,
-        method: 'POST' },
-      options));
-
-    } }, { key: "put", value: function put(
-
-
-    url, data) {var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-      return this.request(_objectSpread({
-        url: url,
-        data: data,
-        method: 'PUT' },
-      options));
-
-    } }, { key: "upload", value: function upload(
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    url, _ref)
-
-
-
-
-
-
-
-
-
-
-    {var _this3 = this;var filePath = _ref.filePath,name = _ref.name,header = _ref.header,formData = _ref.formData;
-      return new Promise(function (resolve, reject) {
-        var next = true;
-        var handleRe = {};
-        var pubConfig = {
-          baseUrl: _this3.config.baseUrl,
-          url: url,
-
-
-
-
-
-
-          filePath: filePath,
-          method: 'UPLOAD',
-          name: name,
-          header: header || _this3.config.header,
-          formData: formData,
-          complete: function complete(response) {
-            response.config = handleRe;
-            if (response.statusCode === 200) {// 成功
-              response = _this3.requestComFun(response);
-              resolve(response);
-            } else {
-              response = _this3.requestComFail(response);
-              reject(response);
-            }
-          } };
-
-        var cancel = function cancel() {var t = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'handle cancel';var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : pubConfig;
-          var err = {
-            errMsg: t,
-            config: config };
-
-          reject(err);
-          next = false;
-        };
-
-        handleRe = _objectSpread({}, _this3.requestBeforeFun(pubConfig, cancel));
-        var _config = _objectSpread({}, handleRe);
-        if (!next) return;
-        _config.url = Request.posUrl(url) ? url : _this3.config.baseUrl + url;
-        uni.uploadFile(_config);
-      });
-    } }], [{ key: "posUrl", value: function posUrl(url) {/* 判断url是否为绝对路径 */return /(http|https):\/\/([\w.]+\/?)\S*/.test(url);} }, { key: "addQueryString", value: function addQueryString(params) {var paramsData = '';Object.keys(params).forEach(function (key) {paramsData += key + '=' + params[key] + '&';});return paramsData.substring(0, paramsData.length - 1);} /**
-                                                                                                                                                                                                                                                                                                                                                                            * @property {Function} request 请求拦截器
-                                                                                                                                                                                                                                                                                                                                                                            * @property {Function} response 响应拦截器
-                                                                                                                                                                                                                                                                                                                                                                            * @type {{request: Request.interceptor.request, response: Request.interceptor.response}}
-                                                                                                                                                                                                                                                                                                                                                                            */ }]);return Request;}(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                        * setConfig回调
-                                                                                                                                                                                                                                                                                                                                                                                                        * @return {Object} - 返回操作后的config
-                                                                                                                                                                                                                                                                                                                                                                                                        * @callback Request~setConfigCallback
-                                                                                                                                                                                                                                                                                                                                                                                                        * @param {Object} config - 全局默认config
-                                                                                                                                                                                                                                                                                                                                                                                                        */ /**
-                                                                                                                                                                                                                                                                                                                                                                                                            * 请求拦截器回调
-                                                                                                                                                                                                                                                                                                                                                                                                            * @return {Object} - 返回操作后的config
-                                                                                                                                                                                                                                                                                                                                                                                                            * @callback Request~requestCallback
-                                                                                                                                                                                                                                                                                                                                                                                                            * @param {Object} config - 全局config
-                                                                                                                                                                                                                                                                                                                                                                                                            * @param {Function} [cancel] - 取消请求钩子，调用会取消本次请求
-                                                                                                                                                                                                                                                                                                                                                                                                            */
 /**
-                                                                                                                                                                                                                                                                                                                                                                                                                * 响应拦截器回调
-                                                                                                                                                                                                                                                                                                                                                                                                                * @return {Object} - 返回操作后的response
-                                                                                                                                                                                                                                                                                                                                                                                                                * @callback Request~responseCallback
-                                                                                                                                                                                                                                                                                                                                                                                                                * @param {Object} response - 请求结果 response
-                                                                                                                                                                                                                                                                                                                                                                                                                */
+                                           * 全局配置
+                                           * 只能配置 静态数据
+                                           * `content-type` 默认为 application/json
+                                           * header 中`content-type`设置特殊参数 或 配置其他会导致触发 跨域 问题，出现跨域会直接进入响应拦截器的catch函数中
+                                           */exports.globalInterceptor = globalInterceptor;
+var config = {
+  baseURL: 'http://school.test/api',
+  // dataType: 'json',
+  // responseType: 'text',
+  header: {
+    // uid: 'xxxx',
+    contentType: 'application/x-www-form-urlencoded'
+    // 'Content-Type': 'application/json'
+  } };
+
+
 /**
-                                                                                                                                                                                                                                                                                                                                                                                                                    * 响应错误拦截器回调
-                                                                                                                                                                                                                                                                                                                                                                                                                    * @return {Object} - 返回操作后的response
-                                                                                                                                                                                                                                                                                                                                                                                                                    * @callback Request~responseErrCallback
-                                                                                                                                                                                                                                                                                                                                                                                                                    * @param {Object} response - 请求结果 response
-                                                                                                                                                                                                                                                                                                                                                                                                                    */exports.default = Request;
+        * 全局 请求拦截器
+        * 例如: 配置token
+        *
+        * `return config` 继续发送请求
+        * `return false` 会停止发送请求，不会进入错误数据拦截，也不会进入请求对象中的catch函数中
+        * `return Promise.reject('xxxxx')` 停止发送请求, 会错误数据拦截，也会进入catch函数中
+        *
+        * @param {Object} config 发送请求的配置数据
+        */exports.config = config;
+globalInterceptor.request.use(
+function (config) {
+  // console.log('is global request interceptor 1', config);
+  if (_jwt.default.getToken()) {
+    config.header.Authorization = 'Bearer ' + _jwt.default.getToken();
+  }
+  // getToken() && (config.header.token = getToken());
+
+  return config;
+  // return false;
+  // return Promise.reject('is error')
+},
+function (err) {
+  // console.error('is global fail request interceptor: ', err);
+  return false;
+});
+
+
+// 支持添加多个请求、响应拦截器
+// globalInterceptor.request.use(config => {
+//     console.log('is global request interceptor 2');
+//     return config;
+// }, err => {
+//     console.error('global request: ', err);
+//     return false;
+// });
+
+/**
+ * 全局 响应拦截器
+ * 例如: 根据状态码选择性拦截、过滤转换数据
+ *
+ * `return res` 继续返回数据
+ * `return false` 停止返回数据，不会进入错误数据拦截，也不会进入catch函数中
+ * `return Promise.reject('xxxxx')` 返回错误信息, 会错误数据拦截，也会进入catch函数中
+ *
+ * @param {Object} res 请求返回的数据
+ * @param {Object} config 发送请求的配置数据
+ * @return {Object|Boolean|Promise<reject>}
+ */
+globalInterceptor.response.use(
+function (res, config) {
+  // console.log('is global response interceptor');
+
+  // 回传数据中没有携带 code
+  if (!(res.data && res.data.code)) {
+    return res;
+  }
+
+  // 用code模拟http状态码
+  var code = parseInt(res.data.code);
+
+  // 20x ~ 30x
+  if (200 <= code && code < 400) {
+    return res;
+  } else if (code == 401 && config.count === 0) {
+    // token 验证失败, 并且这个实例是第一次重复请求
+    config.count++;
+    config.url = config.instanceURL;
+    return getApiToken(2460392754).
+    then(saveToken).
+    then(function () {return (0, _index.default)().request(config);});
+  } else {
+    return Promise.reject(res, config);
+  }
+
+  // return false;
+  // return Promise.reject('is error')
+},
+function (err, config) {
+  // console.error('is global response fail interceptor');
+  // console.error('err: ', err);
+  // console.error('config: ', config);
+  var
+  errMsg =
+
+  err.errMsg,data = err.data;
+
+  return Promise.reject({
+    errMsg: errMsg,
+    data: data,
+    config: config });
+
+});
+
+
+// 重新请求更新获取 token
+function getApiToken(_x) {return _getApiToken.apply(this, arguments);}
+
+
+
+
+
+
+
+
+// 获取 localStorage 中的 token
+function _getApiToken() {_getApiToken = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(uid) {var res, token;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return TokenApi.getMockToken(uid);case 2:res = _context.sent;token = res.data.token;return _context.abrupt("return", token);case 5:case "end":return _context.stop();}}}, _callee, this);}));return _getApiToken.apply(this, arguments);}function getToken() {
+  return uni.getStorageSync('token');
+}
+
+// 保存 token 到 localStorage
+function saveToken(token) {
+  uni.setStorageSync('token', token);
+}
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-qq/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 13 */
+/* 23 */
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
   \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! regenerator-runtime */ 14);
+module.exports = __webpack_require__(/*! regenerator-runtime */ 24);
 
 
 /***/ }),
-/* 14 */
+/* 24 */
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -8857,7 +9389,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 15);
+module.exports = __webpack_require__(/*! ./runtime */ 25);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -8873,7 +9405,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 15 */
+/* 25 */
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -9604,125 +10136,1142 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */
-/*!********************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
-  \********************************************************************/
-/*! exports provided: default */
+/* 26 */
+/*!*************************************************!*\
+  !*** /Users/yuanhy/Desktop/Chat/store/index.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ 27));
+
+
+
+var _token = _interopRequireDefault(__webpack_require__(/*! ./modules/token.js */ 28));
+var _authUser = _interopRequireDefault(__webpack_require__(/*! ./modules/auth-user.js */ 29));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}_vue.default.use(_vuex.default);var _default =
+
+new _vuex.default.Store({
+  modules: {
+    AuthUser: _authUser.default,
+    Token: _token.default
+    // Notification,
+    // SearchStatus,
+    // ChatINfo
+  },
+  strict: true });exports.default = _default;
+
+/***/ }),
+/* 27 */
+/*!********************************************!*\
+  !*** ./node_modules/vuex/dist/vuex.esm.js ***!
+  \********************************************/
+/*! exports provided: Store, install, mapState, mapMutations, mapGetters, mapActions, createNamespacedHelpers, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
-/* globals __VUE_SSR_CONTEXT__ */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Store", function() { return Store; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "install", function() { return install; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapState", function() { return mapState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapMutations", function() { return mapMutations; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapGetters", function() { return mapGetters; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapActions", function() { return mapActions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNamespacedHelpers", function() { return createNamespacedHelpers; });
+/**
+ * vuex v3.0.1
+ * (c) 2017 Evan You
+ * @license MIT
+ */
+var applyMixin = function (Vue) {
+  var version = Number(Vue.version.split('.')[0]);
 
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
+  if (version >= 2) {
+    Vue.mixin({ beforeCreate: vuexInit });
+  } else {
+    // override init and inject vuex init procedure
+    // for 1.x backwards compatibility.
+    var _init = Vue.prototype._init;
+    Vue.prototype._init = function (options) {
+      if ( options === void 0 ) options = {};
 
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode /* vue-cli only */
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
+      options.init = options.init
+        ? [vuexInit].concat(options.init)
+        : vuexInit;
+      _init.call(this, options);
+    };
   }
 
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
+  /**
+   * Vuex init hook, injected into each instances init hooks list.
+   */
 
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
+  function vuexInit () {
+    var options = this.$options;
+    // store injection
+    if (options.store) {
+      this.$store = typeof options.store === 'function'
+        ? options.store()
+        : options.store;
+    } else if (options.parent && options.parent.$store) {
+      this.$store = options.parent.$store;
     }
   }
+};
 
-  return {
-    exports: scriptExports,
-    options: options
+var devtoolHook =
+  typeof window !== 'undefined' &&
+  window.__VUE_DEVTOOLS_GLOBAL_HOOK__;
+
+function devtoolPlugin (store) {
+  if (!devtoolHook) { return }
+
+  store._devtoolHook = devtoolHook;
+
+  devtoolHook.emit('vuex:init', store);
+
+  devtoolHook.on('vuex:travel-to-state', function (targetState) {
+    store.replaceState(targetState);
+  });
+
+  store.subscribe(function (mutation, state) {
+    devtoolHook.emit('vuex:mutation', mutation, state);
+  });
+}
+
+/**
+ * Get the first item that pass the test
+ * by second argument function
+ *
+ * @param {Array} list
+ * @param {Function} f
+ * @return {*}
+ */
+/**
+ * Deep copy the given object considering circular structure.
+ * This function caches all nested objects and its copies.
+ * If it detects circular structure, use cached copy to avoid infinite loop.
+ *
+ * @param {*} obj
+ * @param {Array<Object>} cache
+ * @return {*}
+ */
+
+
+/**
+ * forEach for object
+ */
+function forEachValue (obj, fn) {
+  Object.keys(obj).forEach(function (key) { return fn(obj[key], key); });
+}
+
+function isObject (obj) {
+  return obj !== null && typeof obj === 'object'
+}
+
+function isPromise (val) {
+  return val && typeof val.then === 'function'
+}
+
+function assert (condition, msg) {
+  if (!condition) { throw new Error(("[vuex] " + msg)) }
+}
+
+var Module = function Module (rawModule, runtime) {
+  this.runtime = runtime;
+  this._children = Object.create(null);
+  this._rawModule = rawModule;
+  var rawState = rawModule.state;
+  this.state = (typeof rawState === 'function' ? rawState() : rawState) || {};
+};
+
+var prototypeAccessors$1 = { namespaced: { configurable: true } };
+
+prototypeAccessors$1.namespaced.get = function () {
+  return !!this._rawModule.namespaced
+};
+
+Module.prototype.addChild = function addChild (key, module) {
+  this._children[key] = module;
+};
+
+Module.prototype.removeChild = function removeChild (key) {
+  delete this._children[key];
+};
+
+Module.prototype.getChild = function getChild (key) {
+  return this._children[key]
+};
+
+Module.prototype.update = function update (rawModule) {
+  this._rawModule.namespaced = rawModule.namespaced;
+  if (rawModule.actions) {
+    this._rawModule.actions = rawModule.actions;
+  }
+  if (rawModule.mutations) {
+    this._rawModule.mutations = rawModule.mutations;
+  }
+  if (rawModule.getters) {
+    this._rawModule.getters = rawModule.getters;
+  }
+};
+
+Module.prototype.forEachChild = function forEachChild (fn) {
+  forEachValue(this._children, fn);
+};
+
+Module.prototype.forEachGetter = function forEachGetter (fn) {
+  if (this._rawModule.getters) {
+    forEachValue(this._rawModule.getters, fn);
+  }
+};
+
+Module.prototype.forEachAction = function forEachAction (fn) {
+  if (this._rawModule.actions) {
+    forEachValue(this._rawModule.actions, fn);
+  }
+};
+
+Module.prototype.forEachMutation = function forEachMutation (fn) {
+  if (this._rawModule.mutations) {
+    forEachValue(this._rawModule.mutations, fn);
+  }
+};
+
+Object.defineProperties( Module.prototype, prototypeAccessors$1 );
+
+var ModuleCollection = function ModuleCollection (rawRootModule) {
+  // register root module (Vuex.Store options)
+  this.register([], rawRootModule, false);
+};
+
+ModuleCollection.prototype.get = function get (path) {
+  return path.reduce(function (module, key) {
+    return module.getChild(key)
+  }, this.root)
+};
+
+ModuleCollection.prototype.getNamespace = function getNamespace (path) {
+  var module = this.root;
+  return path.reduce(function (namespace, key) {
+    module = module.getChild(key);
+    return namespace + (module.namespaced ? key + '/' : '')
+  }, '')
+};
+
+ModuleCollection.prototype.update = function update$1 (rawRootModule) {
+  update([], this.root, rawRootModule);
+};
+
+ModuleCollection.prototype.register = function register (path, rawModule, runtime) {
+    var this$1 = this;
+    if ( runtime === void 0 ) runtime = true;
+
+  if (true) {
+    assertRawModule(path, rawModule);
+  }
+
+  var newModule = new Module(rawModule, runtime);
+  if (path.length === 0) {
+    this.root = newModule;
+  } else {
+    var parent = this.get(path.slice(0, -1));
+    parent.addChild(path[path.length - 1], newModule);
+  }
+
+  // register nested modules
+  if (rawModule.modules) {
+    forEachValue(rawModule.modules, function (rawChildModule, key) {
+      this$1.register(path.concat(key), rawChildModule, runtime);
+    });
+  }
+};
+
+ModuleCollection.prototype.unregister = function unregister (path) {
+  var parent = this.get(path.slice(0, -1));
+  var key = path[path.length - 1];
+  if (!parent.getChild(key).runtime) { return }
+
+  parent.removeChild(key);
+};
+
+function update (path, targetModule, newModule) {
+  if (true) {
+    assertRawModule(path, newModule);
+  }
+
+  // update target module
+  targetModule.update(newModule);
+
+  // update nested modules
+  if (newModule.modules) {
+    for (var key in newModule.modules) {
+      if (!targetModule.getChild(key)) {
+        if (true) {
+          console.warn(
+            "[vuex] trying to add a new module '" + key + "' on hot reloading, " +
+            'manual reload is needed'
+          );
+        }
+        return
+      }
+      update(
+        path.concat(key),
+        targetModule.getChild(key),
+        newModule.modules[key]
+      );
+    }
   }
 }
 
+var functionAssert = {
+  assert: function (value) { return typeof value === 'function'; },
+  expected: 'function'
+};
+
+var objectAssert = {
+  assert: function (value) { return typeof value === 'function' ||
+    (typeof value === 'object' && typeof value.handler === 'function'); },
+  expected: 'function or object with "handler" function'
+};
+
+var assertTypes = {
+  getters: functionAssert,
+  mutations: functionAssert,
+  actions: objectAssert
+};
+
+function assertRawModule (path, rawModule) {
+  Object.keys(assertTypes).forEach(function (key) {
+    if (!rawModule[key]) { return }
+
+    var assertOptions = assertTypes[key];
+
+    forEachValue(rawModule[key], function (value, type) {
+      assert(
+        assertOptions.assert(value),
+        makeAssertionMessage(path, key, type, value, assertOptions.expected)
+      );
+    });
+  });
+}
+
+function makeAssertionMessage (path, key, type, value, expected) {
+  var buf = key + " should be " + expected + " but \"" + key + "." + type + "\"";
+  if (path.length > 0) {
+    buf += " in module \"" + (path.join('.')) + "\"";
+  }
+  buf += " is " + (JSON.stringify(value)) + ".";
+  return buf
+}
+
+var Vue; // bind on install
+
+var Store = function Store (options) {
+  var this$1 = this;
+  if ( options === void 0 ) options = {};
+
+  // Auto install if it is not done yet and `window` has `Vue`.
+  // To allow users to avoid auto-installation in some cases,
+  // this code should be placed here. See #731
+  if (!Vue && typeof window !== 'undefined' && window.Vue) {
+    install(window.Vue);
+  }
+
+  if (true) {
+    assert(Vue, "must call Vue.use(Vuex) before creating a store instance.");
+    assert(typeof Promise !== 'undefined', "vuex requires a Promise polyfill in this browser.");
+    assert(this instanceof Store, "Store must be called with the new operator.");
+  }
+
+  var plugins = options.plugins; if ( plugins === void 0 ) plugins = [];
+  var strict = options.strict; if ( strict === void 0 ) strict = false;
+
+  var state = options.state; if ( state === void 0 ) state = {};
+  if (typeof state === 'function') {
+    state = state() || {};
+  }
+
+  // store internal state
+  this._committing = false;
+  this._actions = Object.create(null);
+  this._actionSubscribers = [];
+  this._mutations = Object.create(null);
+  this._wrappedGetters = Object.create(null);
+  this._modules = new ModuleCollection(options);
+  this._modulesNamespaceMap = Object.create(null);
+  this._subscribers = [];
+  this._watcherVM = new Vue();
+
+  // bind commit and dispatch to self
+  var store = this;
+  var ref = this;
+  var dispatch = ref.dispatch;
+  var commit = ref.commit;
+  this.dispatch = function boundDispatch (type, payload) {
+    return dispatch.call(store, type, payload)
+  };
+  this.commit = function boundCommit (type, payload, options) {
+    return commit.call(store, type, payload, options)
+  };
+
+  // strict mode
+  this.strict = strict;
+
+  // init root module.
+  // this also recursively registers all sub-modules
+  // and collects all module getters inside this._wrappedGetters
+  installModule(this, state, [], this._modules.root);
+
+  // initialize the store vm, which is responsible for the reactivity
+  // (also registers _wrappedGetters as computed properties)
+  resetStoreVM(this, state);
+
+  // apply plugins
+  plugins.forEach(function (plugin) { return plugin(this$1); });
+
+  if (Vue.config.devtools) {
+    devtoolPlugin(this);
+  }
+};
+
+var prototypeAccessors = { state: { configurable: true } };
+
+prototypeAccessors.state.get = function () {
+  return this._vm._data.$$state
+};
+
+prototypeAccessors.state.set = function (v) {
+  if (true) {
+    assert(false, "Use store.replaceState() to explicit replace store state.");
+  }
+};
+
+Store.prototype.commit = function commit (_type, _payload, _options) {
+    var this$1 = this;
+
+  // check object-style commit
+  var ref = unifyObjectStyle(_type, _payload, _options);
+    var type = ref.type;
+    var payload = ref.payload;
+    var options = ref.options;
+
+  var mutation = { type: type, payload: payload };
+  var entry = this._mutations[type];
+  if (!entry) {
+    if (true) {
+      console.error(("[vuex] unknown mutation type: " + type));
+    }
+    return
+  }
+  this._withCommit(function () {
+    entry.forEach(function commitIterator (handler) {
+      handler(payload);
+    });
+  });
+  this._subscribers.forEach(function (sub) { return sub(mutation, this$1.state); });
+
+  if (
+     true &&
+    options && options.silent
+  ) {
+    console.warn(
+      "[vuex] mutation type: " + type + ". Silent option has been removed. " +
+      'Use the filter functionality in the vue-devtools'
+    );
+  }
+};
+
+Store.prototype.dispatch = function dispatch (_type, _payload) {
+    var this$1 = this;
+
+  // check object-style dispatch
+  var ref = unifyObjectStyle(_type, _payload);
+    var type = ref.type;
+    var payload = ref.payload;
+
+  var action = { type: type, payload: payload };
+  var entry = this._actions[type];
+  if (!entry) {
+    if (true) {
+      console.error(("[vuex] unknown action type: " + type));
+    }
+    return
+  }
+
+  this._actionSubscribers.forEach(function (sub) { return sub(action, this$1.state); });
+
+  return entry.length > 1
+    ? Promise.all(entry.map(function (handler) { return handler(payload); }))
+    : entry[0](payload)
+};
+
+Store.prototype.subscribe = function subscribe (fn) {
+  return genericSubscribe(fn, this._subscribers)
+};
+
+Store.prototype.subscribeAction = function subscribeAction (fn) {
+  return genericSubscribe(fn, this._actionSubscribers)
+};
+
+Store.prototype.watch = function watch (getter, cb, options) {
+    var this$1 = this;
+
+  if (true) {
+    assert(typeof getter === 'function', "store.watch only accepts a function.");
+  }
+  return this._watcherVM.$watch(function () { return getter(this$1.state, this$1.getters); }, cb, options)
+};
+
+Store.prototype.replaceState = function replaceState (state) {
+    var this$1 = this;
+
+  this._withCommit(function () {
+    this$1._vm._data.$$state = state;
+  });
+};
+
+Store.prototype.registerModule = function registerModule (path, rawModule, options) {
+    if ( options === void 0 ) options = {};
+
+  if (typeof path === 'string') { path = [path]; }
+
+  if (true) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+    assert(path.length > 0, 'cannot register the root module by using registerModule.');
+  }
+
+  this._modules.register(path, rawModule);
+  installModule(this, this.state, path, this._modules.get(path), options.preserveState);
+  // reset store to update getters...
+  resetStoreVM(this, this.state);
+};
+
+Store.prototype.unregisterModule = function unregisterModule (path) {
+    var this$1 = this;
+
+  if (typeof path === 'string') { path = [path]; }
+
+  if (true) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+  }
+
+  this._modules.unregister(path);
+  this._withCommit(function () {
+    var parentState = getNestedState(this$1.state, path.slice(0, -1));
+    Vue.delete(parentState, path[path.length - 1]);
+  });
+  resetStore(this);
+};
+
+Store.prototype.hotUpdate = function hotUpdate (newOptions) {
+  this._modules.update(newOptions);
+  resetStore(this, true);
+};
+
+Store.prototype._withCommit = function _withCommit (fn) {
+  var committing = this._committing;
+  this._committing = true;
+  fn();
+  this._committing = committing;
+};
+
+Object.defineProperties( Store.prototype, prototypeAccessors );
+
+function genericSubscribe (fn, subs) {
+  if (subs.indexOf(fn) < 0) {
+    subs.push(fn);
+  }
+  return function () {
+    var i = subs.indexOf(fn);
+    if (i > -1) {
+      subs.splice(i, 1);
+    }
+  }
+}
+
+function resetStore (store, hot) {
+  store._actions = Object.create(null);
+  store._mutations = Object.create(null);
+  store._wrappedGetters = Object.create(null);
+  store._modulesNamespaceMap = Object.create(null);
+  var state = store.state;
+  // init all modules
+  installModule(store, state, [], store._modules.root, true);
+  // reset vm
+  resetStoreVM(store, state, hot);
+}
+
+function resetStoreVM (store, state, hot) {
+  var oldVm = store._vm;
+
+  // bind store public getters
+  store.getters = {};
+  var wrappedGetters = store._wrappedGetters;
+  var computed = {};
+  forEachValue(wrappedGetters, function (fn, key) {
+    // use computed to leverage its lazy-caching mechanism
+    computed[key] = function () { return fn(store); };
+    Object.defineProperty(store.getters, key, {
+      get: function () { return store._vm[key]; },
+      enumerable: true // for local getters
+    });
+  });
+
+  // use a Vue instance to store the state tree
+  // suppress warnings just in case the user has added
+  // some funky global mixins
+  var silent = Vue.config.silent;
+  Vue.config.silent = true;
+  store._vm = new Vue({
+    data: {
+      $$state: state
+    },
+    computed: computed
+  });
+  Vue.config.silent = silent;
+
+  // enable strict mode for new vm
+  if (store.strict) {
+    enableStrictMode(store);
+  }
+
+  if (oldVm) {
+    if (hot) {
+      // dispatch changes in all subscribed watchers
+      // to force getter re-evaluation for hot reloading.
+      store._withCommit(function () {
+        oldVm._data.$$state = null;
+      });
+    }
+    Vue.nextTick(function () { return oldVm.$destroy(); });
+  }
+}
+
+function installModule (store, rootState, path, module, hot) {
+  var isRoot = !path.length;
+  var namespace = store._modules.getNamespace(path);
+
+  // register in namespace map
+  if (module.namespaced) {
+    store._modulesNamespaceMap[namespace] = module;
+  }
+
+  // set state
+  if (!isRoot && !hot) {
+    var parentState = getNestedState(rootState, path.slice(0, -1));
+    var moduleName = path[path.length - 1];
+    store._withCommit(function () {
+      Vue.set(parentState, moduleName, module.state);
+    });
+  }
+
+  var local = module.context = makeLocalContext(store, namespace, path);
+
+  module.forEachMutation(function (mutation, key) {
+    var namespacedType = namespace + key;
+    registerMutation(store, namespacedType, mutation, local);
+  });
+
+  module.forEachAction(function (action, key) {
+    var type = action.root ? key : namespace + key;
+    var handler = action.handler || action;
+    registerAction(store, type, handler, local);
+  });
+
+  module.forEachGetter(function (getter, key) {
+    var namespacedType = namespace + key;
+    registerGetter(store, namespacedType, getter, local);
+  });
+
+  module.forEachChild(function (child, key) {
+    installModule(store, rootState, path.concat(key), child, hot);
+  });
+}
+
+/**
+ * make localized dispatch, commit, getters and state
+ * if there is no namespace, just use root ones
+ */
+function makeLocalContext (store, namespace, path) {
+  var noNamespace = namespace === '';
+
+  var local = {
+    dispatch: noNamespace ? store.dispatch : function (_type, _payload, _options) {
+      var args = unifyObjectStyle(_type, _payload, _options);
+      var payload = args.payload;
+      var options = args.options;
+      var type = args.type;
+
+      if (!options || !options.root) {
+        type = namespace + type;
+        if ( true && !store._actions[type]) {
+          console.error(("[vuex] unknown local action type: " + (args.type) + ", global type: " + type));
+          return
+        }
+      }
+
+      return store.dispatch(type, payload)
+    },
+
+    commit: noNamespace ? store.commit : function (_type, _payload, _options) {
+      var args = unifyObjectStyle(_type, _payload, _options);
+      var payload = args.payload;
+      var options = args.options;
+      var type = args.type;
+
+      if (!options || !options.root) {
+        type = namespace + type;
+        if ( true && !store._mutations[type]) {
+          console.error(("[vuex] unknown local mutation type: " + (args.type) + ", global type: " + type));
+          return
+        }
+      }
+
+      store.commit(type, payload, options);
+    }
+  };
+
+  // getters and state object must be gotten lazily
+  // because they will be changed by vm update
+  Object.defineProperties(local, {
+    getters: {
+      get: noNamespace
+        ? function () { return store.getters; }
+        : function () { return makeLocalGetters(store, namespace); }
+    },
+    state: {
+      get: function () { return getNestedState(store.state, path); }
+    }
+  });
+
+  return local
+}
+
+function makeLocalGetters (store, namespace) {
+  var gettersProxy = {};
+
+  var splitPos = namespace.length;
+  Object.keys(store.getters).forEach(function (type) {
+    // skip if the target getter is not match this namespace
+    if (type.slice(0, splitPos) !== namespace) { return }
+
+    // extract local getter type
+    var localType = type.slice(splitPos);
+
+    // Add a port to the getters proxy.
+    // Define as getter property because
+    // we do not want to evaluate the getters in this time.
+    Object.defineProperty(gettersProxy, localType, {
+      get: function () { return store.getters[type]; },
+      enumerable: true
+    });
+  });
+
+  return gettersProxy
+}
+
+function registerMutation (store, type, handler, local) {
+  var entry = store._mutations[type] || (store._mutations[type] = []);
+  entry.push(function wrappedMutationHandler (payload) {
+    handler.call(store, local.state, payload);
+  });
+}
+
+function registerAction (store, type, handler, local) {
+  var entry = store._actions[type] || (store._actions[type] = []);
+  entry.push(function wrappedActionHandler (payload, cb) {
+    var res = handler.call(store, {
+      dispatch: local.dispatch,
+      commit: local.commit,
+      getters: local.getters,
+      state: local.state,
+      rootGetters: store.getters,
+      rootState: store.state
+    }, payload, cb);
+    if (!isPromise(res)) {
+      res = Promise.resolve(res);
+    }
+    if (store._devtoolHook) {
+      return res.catch(function (err) {
+        store._devtoolHook.emit('vuex:error', err);
+        throw err
+      })
+    } else {
+      return res
+    }
+  });
+}
+
+function registerGetter (store, type, rawGetter, local) {
+  if (store._wrappedGetters[type]) {
+    if (true) {
+      console.error(("[vuex] duplicate getter key: " + type));
+    }
+    return
+  }
+  store._wrappedGetters[type] = function wrappedGetter (store) {
+    return rawGetter(
+      local.state, // local state
+      local.getters, // local getters
+      store.state, // root state
+      store.getters // root getters
+    )
+  };
+}
+
+function enableStrictMode (store) {
+  store._vm.$watch(function () { return this._data.$$state }, function () {
+    if (true) {
+      assert(store._committing, "Do not mutate vuex store state outside mutation handlers.");
+    }
+  }, { deep: true, sync: true });
+}
+
+function getNestedState (state, path) {
+  return path.length
+    ? path.reduce(function (state, key) { return state[key]; }, state)
+    : state
+}
+
+function unifyObjectStyle (type, payload, options) {
+  if (isObject(type) && type.type) {
+    options = payload;
+    payload = type;
+    type = type.type;
+  }
+
+  if (true) {
+    assert(typeof type === 'string', ("Expects string as the type, but found " + (typeof type) + "."));
+  }
+
+  return { type: type, payload: payload, options: options }
+}
+
+function install (_Vue) {
+  if (Vue && _Vue === Vue) {
+    if (true) {
+      console.error(
+        '[vuex] already installed. Vue.use(Vuex) should be called only once.'
+      );
+    }
+    return
+  }
+  Vue = _Vue;
+  applyMixin(Vue);
+}
+
+var mapState = normalizeNamespace(function (namespace, states) {
+  var res = {};
+  normalizeMap(states).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedState () {
+      var state = this.$store.state;
+      var getters = this.$store.getters;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapState', namespace);
+        if (!module) {
+          return
+        }
+        state = module.context.state;
+        getters = module.context.getters;
+      }
+      return typeof val === 'function'
+        ? val.call(this, state, getters)
+        : state[val]
+    };
+    // mark vuex getter for devtools
+    res[key].vuex = true;
+  });
+  return res
+});
+
+var mapMutations = normalizeNamespace(function (namespace, mutations) {
+  var res = {};
+  normalizeMap(mutations).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedMutation () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      var commit = this.$store.commit;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapMutations', namespace);
+        if (!module) {
+          return
+        }
+        commit = module.context.commit;
+      }
+      return typeof val === 'function'
+        ? val.apply(this, [commit].concat(args))
+        : commit.apply(this.$store, [val].concat(args))
+    };
+  });
+  return res
+});
+
+var mapGetters = normalizeNamespace(function (namespace, getters) {
+  var res = {};
+  normalizeMap(getters).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    val = namespace + val;
+    res[key] = function mappedGetter () {
+      if (namespace && !getModuleByNamespace(this.$store, 'mapGetters', namespace)) {
+        return
+      }
+      if ( true && !(val in this.$store.getters)) {
+        console.error(("[vuex] unknown getter: " + val));
+        return
+      }
+      return this.$store.getters[val]
+    };
+    // mark vuex getter for devtools
+    res[key].vuex = true;
+  });
+  return res
+});
+
+var mapActions = normalizeNamespace(function (namespace, actions) {
+  var res = {};
+  normalizeMap(actions).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedAction () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      var dispatch = this.$store.dispatch;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapActions', namespace);
+        if (!module) {
+          return
+        }
+        dispatch = module.context.dispatch;
+      }
+      return typeof val === 'function'
+        ? val.apply(this, [dispatch].concat(args))
+        : dispatch.apply(this.$store, [val].concat(args))
+    };
+  });
+  return res
+});
+
+var createNamespacedHelpers = function (namespace) { return ({
+  mapState: mapState.bind(null, namespace),
+  mapGetters: mapGetters.bind(null, namespace),
+  mapMutations: mapMutations.bind(null, namespace),
+  mapActions: mapActions.bind(null, namespace)
+}); };
+
+function normalizeMap (map) {
+  return Array.isArray(map)
+    ? map.map(function (key) { return ({ key: key, val: key }); })
+    : Object.keys(map).map(function (key) { return ({ key: key, val: map[key] }); })
+}
+
+function normalizeNamespace (fn) {
+  return function (namespace, map) {
+    if (typeof namespace !== 'string') {
+      map = namespace;
+      namespace = '';
+    } else if (namespace.charAt(namespace.length - 1) !== '/') {
+      namespace += '/';
+    }
+    return fn(namespace, map)
+  }
+}
+
+function getModuleByNamespace (store, helper, namespace) {
+  var module = store._modulesNamespaceMap[namespace];
+  if ( true && !module) {
+    console.error(("[vuex] module namespace not found in " + helper + "(): " + namespace));
+  }
+  return module
+}
+
+var index_esm = {
+  Store: Store,
+  install: install,
+  version: '3.0.1',
+  mapState: mapState,
+  mapMutations: mapMutations,
+  mapGetters: mapGetters,
+  mapActions: mapActions,
+  createNamespacedHelpers: createNamespacedHelpers
+};
+
+
+/* harmony default export */ __webpack_exports__["default"] = (index_esm);
+
 
 /***/ }),
-/* 20 */,
-/* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
+/* 28 */
+/*!*********************************************************!*\
+  !*** /Users/yuanhy/Desktop/Chat/store/modules/token.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _jwt = _interopRequireDefault(__webpack_require__(/*! ./../../utils/jwt.js */ 12));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+
+{
+  actions: {
+    getNewToken: function getNewToken(_ref,
+
+    code) {var dispatch = _ref.dispatch;
+      qq.login({
+        success: function success(res) {
+          return _vue.default.prototype.$http.request({
+            url: '/token/get',
+            method: 'POST',
+            params: {
+              code: res.code } }).
+
+          then(function (res) {
+            dispatch('getTokenSuccess', res.data);
+          }).catch(function (error) {});
+        } });
+
+
+    },
+
+    getTokenSuccess: function getTokenSuccess(_ref2,
+
+    tokenResponse) {var dispatch = _ref2.dispatch;
+      console.log('get token success');
+      _jwt.default.setToken(tokenResponse.access_token);
+      _jwt.default.setRefreshToken(tokenResponse.refresh_token);
+      dispatch('setAuthUser');
+    },
+
+    cleanToken: function cleanToken(_ref3)
+
+    {var dispatch = _ref3.dispatch;
+      return _vue.default.prototype.$http.request({
+        url: '/token/clean',
+        method: 'POST',
+        params: {
+          code: res.code } }).
+
+      then(function (res) {
+        _jwt.default.removeToken();
+        dispatch('initAuthUser');
+      });
+    } } };exports.default = _default;
+
+/***/ }),
+/* 29 */
+/*!*************************************************************!*\
+  !*** /Users/yuanhy/Desktop/Chat/store/modules/auth-user.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _jwt = _interopRequireDefault(__webpack_require__(/*! ./../../utils/jwt.js */ 12));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+
+{
+  state: {
+    authentication: false,
+    user_id: null,
+    user_name: null,
+    user_sex: null,
+    user_created: null },
+
+
+  mutations: {
+
+    SET_AUTH_USER: function SET_AUTH_USER(state, payload) {
+      for (var item in state) {
+        state[item] = payload.user.data[item];
+      }
+      state.authentication = true;
+    },
+
+    INIT_AUTH_USER: function INIT_AUTH_USER(state) {
+      state.authentication = false;
+      state.user_id = null;
+      state.user_name = null;
+      state.user_sex = null;
+      state.user_created = null;
+    } },
+
+
+  actions: {
+    setAuthUser: function setAuthUser(_ref)
+
+
+    {var commit = _ref.commit,dispatch = _ref.dispatch;
+      return _vue.default.prototype.$http.get('/user').then(function (res) {
+        commit({
+          type: 'SET_AUTH_USER',
+          user: res.data });
+
+      }).catch(function (error) {
+        dispatch('refreshToken');
+      });
+    },
+
+    updateUserInfo: function updateUserInfo(_ref2,
+
+
+    userInfo) {var commit = _ref2.commit,dispatch = _ref2.dispatch;
+      return _vue.default.prototype.$http.request({
+        url: '/users/update',
+        method: 'POST',
+        params: {
+          user_name: userInfo.nickName,
+          user_avatar: userInfo.avatarUrl,
+          user_sex: userInfo.gender } }).
+
+      then(function (res) {
+        commit({
+          type: 'SET_AUTH_USER',
+          user: res.data });
+
+      });
+    },
+
+
+    initAuthUser: function initAuthUser(_ref3)
+
+    {var commit = _ref3.commit;
+      commit({
+        type: 'INIT_AUTH_USER' });
+
+    },
+
+    refreshToken: function refreshToken(_ref4)
+
+
+    {var commit = _ref4.commit,dispatch = _ref4.dispatch;
+      return _vue.default.prototype.$http.request({
+        method: 'POST',
+        url: '/token/refresh',
+        params: {
+          refresh_token: _jwt.default.getRefreshToken() } }).
+
+      then(function (res) {
+        dispatch('getTokenSuccess', res.data);
+      }).catch(function (error) {
+        console.log('clean token');
+        dispatch('cleanToken');
+        dispatch('getNewToken');
+      });
+    } } };exports.default = _default;
+
+/***/ }),
 /* 30 */,
 /* 31 */,
 /* 32 */,
@@ -9734,7 +11283,17 @@ function normalizeComponent (
 /* 38 */,
 /* 39 */,
 /* 40 */,
-/* 41 */
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */
 /*!*****************************************************************************************!*\
   !*** /Users/yuanhy/Desktop/Chat/pages/index/index.css?vue&type=style&index=0&lang=css& ***!
   \*****************************************************************************************/
@@ -9743,13 +11302,13 @@ function normalizeComponent (
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_index_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/mini-css-extract-plugin/dist/loader.js??ref--6-oneOf-1-0!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--6-oneOf-1-1!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/css-loader??ref--6-oneOf-1-2!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--6-oneOf-1-3!./index.css?vue&type=style&index=0&lang=css& */ 42);
+/* harmony import */ var _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_index_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/mini-css-extract-plugin/dist/loader.js??ref--6-oneOf-1-0!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--6-oneOf-1-1!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/css-loader??ref--6-oneOf-1-2!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--6-oneOf-1-3!./index.css?vue&type=style&index=0&lang=css& */ 52);
 /* harmony import */ var _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_index_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_index_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_index_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_index_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
  /* harmony default export */ __webpack_exports__["default"] = (_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_index_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 42 */
+/* 52 */
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--6-oneOf-1-0!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--6-oneOf-1-1!./node_modules/css-loader??ref--6-oneOf-1-2!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-oneOf-1-3!/Users/yuanhy/Desktop/Chat/pages/index/index.css?vue&type=style&index=0&lang=css& ***!
   \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
@@ -9759,20 +11318,20 @@ __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 43 */,
-/* 44 */,
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */,
 /* 53 */,
 /* 54 */,
 /* 55 */,
-/* 56 */
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */
 /*!************************************************************************************************************************!*\
   !*** /Users/yuanhy/Desktop/Chat/components/tabbar/tabbar.css?vue&type=style&index=0&id=3214a57a&scoped=true&lang=css& ***!
   \************************************************************************************************************************/
@@ -9781,13 +11340,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_tabbar_css_vue_type_style_index_0_id_3214a57a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/mini-css-extract-plugin/dist/loader.js??ref--6-oneOf-1-0!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--6-oneOf-1-1!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/css-loader??ref--6-oneOf-1-2!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--6-oneOf-1-3!./tabbar.css?vue&type=style&index=0&id=3214a57a&scoped=true&lang=css& */ 57);
+/* harmony import */ var _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_tabbar_css_vue_type_style_index_0_id_3214a57a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/mini-css-extract-plugin/dist/loader.js??ref--6-oneOf-1-0!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--6-oneOf-1-1!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/css-loader??ref--6-oneOf-1-2!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--6-oneOf-1-3!./tabbar.css?vue&type=style&index=0&id=3214a57a&scoped=true&lang=css& */ 67);
 /* harmony import */ var _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_tabbar_css_vue_type_style_index_0_id_3214a57a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_tabbar_css_vue_type_style_index_0_id_3214a57a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_tabbar_css_vue_type_style_index_0_id_3214a57a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_tabbar_css_vue_type_style_index_0_id_3214a57a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
  /* harmony default export */ __webpack_exports__["default"] = (_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_tabbar_css_vue_type_style_index_0_id_3214a57a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 57 */
+/* 67 */
 /*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--6-oneOf-1-0!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--6-oneOf-1-1!./node_modules/css-loader??ref--6-oneOf-1-2!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-oneOf-1-3!/Users/yuanhy/Desktop/Chat/components/tabbar/tabbar.css?vue&type=style&index=0&id=3214a57a&scoped=true&lang=css& ***!
   \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
@@ -9797,12 +11356,12 @@ __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 58 */,
-/* 59 */,
-/* 60 */,
-/* 61 */,
-/* 62 */,
-/* 63 */
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */
 /*!***************************************************************************************!*\
   !*** /Users/yuanhy/Desktop/Chat/pages/user/user.css?vue&type=style&index=0&lang=css& ***!
   \***************************************************************************************/
@@ -9811,13 +11370,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_user_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/mini-css-extract-plugin/dist/loader.js??ref--6-oneOf-1-0!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--6-oneOf-1-1!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/css-loader??ref--6-oneOf-1-2!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--6-oneOf-1-3!./user.css?vue&type=style&index=0&lang=css& */ 64);
+/* harmony import */ var _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_user_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/mini-css-extract-plugin/dist/loader.js??ref--6-oneOf-1-0!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--6-oneOf-1-1!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/css-loader??ref--6-oneOf-1-2!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--6-oneOf-1-3!./user.css?vue&type=style&index=0&lang=css& */ 74);
 /* harmony import */ var _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_user_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_user_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_user_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_user_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
  /* harmony default export */ __webpack_exports__["default"] = (_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_index_js_ref_6_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_user_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 64 */
+/* 74 */
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--6-oneOf-1-0!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--6-oneOf-1-1!./node_modules/css-loader??ref--6-oneOf-1-2!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-oneOf-1-3!/Users/yuanhy/Desktop/Chat/pages/user/user.css?vue&type=style&index=0&lang=css& ***!
   \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/

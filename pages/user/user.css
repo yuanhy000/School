@@ -123,3 +123,8 @@ page {
 	width: 128upx;
 	height: 128upx;
 }
+
+.avatar-shadow {
+	padding: 1rpx;
+	box-shadow: 2upx 2upx 8upx rgba(26, 26, 26, 0.2);
+}

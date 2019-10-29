@@ -139,4 +139,9 @@ page {
 	width: 128rpx;
 	height: 128rpx;
 }
+.avatar-shadow {
+	padding: 1rpx;
+	-webkit-box-shadow: 2rpx 2rpx 8rpx rgba(26, 26, 26, 0.2);
+	        box-shadow: 2rpx 2rpx 8rpx rgba(26, 26, 26, 0.2);
+}
 
