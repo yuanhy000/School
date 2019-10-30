@@ -103,22 +103,60 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {};
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
+
+
+
+var _qqmapWxJssdk = _interopRequireDefault(__webpack_require__(/*! ../../js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js */ 45));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+var _default = { data: function data() {return {};
+
+  },
+  mounted: function mounted() {
+    var qqmapsdk = new _qqmapWxJssdk.default({
+      key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J' });
+
+    qqmapsdk.search({
+      keyword: '娱乐',
+      success: function success(res) {
+        console.log(res);
+      },
+      fail: function fail(res) {
+        // console.log(res);
+      },
+      complete: function complete(res) {
+        // console.log(res);
+      } });
+
+    qq.getLocation({
+      type: 'gcj02',
+      success: function success(res) {
+        // const latitude = res.latitude
+        // const longitude = res.longitude
+        // const speed = res.speed
+        // const accuracy = res.accuracy
+        qqmapsdk.reverseGeocoder({
+          location: {
+            latitude: res.latitude,
+            longitude: res.longitude },
+
+          success: function success(res) {
+            console.log(res.result);
+          } });
+
+
+
+      } });
 
   },
   methods: {} };exports.default = _default;
 
 /***/ }),
 
-/***/ 55:
+/***/ 56:
 /*!***********************************************************************************!*\
   !*** /Users/yuanhy/Desktop/Chat/main.js?{"page":"pages%2Fdiscovery%2Fdiscovery"} ***!
   \***********************************************************************************/
@@ -135,5 +173,5 @@ createPage(_discovery.default);
 
 /***/ })
 
-},[[55,"common/runtime","common/vendor"]]]);
+},[[56,"common/runtime","common/vendor"]]]);
 //# sourceMappingURL=../../../.sourcemap/mp-qq/pages/discovery/discovery.js.map

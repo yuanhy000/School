@@ -1,24 +1,29 @@
 {
-  "pages": [
-    "pages/index/index",
-    "pages/chat/chat",
-    "pages/contacts/contacts",
-    "pages/discovery/discovery"
-  ],
-  "window": {
-    "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8",
-    "navigationStyle": "custom"
-  },
-  "usingComponents": {
-    "cu-custom": "/colorui/components/cu-custom",
-    "tabbar": "/components/tabbar/tabbar",
-    "chat": "/pages/chat/chat",
-    "contacts": "/pages/contacts/contacts",
-    "discovery": "/pages/discovery/discovery",
-    "user": "/pages/user/user",
-    "authorization": "/pages/authorization/authorization"
-  }
+	"pages": [
+		"pages/index/index",
+		"pages/chat/chat",
+		"pages/contacts/contacts",
+		"pages/discovery/discovery"
+	],
+	"window": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"navigationStyle": "custom"
+	},
+	"permission": {
+		"scope.userLocation": {
+			"desc": "你的位置信息将用于小程序位置接口的效果展示"
+		}
+	},
+	"usingComponents": {
+		"cu-custom": "/colorui/components/cu-custom",
+		"tabbar": "/components/tabbar/tabbar",
+		"chat": "/pages/chat/chat",
+		"contacts": "/pages/contacts/contacts",
+		"discovery": "/pages/discovery/discovery",
+		"user": "/pages/user/user",
+		"authorization": "/pages/authorization/authorization"
+	}
 }

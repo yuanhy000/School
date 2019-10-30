@@ -1,1 +1,0 @@
-<view>discovery-view</view>

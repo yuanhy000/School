@@ -115,13 +115,13 @@ page {
 
 .user-avatar-container {
 	height: 200rpx;
-	padding-top: 30rpx;
 	/* width: 100%; */
 }
 
 .avatar-button {
 	width: 128upx;
 	height: 128upx;
+	border-radius: 50%;
 }
 
 .avatar-shadow {

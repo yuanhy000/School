@@ -132,12 +132,12 @@ page {
 }
 .user-avatar-container {
 	height: 200rpx;
-	padding-top: 30rpx;
 	/* width: 100%; */
 }
 .avatar-button {
 	width: 128rpx;
 	height: 128rpx;
+	border-radius: 50%;
 }
 .avatar-shadow {
 	padding: 1rpx;

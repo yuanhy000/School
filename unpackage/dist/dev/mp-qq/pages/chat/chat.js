@@ -113,7 +113,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 53:
+/***/ 54:
 /*!*************************************************************************!*\
   !*** /Users/yuanhy/Desktop/Chat/main.js?{"page":"pages%2Fchat%2Fchat"} ***!
   \*************************************************************************/
@@ -130,5 +130,5 @@ createPage(_chat.default);
 
 /***/ })
 
-},[[53,"common/runtime","common/vendor"]]]);
+},[[54,"common/runtime","common/vendor"]]]);
 //# sourceMappingURL=../../../.sourcemap/mp-qq/pages/chat/chat.js.map

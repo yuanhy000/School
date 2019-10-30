@@ -25,7 +25,6 @@ export default {
 		getTokenSuccess({
 			dispatch
 		}, tokenResponse) {
-			console.log('get token success')
 			jwtToken.setToken(tokenResponse.access_token);
 			jwtToken.setRefreshToken(tokenResponse.refresh_token);
 			dispatch('setAuthUser');
@@ -44,6 +43,24 @@ export default {
 				jwtToken.removeToken();
 				dispatch('initAuthUser');
 			})
-		}
+		},
+		
+		refreshToken({
+			commit,
+			dispatch
+		}) {
+			return Vue.prototype.$http.request({
+				method: 'POST',
+				url: '/token/refresh',
+				params: {
+					refresh_token: jwtToken.getRefreshToken()
+				},
+			}).then(res => {
+				dispatch('getTokenSuccess', res.data);
+			}).catch(error => {
+				dispatch('cleanToken');
+				dispatch('getNewToken');
+			})
+		},
 	}
 }

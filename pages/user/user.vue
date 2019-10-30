@@ -2,11 +2,12 @@
 	<view>
 		<scroll-view scroll-y class="DrawerPage" :class="modalName=='viewModal'?'show':''">
 			<view class="user-avatar-container">
-				<!-- 		<view class="cu-avatar xl round margin-left" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big25002.jpg);"></view> -->
-				<image-button @bindGetUserInfo="onGetUserInfo" :type="getUserInfo" class="avatar-button ">
-					<image class="cu-avatar xl round avatar-shadow" slot="img" src="./../../static/user/click-me.png">
-					</image>
-				</image-button>
+				<view class="user-avatar-container flex justify-center align-center">
+					<image class="cu-avatar xl round avatar-shadow" v-if="user.authentication" :src="user.user_avatar"> </image>
+					<button @getuserinfo="bindGetUserInfo" class="avatar-button cu-avatar xl avatar-shadow" open-type="getUserInfo"
+					 v-else style="background-image:url(./../../static/user/click-me.png);" plain=true>
+					</button>
+				</view>
 			</view>
 			<view class='padding margin text-center'>
 				<view class='cu-btn bg-gradual-tab lg block shadow radius margin-xl' @tap="showModal" data-target="viewModal">
@@ -44,6 +45,10 @@
 <script>
 	import imageButton from '../../components/image-button/image-button.vue'
 	import Vue from 'vue'
+	import {
+		mapState
+	} from 'vuex';
+
 	export default {
 		data() {
 			return {
@@ -52,16 +57,25 @@
 				modalName: null,
 			};
 		},
+		computed: {
+			...mapState({
+				user: state => state.AuthUser
+			}),
+		},
 		components: {
 			imageButton: imageButton
 		},
+		mounted() {
+			console.log(this.user);
+		},
 		methods: {
-			onGetUserInfo(event) {
-				const userInfo = event.info.userInfo
+			bindGetUserInfo(event) {
+				const userInfo = event.detail.userInfo
 				if (userInfo) {
 					this.userInfo = userInfo;
-					this.authorized = true;
-					this.$store.dispatch('updateUserInfo', userInfo);
+					this.$store.dispatch('updateUserInfo', userInfo).then(res => {
+						this.$store.dispatch('authorized');
+					});
 				}
 			},
 			showModal(e) {

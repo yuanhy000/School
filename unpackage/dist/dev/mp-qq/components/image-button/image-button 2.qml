@@ -1,1 +1,0 @@
-<button class="avatar-button" open-type="getUserInfo" plain="false" data-event-opts="{{[['getuserinfo',[['bindGetUserInfo',['$event']]]]]}}" bindgetuserinfo="__e"><slot name="img"></slot></button>

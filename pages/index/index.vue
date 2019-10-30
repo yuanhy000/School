@@ -16,7 +16,7 @@
 	export default {
 		data() {
 			return {
-				CurrentPage: 'user',
+				CurrentPage: 'discovery',
 			}
 		},
 		onLoad() {
