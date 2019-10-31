@@ -40,7 +40,7 @@
 	export default {
 		data() {
 			return {
-				PageCur: 'user',
+				PageCur: 'discovery',
 				animation: 'scale-up',
 			};
 		},

@@ -147,7 +147,7 @@ var _default =
 {
   data: function data() {
     return {
-      PageCur: 'user',
+      PageCur: 'discovery',
       animation: 'scale-up' };
 
   },

@@ -1,0 +1,1 @@
+<view><cu-custom vue-id="1" bgColor="bg-gradual-tab" isBack="{{true}}" bind:__l="__l" vue-slots="{{['backText','content']}}"><view slot="backText">返回</view><view slot="content">Location</view></cu-custom><map class="map-size" latitude="{{location.user_location.latitude}}" longitude="{{location.user_location.longitude}}" scale="17"></map></view>

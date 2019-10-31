@@ -3642,6 +3642,7 @@ scroll-view.cu-steps .cu-item {
 .shadow[class*="-white"] {
 	box-shadow: 6upx 6upx 8upx rgba(26, 26, 26, 0.2);
 }
+
 .shadow[class*="-tab"] {
 	box-shadow: 6upx 6upx 8upx rgba(26, 26, 26, 0.2);
 }
@@ -3916,5 +3917,10 @@ scroll-view.cu-steps .cu-item {
 .text-white,
 .line-white,
 .lines-white {
+	color: #ffffff;
+}
+
+.bg-gradual-tab {
+	background-image: linear-gradient(60deg, #343A4F, #467385);
 	color: #ffffff;
 }

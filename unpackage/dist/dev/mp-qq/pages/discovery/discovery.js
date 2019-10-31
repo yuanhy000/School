@@ -12,7 +12,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _discovery_vue_vue_type_template_id_15dc0f1c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./discovery.vue?vue&type=template&id=15dc0f1c& */ 41);
 /* harmony import */ var _discovery_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./discovery.vue?vue&type=script&lang=js& */ 43);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _discovery_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _discovery_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 15);
+/* harmony import */ var _discovery_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./discovery.css?vue&type=style&index=0&lang=css& */ 90);
+/* harmony import */ var _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 15);
+
 
 
 
@@ -20,7 +22,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _discovery_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _discovery_vue_vue_type_template_id_15dc0f1c___WEBPACK_IMPORTED_MODULE_0__["render"],
   _discovery_vue_vue_type_template_id_15dc0f1c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -103,56 +105,63 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
 
-var _qqmapWxJssdk = _interopRequireDefault(__webpack_require__(/*! ../../js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js */ 45));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
-//
-//
-//
-var _default = { data: function data() {return {};
 
+
+
+
+
+
+
+var _qqmapWxJssdk = _interopRequireDefault(__webpack_require__(/*! ../../js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js */ 45));
+
+var _vuex = __webpack_require__(/*! vuex */ 27);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
+
+
+
+{
+  data: function data() {
+    return {};
   },
+  computed: _objectSpread({},
+  (0, _vuex.mapState)({
+    location: function location(state) {return state.UserLocation;} })),
+
+
   mounted: function mounted() {
     var qqmapsdk = new _qqmapWxJssdk.default({
       key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J' });
 
-    qqmapsdk.search({
-      keyword: '娱乐',
-      success: function success(res) {
-        console.log(res);
-      },
-      fail: function fail(res) {
-        // console.log(res);
-      },
-      complete: function complete(res) {
-        // console.log(res);
-      } });
 
-    qq.getLocation({
-      type: 'gcj02',
-      success: function success(res) {
-        // const latitude = res.latitude
-        // const longitude = res.longitude
-        // const speed = res.speed
-        // const accuracy = res.accuracy
-        qqmapsdk.reverseGeocoder({
-          location: {
-            latitude: res.latitude,
-            longitude: res.longitude },
+    if (this.location.user_address == null) {
+      this.$store.dispatch('requestUserLocation');
+    }
 
-          success: function success(res) {
-            console.log(res.result);
-          } });
-
-
-
-      } });
+    // qqmapsdk.search({
+    // 	keyword: '娱乐',
+    // 	success: function(res) {
+    // 		console.log(res);
+    // 	},
+    // 	fail: function(res) {
+    // 		// console.log(res);
+    // 	},
+    // 	complete: function(res) {
+    // 		// console.log(res);
+    // 	}
+    // });
 
   },
-  methods: {} };exports.default = _default;
+  methods: {
+    navigateLocation: function navigateLocation() {
+      uni.navigateTo({
+        url: '/pages/location/location' });
+
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-qq/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

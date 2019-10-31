@@ -1,1 +1,1 @@
-<view>discovery-view</view>
+<view><view class="location-button-container"><button data-event-opts="{{[['tap',[['navigateLocation',['$event']]]]]}}" class="cu-btn round bg-white margin-top-sm margin-bottom-sm margin-left-sm shadow-lg" bindtap="__e"><text class="location-icon-size theme-color cuIcon-locationfill"></text><text class=" margin-left-xs  text-grey text-sm">{{''+location.user_address}}</text></button></view></view>

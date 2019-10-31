@@ -1,0 +1,10 @@
+.location-icon-size {
+	font-size: 32rpx;
+}
+
+
+.theme-color {
+	background-image: -webkit-linear-gradient(45deg, #467385, #343A4F);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}

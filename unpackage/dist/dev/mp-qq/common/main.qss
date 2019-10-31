@@ -3862,6 +3862,11 @@ scroll-view.cu-steps .cu-item {
 .lines-white {
 	color: #ffffff;
 }
+.bg-gradual-tab {
+	background-image: -o-linear-gradient(30deg, #343A4F, #467385);
+	background-image: linear-gradient(60deg, #343A4F, #467385);
+	color: #ffffff;
+}
 @-webkit-keyframes cuIcon-spin {
 0% {
 		-webkit-transform: rotate(0);
@@ -5107,4 +5112,13 @@ scroll-view.cu-steps .cu-item {
 }
 
 /*每个页面公共css */
+
+.location-icon-size {
+	font-size: 32rpx;
+}
+.theme-color {
+	background-image: -webkit-linear-gradient(45deg, #467385, #343A4F);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
 
