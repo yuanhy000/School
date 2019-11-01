@@ -6,6 +6,7 @@
 		</cu-custom>
 		<chat v-if="CurrentPage=='chat'"></chat>
 		<contacts v-if="CurrentPage=='contacts'"></contacts>
+		<addition v-if="CurrentPage=='addition'"></addition>
 		<discovery v-if="CurrentPage=='discovery'"></discovery>
 		<user v-if="CurrentPage=='user'"></user>
 		<tabbar class="tabbar-position" @navigate="NavChange"></tabbar>
@@ -16,7 +17,7 @@
 	export default {
 		data() {
 			return {
-				CurrentPage: 'discovery',
+				CurrentPage: 'addition',
 			}
 		},
 		onLoad() {

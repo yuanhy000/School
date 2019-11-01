@@ -25,6 +25,16 @@
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
+		}, {
+			"path": "pages/addition/addition",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		},{
+			"path": "pages/addition-article/addition-article",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
 		}
 	],
 	"permission": {
@@ -37,7 +47,10 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8",
-		"navigationStyle": "custom"
+		"navigationStyle": "custom",
+		"usingComponents": {
+			// "van-transition": "/vantui/components/vant/transition/index"
+		}
 	}
 	// "tabBar": {
 	// 	"selectedColor": "#8EA7C7",

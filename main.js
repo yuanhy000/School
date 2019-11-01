@@ -13,6 +13,9 @@ Vue.component('cu-custom', cuCustom)
 import tabbar from './components/tabbar/tabbar.vue'
 Vue.component('tabbar', tabbar)
 
+import addition from './pages/addition/addition.vue'
+Vue.component('addition', addition)
+
 import chat from './pages/chat/chat.vue'
 Vue.component('chat', chat)
 
@@ -27,6 +30,9 @@ Vue.component('user', user)
 
 import authorization from './pages/authorization/authorization.vue'
 Vue.component('authorization', authorization)
+
+// import vantTransition from './vantui/components/vant/transition/index'
+// Vue.component('vantTransition', vantTransition)
 
 Vue.config.productionTip = false
 

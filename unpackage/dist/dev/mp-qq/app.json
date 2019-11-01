@@ -4,7 +4,9 @@
     "pages/chat/chat",
     "pages/contacts/contacts",
     "pages/discovery/discovery",
-    "pages/location/location"
+    "pages/location/location",
+    "pages/addition/addition",
+    "pages/addition-article/addition-article"
   ],
   "window": {
     "navigationBarTextStyle": "white",
@@ -16,6 +18,7 @@
   "usingComponents": {
     "cu-custom": "/colorui/components/cu-custom",
     "tabbar": "/components/tabbar/tabbar",
+    "addition": "/pages/addition/addition",
     "chat": "/pages/chat/chat",
     "contacts": "/pages/contacts/contacts",
     "discovery": "/pages/discovery/discovery",

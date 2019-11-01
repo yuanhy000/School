@@ -1,0 +1,11 @@
+.border-radius {
+	border-radius: 20rpx;
+}
+.textarea-font-size {
+	font-size: 24rpx !important;
+	height: 6rem !important;
+}
+.theme-border {
+	border: 1rpx solid #3F596D;
+}
+

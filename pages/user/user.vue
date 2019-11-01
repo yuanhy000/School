@@ -66,7 +66,6 @@
 			imageButton: imageButton
 		},
 		mounted() {
-			console.log(this.user);
 		},
 		methods: {
 			bindGetUserInfo(event) {
