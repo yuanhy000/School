@@ -32,15 +32,17 @@ var _chat = _interopRequireDefault(__webpack_require__(/*! ./pages/chat/chat.vue
 var _contacts = _interopRequireDefault(__webpack_require__(/*! ./pages/contacts/contacts.vue */ 44));
 
 
-var _discovery = _interopRequireDefault(__webpack_require__(/*! ./pages/discovery/discovery.vue */ 49));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}_vue.default.prototype.$http = (0, _index.default)();_vue.default.prototype.$store = _index2.default;var cuCustom = function cuCustom() {return __webpack_require__.e(/*! import() | colorui/components/cu-custom */ "colorui/components/cu-custom").then(__webpack_require__.bind(null, /*! ./colorui/components/cu-custom.vue */ 85));};_vue.default.component('cu-custom', cuCustom);var tabbar = function tabbar() {return Promise.all(/*! import() | components/tabbar/tabbar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/tabbar/tabbar")]).then(__webpack_require__.bind(null, /*! ./components/tabbar/tabbar.vue */ 90));};_vue.default.component('tabbar', tabbar);_vue.default.component('addition', _addition.default);_vue.default.component('chat', _chat.default);_vue.default.component('contacts', _contacts.default);
-_vue.default.component('discovery', _discovery.default);var user = function user() {return Promise.all(/*! import() | pages/user/user */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/user/user")]).then(__webpack_require__.bind(null, /*! ./pages/user/user.vue */ 97));};
+var _discovery = _interopRequireDefault(__webpack_require__(/*! ./pages/discovery/discovery.vue */ 49));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}_vue.default.prototype.$http = (0, _index.default)();_vue.default.prototype.$store = _index2.default;var cuCustom = function cuCustom() {return __webpack_require__.e(/*! import() | colorui/components/cu-custom */ "colorui/components/cu-custom").then(__webpack_require__.bind(null, /*! ./colorui/components/cu-custom.vue */ 83));};_vue.default.component('cu-custom', cuCustom);var tabbar = function tabbar() {return Promise.all(/*! import() | components/tabbar/tabbar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/tabbar/tabbar")]).then(__webpack_require__.bind(null, /*! ./components/tabbar/tabbar.vue */ 88));};_vue.default.component('tabbar', tabbar);_vue.default.component('addition', _addition.default);_vue.default.component('chat', _chat.default);_vue.default.component('contacts', _contacts.default);
+_vue.default.component('discovery', _discovery.default);var user = function user() {return Promise.all(/*! import() | pages/user/user */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/user/user")]).then(__webpack_require__.bind(null, /*! ./pages/user/user.vue */ 95));};
 
 
-_vue.default.component('user', user);var authorization = function authorization() {return __webpack_require__.e(/*! import() | pages/authorization/authorization */ "pages/authorization/authorization").then(__webpack_require__.bind(null, /*! ./pages/authorization/authorization.vue */ 104));};
+_vue.default.component('user', user);var authorization = function authorization() {return __webpack_require__.e(/*! import() | pages/authorization/authorization */ "pages/authorization/authorization").then(__webpack_require__.bind(null, /*! ./pages/authorization/authorization.vue */ 102));};
 
 
-_vue.default.component('authorization', authorization);
+_vue.default.component('authorization', authorization);var additionArticle = function additionArticle() {return Promise.all(/*! import() | components/addition-article/addition-article */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/addition-article/addition-article")]).then(__webpack_require__.bind(null, /*! ./components/addition-article/addition-article.vue */ 107));};
 
+
+_vue.default.component('additionArticle', additionArticle);
 // import vantTransition from './vantui/components/vant/transition/index'
 // Vue.component('vantTransition', vantTransition)
 
@@ -710,7 +712,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var _qqmapWxJssdk = _interopRequireDefault(__webpack_require__(/*! ../../js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js */ 31));
 var _amapWx = _interopRequireDefault(__webpack_require__(/*! ../../js_sdk/amap-wx.js */ 54));
 var _vuex = __webpack_require__(/*! vuex */ 27);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
@@ -727,8 +728,16 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _interopRequireDefault(
   },
   computed: _objectSpread({},
   (0, _vuex.mapState)({
-    location: function location(state) {return state.UserLocation;} })),
+    location: function location(state) {return state.UserLocation;} }), {
 
+    userLocation: function userLocation() {
+      if (this.location.user_address == null) {
+        console.log('123123');
+        return "定位中...";
+      } else {
+        return this.location.user_address_component.district + this.location.user_address_component.street;
+      }
+    } }),
 
   mounted: function mounted() {
     // let myAmapFun = new amapFile.AMapWX({

@@ -31,6 +31,8 @@ Vue.component('user', user)
 import authorization from './pages/authorization/authorization.vue'
 Vue.component('authorization', authorization)
 
+import additionArticle from './components/addition-article/addition-article.vue'
+Vue.component('additionArticle', additionArticle)
 // import vantTransition from './vantui/components/vant/transition/index'
 // Vue.component('vantTransition', vantTransition)
 

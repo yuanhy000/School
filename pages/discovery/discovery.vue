@@ -1,10 +1,9 @@
 <template>
 	<view>
 		<view class="cu-bar search bg-white flex justify-center align-center">
-			<button class="cu-btn bg-f5-white round  shadow  margin-left" @click="navigateLocation"
-			 v-if="display_location">
+			<button class="cu-btn bg-f5-white round  shadow  margin-left" @click="navigateLocation" v-if="display_location">
 				<text class="location-icon-size text-theme-color cuIcon-locationfill"></text>
-				<text class=" margin-left-xs location-text-color text-sm"> {{location.user_address_component.district}}{{location.user_address_component.street}}</text>
+				<text class=" margin-left-xs location-text-color text-sm"> {{userLocation}}</text>
 			</button>
 			<view class="search-form round shadow bg-white">
 				<text class="cuIcon-search"></text>
@@ -42,6 +41,14 @@
 			...mapState({
 				location: state => state.UserLocation
 			}),
+			userLocation: function() {
+				if (this.location.user_address == null) {
+					console.log('123123')
+					return "定位中...";
+				} else {
+					return this.location.user_address_component.district + this.location.user_address_component.street
+				}
+			},
 		},
 		mounted() {
 			// let myAmapFun = new amapFile.AMapWX({

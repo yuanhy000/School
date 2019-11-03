@@ -130,7 +130,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var _qqmapWxJssdk = _interopRequireDefault(__webpack_require__(/*! ../../js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js */ 31));
 var _amapWx = _interopRequireDefault(__webpack_require__(/*! ../../js_sdk/amap-wx.js */ 54));
 var _vuex = __webpack_require__(/*! vuex */ 27);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
@@ -147,8 +146,16 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _interopRequireDefault(
   },
   computed: _objectSpread({},
   (0, _vuex.mapState)({
-    location: function location(state) {return state.UserLocation;} })),
+    location: function location(state) {return state.UserLocation;} }), {
 
+    userLocation: function userLocation() {
+      if (this.location.user_address == null) {
+        console.log('123123');
+        return "定位中...";
+      } else {
+        return this.location.user_address_component.district + this.location.user_address_component.street;
+      }
+    } }),
 
   mounted: function mounted() {
     // let myAmapFun = new amapFile.AMapWX({

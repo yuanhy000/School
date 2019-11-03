@@ -23,6 +23,7 @@
     "contacts": "/pages/contacts/contacts",
     "discovery": "/pages/discovery/discovery",
     "user": "/pages/user/user",
-    "authorization": "/pages/authorization/authorization"
+    "authorization": "/pages/authorization/authorization",
+    "addition-article": "/components/addition-article/addition-article"
   }
 }

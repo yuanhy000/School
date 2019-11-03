@@ -7,6 +7,8 @@
 		<map id="myMap" class="map-size" :latitude="location.user_location.latitude" :longitude="location.user_location.longitude"
 		 scale="17" subkey="QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J">
 		</map>
+		<!-- 		<iframe id="mapPage" width="100%" height="600px" frameborder=0 src="">
+		</iframe> -->
 		<!-- <map id="myMap" class="map-size" latitude="29.52168" longitude="106.56256"
 		 scale="17" subkey="QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J">
 		</map> -->
@@ -33,9 +35,10 @@
 			let qqmapsdk = new QQMapWX({
 				key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J'
 			});
-			
-			this.mapCtx = qq.createMapContext('myMap');//获取地图对象同canvas相似，获取后才能调用相应的方法
-			console.log(this.mapCtx)
+
+			this.mapCtx = qq.createMapContext('myMap'); //获取地图对象同canvas相似，获取后才能调用相应的方法
+			// console.log(this.mapCtx)
+
 		}
 	}
 </script>

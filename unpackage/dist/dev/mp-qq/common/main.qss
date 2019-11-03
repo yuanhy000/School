@@ -424,6 +424,19 @@ radio.white.checked .uni-radio-input {
 	border-color: #ffffff !important;
 	color: #333333 !important;
 }
+switch.theme[checked] .wx-switch-input,
+checkbox.theme[checked] .wx-checkbox-input,
+radio.theme[checked] .wx-radio-input,
+switch.theme.checked .uni-switch-input,
+checkbox.theme.checked .uni-checkbox-input,
+radio.theme.checked .uni-radio-input {
+	background-image: -o-linear-gradient(45deg, #467385, #343A4F) !important;
+	background-image: linear-gradient(45deg, #467385, #343A4F) !important;
+	color: #ffffff !important;
+	width: 26px !important;
+	height: 26px !important;
+	border: none;
+}
 
 /* ==================
           边框
@@ -3866,6 +3879,16 @@ scroll-view.cu-steps .cu-item {
 	background-image: -o-linear-gradient(30deg, #343A4F, #467385);
 	background-image: linear-gradient(60deg, #343A4F, #467385);
 	color: #ffffff;
+}
+
+/* checkbox.bg-theme-green-black.checked {
+	background-image: linear-gradient(45deg, #467385, #343A4F) !important;
+	color: #ffffff !important;
+} */
+.custom{
+	position: fixed;
+	top: 0;
+	z-index: 999999;
 }
 @-webkit-keyframes cuIcon-spin {
 0% {
