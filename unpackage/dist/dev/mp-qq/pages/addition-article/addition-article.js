@@ -29,7 +29,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _addition_article_vue_vue_type_template_id_0ce71270___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./addition-article.vue?vue&type=template&id=0ce71270& */ 79);
 /* harmony import */ var _addition_article_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./addition-article.vue?vue&type=script&lang=js& */ 81);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _addition_article_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _addition_article_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _addition_article_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./addition-article.css?vue&type=style&index=0&lang=css& */ 134);
+/* harmony import */ var _addition_article_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./addition-article.css?vue&type=style&index=0&lang=css& */ 90);
 /* harmony import */ var _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 15);
 
 
@@ -169,7 +169,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _uploadFile = __webpack_require__(/*! ../../utils/uploadFile.js */ 112);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+var _uploadFile = __webpack_require__(/*! ../../utils/uploadFile.js */ 83);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
 //
@@ -214,7 +214,7 @@ var _uploadFile = __webpack_require__(/*! ../../utils/uploadFile.js */ 112);func
 //
 //
 //
-var util = __webpack_require__(/*! ../../utils/util.js */ 118);var _default = { data: function data() {return { title: '', content: '', isInput: false, selectImageList: [], imageUrlList: [], isDisplayLocation: false, isAnonymity: false };}, methods: { Submit: function Submit() {console.log(this.imageUrlList);_vue.default.prototype.$http.request({ url: '/articles/create', method: 'POST', params: { article_title: this.title, article_content: this.content, article_image: this.imageUrlList, is_display_location: this.isDisplayLocation, is_anonymity: this.isAnonymity } }).then(function (res) {console.log(res.data);});}, CheckboxOnclick: function CheckboxOnclick() {this.isDisplayLocation = !this.isDisplayLocation;}, ChooseImage: function ChooseImage() {var _this = this;uni.chooseImage({ count: 9, //默认9
+var util = __webpack_require__(/*! ../../utils/util.js */ 89);var _default = { data: function data() {return { title: '', content: '', isInput: false, selectImageList: [], imageUrlList: [], isDisplayLocation: false, isAnonymity: false };}, methods: { Submit: function Submit() {console.log(this.imageUrlList);_vue.default.prototype.$http.request({ url: '/articles/create', method: 'POST', params: { article_title: this.title, article_content: this.content, article_image: this.imageUrlList, is_display_location: this.isDisplayLocation, is_anonymity: this.isAnonymity } }).then(function (res) {console.log(res.data);});}, CheckboxOnclick: function CheckboxOnclick() {this.isDisplayLocation = !this.isDisplayLocation;}, ChooseImage: function ChooseImage() {var _this = this;uni.chooseImage({ count: 9, //默认9
         sizeType: ['original', 'compressed'], sourceType: ['album'], success: function success(res) {if (_this.selectImageList.length != 0) {_this.selectImageList = _this.selectImageList.concat(res.tempFilePaths);} else {
             _this.selectImageList = res.tempFilePaths;
           }

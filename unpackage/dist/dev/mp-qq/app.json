@@ -24,6 +24,6 @@
     "discovery": "/pages/discovery/discovery",
     "user": "/pages/user/user",
     "authorization": "/pages/authorization/authorization",
-    "addition-article": "/components/addition-article/addition-article"
+    "search": "/pages/search/search"
   }
 }

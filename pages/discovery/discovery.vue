@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="cu-bar search bg-white flex justify-center align-center">
+				<view class="cu-bar search bg-white flex justify-center align-center">
 			<button class="cu-btn bg-f5-white round  shadow  margin-left" @click="navigateLocation" v-if="display_location">
 				<text class="location-icon-size text-theme-color cuIcon-locationfill"></text>
 				<text class=" margin-left-xs location-text-color text-sm"> {{userLocation}}</text>
@@ -11,7 +11,8 @@
 				 confirm-type="search"></input>
 			</view>
 		</view>
-		<scroll-view scroll-x class="bg-white nav">
+		<!-- <search :showWant="true"></search> -->
+			<scroll-view scroll-x class="bg-white nav" >
 			<view class="flex text-center">
 				<view class="cu-item flex-sub" :class="index==TabCur?'text-theme-color cur':''" v-for="(item,index) in menu_list"
 				 :key="index" @tap="tabSelect" :data-id="index">
@@ -65,7 +66,7 @@
 			// 	}
 			// })
 			let qqmapsdk = new QQMapWX({
-				key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J'
+				key: 'XSWBZ-MHZ3K-U76JO-AU4NT-WKNYK-B2BA4'
 			});
 
 			if (this.location.user_address == null) {

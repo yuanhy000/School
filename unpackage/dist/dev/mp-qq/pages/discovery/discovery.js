@@ -130,6 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _qqmapWxJssdk = _interopRequireDefault(__webpack_require__(/*! ../../js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js */ 31));
 var _amapWx = _interopRequireDefault(__webpack_require__(/*! ../../js_sdk/amap-wx.js */ 54));
 var _vuex = __webpack_require__(/*! vuex */ 27);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
@@ -172,7 +173,7 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _interopRequireDefault(
     // 	}
     // })
     var qqmapsdk = new _qqmapWxJssdk.default({
-      key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J' });
+      key: 'XSWBZ-MHZ3K-U76JO-AU4NT-WKNYK-B2BA4' });
 
 
     if (this.location.user_address == null) {

@@ -126,5 +126,5 @@ page {
 
 .avatar-shadow {
 	padding: 1rpx;
-	box-shadow: 2upx 2upx 8upx rgba(26, 26, 26, 0.2);
+	box-shadow: 4upx 4upx 2upx rgba(26, 26, 26, 0.2);
 }

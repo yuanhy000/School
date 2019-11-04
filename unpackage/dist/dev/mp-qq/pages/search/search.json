@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "zy-search": "/components/zy-search/zy-search"
+  },
+  "component": true
+}

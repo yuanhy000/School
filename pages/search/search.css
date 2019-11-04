@@ -1,0 +1,36 @@
+.search-container {
+	height: 1200px;
+	overflow: hidden;
+}
+
+.search-tab-width {
+	width: 100%;
+}
+
+.search-txet-size {
+	font-size: 26rpx;
+}
+
+.search-icon-size {
+	font-size: 30rpx;
+}
+
+.list {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 0 30rpx;
+}
+
+.list-item {
+	/* width: 50%; */
+	box-sizing: border-box;
+	text-align: center;
+	font-size: 24rpx;
+	padding: 20upx 40upx;
+	border-top: 2upx solid #FFF;
+	border-left: 2upx solid #FFF;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	background-color: #F7F7F7;
+}

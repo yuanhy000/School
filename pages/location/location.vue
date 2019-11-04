@@ -5,7 +5,7 @@
 			<block slot="content">Location</block>
 		</cu-custom>
 		<map id="myMap" class="map-size" :latitude="location.user_location.latitude" :longitude="location.user_location.longitude"
-		 scale="17" subkey="QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J">
+		 scale="17">
 		</map>
 		<!-- 		<iframe id="mapPage" width="100%" height="600px" frameborder=0 src="">
 		</iframe> -->
@@ -33,11 +33,22 @@
 		},
 		mounted() {
 			let qqmapsdk = new QQMapWX({
-				key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J'
+				key: 'XSWBZ-MHZ3K-U76JO-AU4NT-WKNYK-B2BA4'
 			});
 
 			this.mapCtx = qq.createMapContext('myMap'); //获取地图对象同canvas相似，获取后才能调用相应的方法
-			// console.log(this.mapCtx)
+			console.log(qqmapsdk)
+			// const key = 'XSWBZ-MHZ3K-U76JO-AU4NT-WKNYK-B2BA4'; //使用在腾讯位置服务申请的key
+			// const referer = 'test'; //调用插件的app的名称
+			// const location = JSON.stringify({
+			// 	latitude: 39.89631551,
+			// 	longitude: 116.323459711
+			// });
+			// const category = '生活服务,娱乐休闲';
+
+			// qq.navigateTo({
+			// 	url: `plugin://chooseLocation/index?key=${key}&referer=${referer}&location=${location}&category=${category}`
+			// });
 
 		}
 	}
