@@ -5,6 +5,7 @@
 	export default {
 		onLaunch: function() {
 			this.setCustomBarHeight();
+			this.$store.dispatch('requestUserLocation');
 		},
 		onShow: function() {
 			if (jwtToken.getToken()) {

@@ -7,7 +7,7 @@
 				 @confirm="searchStart"></input>
 			</view>
 			<button class="cu-btn round bg-theme-green-black text-white margin-right-sm search-txet-size" role="button"
-			 aria-disabled="false">取消</button>
+			 aria-disabled="false">搜索</button>
 		</view>
 		<view class="cu-bar search">
 			<view class="flex justify-between align-center search-tab-width ">
@@ -35,6 +35,13 @@
 
 <script>
 	import zySearch from '../../components/zy-search/zy-search.vue'
+	import QQMapWX from '../../js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js';
+	import {
+		mapState
+	} from 'vuex';
+	const qqmapsdk = new QQMapWX({
+		key: 'XSWBZ-MHZ3K-U76JO-AU4NT-WKNYK-B2BA4'
+	});
 	export default {
 		components: {
 			zySearch
@@ -47,15 +54,15 @@
 			}
 		},
 		computed: {
-			// historyList: {
-			// 	get() {
-			// 		return;
-			// 	}
-			// }
+			...mapState({
+				location: state => state.UserLocation
+			}),
+		},
+		mounted() {
+
 		},
 		methods: {
 			searchStart() {
-				let _this = this;
 				if (this.searchText == '') {
 					uni.showToast({
 						title: '请输入关键字',
@@ -64,49 +71,62 @@
 					});
 					return false;
 				} else {
-					// this.hList.push(_this.searchText);
-					// uni.setStorage({
-					// 	key: 'search_cache',
-					// 	data: _this.hList
-					// });
-					uni.getStorage({
-						key: 'search_cache',
-						success(res) {
-							let list = res.data;
-							console.log(list);
-							if (list.length > 10) {
-								for (let item of list) {
-									if (item == _this.searchText) {
-										return false;
-									}
-								}
-								list.pop();
-								list.unshift(_this.searchText);
-							} else {
-								for (let item of list) {
-									if (item == _this.searchText) {
-										return false;
-									}
-								}
-								list.unshift(_this.searchText);
-							}
-							_this.historyList = list;
-							uni.setStorage({
-								key: 'search_cache',
-								data: _this.historyList
-							});
+					this.setSerachStorage();
+					console.log(this.location)
+					qqmapsdk.search({
+						keyword: this.searchText,
+						location: {
+							latitude: this.location.user_location.latitude,
+							longitude: this.location.user_location.longitude
 						},
-						fail() {
-							_this.historyList = [];
-							_this.historyList.push(_this.searchText);
-							uni.setStorage({
-								key: 'search_cache',
-								data: _this.historyList
-							});
+						success: function(res) {
+							console.log(res);
+						},
+						fail: function(res) {
+							console.log(res);
 						}
-					})
+					});
 				}
 			},
+			setSerachStorage() {
+				let _this = this;
+				uni.getStorage({
+					key: 'search_cache',
+					success(res) {
+						let list = res.data;
+						console.log(list);
+						if (list.length > 9) {
+							for (let item of list) {
+								if (item == _this.searchText) {
+									return false;
+								}
+							}
+							list.pop();
+							list.unshift(_this.searchText);
+						} else {
+							for (let item of list) {
+								if (item == _this.searchText) {
+									return false;
+								}
+							}
+							list.unshift(_this.searchText);
+						}
+						_this.historyList = list;
+						uni.setStorage({
+							key: 'search_cache',
+							data: _this.historyList
+						});
+					},
+					fail() {
+						_this.historyList = [];
+						_this.historyList.push(_this.searchText);
+						uni.setStorage({
+							key: 'search_cache',
+							data: _this.historyList
+						});
+					}
+				})
+			}
 		},
 	}
 </script>

@@ -11,7 +11,7 @@
 			<view class="cu-form-group margin-left margin-top margin-right margin-bottom border-radius bg-white shadow">
 				<textarea class="textarea-font-size" placeholder="分享新鲜事..." v-model="content" />
 				</view>
-			<view class="cu-form-group margin-left margin-right margin-top margin-bottom border-rad ius bg-white shadow">
+			<view class="cu-form-group margin-left margin-right margin-top margin-bottom border-rad ius bg-white border-radius shadow">
 				<view class="grid col-4 grid-square flex-sub  margin-top">
 					<view class="bg-img" v-for="(item,index) in selectImageList" :key="index" @tap="ViewImage" :data-url="selectImageList[index]">
 						<image :src="selectImageList[index]" mode="aspectFill"></image>

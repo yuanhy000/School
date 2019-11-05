@@ -17,8 +17,8 @@
 <script>
 	export default {
 		data() {
-			return { 
-				CurrentPage: 'chat',
+			return {
+				CurrentPage: 'discovery',
 			}
 		},
 		onLoad() {
