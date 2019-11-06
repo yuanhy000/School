@@ -90,22 +90,6 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var l0 = _vm.__map(_vm.inputTips, function(item, index) {
-    var m0 = _vm.highLight(item.title, _vm.searchText)
-    return {
-      $orig: _vm.__get_orig(item),
-      m0: m0
-    }
-  })
-
-  _vm.$mp.data = Object.assign(
-    {},
-    {
-      $root: {
-        l0: l0
-      }
-    }
-  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -175,21 +159,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 var _qqmapWxJssdk = _interopRequireDefault(__webpack_require__(/*! ../../js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js */ 31));
-var _highLight2 = __webpack_require__(/*! ../../utils/high-light.js */ 155);
-
-
 var _vuex = __webpack_require__(/*! vuex */ 27);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var zySearch = function zySearch() {return __webpack_require__.e(/*! import() | components/zy-search/zy-search */ "components/zy-search/zy-search").then(__webpack_require__.bind(null, /*! ../../components/zy-search/zy-search.vue */ 132));};
 
 
@@ -204,25 +174,9 @@ var qqmapsdk = new _qqmapWxJssdk.default({
     return {
       searchText: '',
       historyList: uni.getStorageSync('search_cache'),
-      wantList: ['美食', '住宿', '休闲', '娱乐', '美食', '住宿', '休闲'],
-      inputTimeStamp: 0,
-      inputTips: [] };
+      wantList: ['美食', '住宿', '休闲', '娱乐', '美食', '住宿', '休闲'] };
 
   },
-  watch: {
-    searchText: function searchText() {
-      // this.$store.dispatch('getInputTips', {
-      // 	latitude: this.location.user_location.latitude,
-      // 	longitude: this.location.user_location.longitude,
-      // 	keywords: this.searchText,
-      // 	datatype: 'poi',
-      // }).then(res => {
-      // 	console.log(res)
-      // })
-
-
-    } },
-
   computed: _objectSpread({},
   (0, _vuex.mapState)({
     location: function location(state) {return state.UserLocation;} })),
@@ -232,35 +186,6 @@ var qqmapsdk = new _qqmapWxJssdk.default({
 
   },
   methods: {
-    searchTips: function searchTips(event) {var _this2 = this;
-      this.inputTimeStamp = event.timeStamp;
-      setTimeout(function () {
-        //1s后比较二者是否还相同（因为只要还有事件触发，inputTimeStamp就会被改写，不再是当前事件函数的时间戳）
-        if (_this2.inputTimeStamp == event.timeStamp) {
-          _this2.requestTips();
-        }
-      }, 1000);
-    },
-    requestTips: function requestTips() {var _this3 = this;
-      this.inputTips = [];
-      qqmapsdk.getSuggestion({
-        keyword: this.searchText,
-        region: this.location.user_address_component.city,
-        success: function success(res) {
-          for (var i = 0; i < res.data.length; i++) {
-            _this3.inputTips.push({
-              title: res.data[i].title,
-              id: res.data[i].id,
-              addr: res.data[i].address,
-              city: res.data[i].city,
-              district: res.data[i].district,
-              latitude: res.data[i].location.lat,
-              longitude: res.data[i].location.lng });
-
-          }
-        } });
-
-    },
     searchStart: function searchStart() {
       if (this.searchText == '') {
         uni.showToast({
@@ -325,9 +250,6 @@ var qqmapsdk = new _qqmapWxJssdk.default({
 
         } });
 
-    },
-    highLight: function highLight(item, _highLight) {
-      return (0, _highLight2.highLightMsg)(item, _highLight);
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-qq/dist/index.js */ 1)["default"]))
 

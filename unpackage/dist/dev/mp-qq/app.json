@@ -6,7 +6,8 @@
     "pages/discovery/discovery",
     "pages/location/location",
     "pages/addition/addition",
-    "pages/addition-article/addition-article"
+    "pages/addition-article/addition-article",
+    "pages/search/search"
   ],
   "window": {
     "navigationBarTextStyle": "white",
@@ -24,6 +25,7 @@
     "discovery": "/pages/discovery/discovery",
     "user": "/pages/user/user",
     "authorization": "/pages/authorization/authorization",
-    "search": "/pages/search/search"
+    "search": "/pages/search/search",
+    "loading": "/components/loading/loading"
   }
 }

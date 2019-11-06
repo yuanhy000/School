@@ -34,6 +34,9 @@ Vue.component('authorization', authorization)
 import search from './pages/search/search.vue'
 Vue.component('search', search)
 
+import loading from './components/loading/loading.vue'
+Vue.component('loading', loading)
+
 
 // import vantTransition from './vantui/components/vant/transition/index'
 // Vue.component('vantTransition', vantTransition)

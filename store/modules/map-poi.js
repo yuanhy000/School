@@ -15,5 +15,11 @@ export default {
 				'&extensions=' + data.extensions + '&sortrule=' + data.sortrule)
 		},
 
+		getInputTips({
+			dispatch
+		}, data) {
+			return Vue.prototype.$http.get('https://restapi.amap.com/v3/assistant/inputtips?key=' + key + '&keywords=' + data.keywords +
+				'&location=' + data.latitude + ',' + data.longitude + '&datatype=' + data.datatype)
+		}
 	}
 }

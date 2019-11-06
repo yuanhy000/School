@@ -34,3 +34,10 @@
 	text-overflow: ellipsis;
 	background-color: #F7F7F7;
 }
+
+.high-light {
+	color: #111111;
+	font-weight: 600;
+	font-size: 26rpx;
+	margin: 0 2px;
+}

@@ -166,6 +166,76 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 
 
@@ -174,12 +244,20 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {
   data: function data() {
     return {
       TabCur: 0,
-      menu_list: ['美食', '娱乐', '住宿', '休闲'],
+      menu_list: ['美食', '娱乐', '住宿', '运动'],
       food_list: [],
+      play_list: [],
+      live_list: [],
+      sport_list: [],
       display_location: true,
       scroll_height: 600,
       screen_height: 800,
-      search_keywords: '' };
+      search_keywords: '',
+      foodCurrentPage: 1,
+      playCurrentPage: 1,
+      liveCurrentPage: 1,
+      sportCurrentPage: 1,
+      loading: false };
 
   },
   computed: _objectSpread({},
@@ -194,40 +272,68 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {
       }
     } }),
 
-  mounted: function mounted() {
-    // var myAmapFun = new amapFile.AMapWX({
-    // 	key: 'c6ffcbdf769089a9ef57fdf112905d45'
-    // });
-    // Vue.prototype.$http.get('https://restapi.amap.com/v3/place/text?key=e6385f2595bf744cc4b92374eb502d49&keywords=美食&city=chongqing').then(res => {
-    // 	console.log(res);
-    // })
+  mounted: function mounted() {var _this = this;
     this.initPoi();
-
-    // let qqmapsdk = new QQMapWX({
-    // 	key: 'XSWBZ-MHZ3K-U76JO-AU4NT-WKNYK-B2BA4'
-    // });
-
-
-
-    // qqmapsdk.search({
-    // 	keyword: '美食',
-    // 	success: res => {
-    // 		console.log(res);
-    // 		this.food_list = res.data;
-    // 		console.log(this.food_list)
-    // 	},
-    // 	fail: function(res) {
-    // 		// console.log(res);
-    // 	},
-    // 	complete: function(res) {
-    // 		// console.log(res);
-    // 	}
-    // });
-    // setTimeout(() => {
-    // 	this.getHeight();
-    // }, 100)
+    setTimeout(function () {
+      _this.getHeight();
+    }, 100);
   },
   methods: {
+    loadNextPage: function loadNextPage(type) {var _this2 = this;
+      if (this.loading) {
+        return;
+      }
+      this.currentPage++;
+      this.loading = true;
+      var keywords = '';
+      var currentPage = 0;
+      switch (type) {
+        case 'food':
+          keywords = '美食';
+          this.foodCurrentPage++;
+          currentPage = this.foodCurrentPage;
+          break;
+        case 'play':
+          keywords = '娱乐';
+          this.playCurrentPage++;
+          currentPage = this.playCurrentPage;
+          break;
+        case 'live':
+          keywords = '住宿';
+          this.liveCurrentPage++;
+          currentPage = this.liveCurrentPage;
+          break;
+        case 'sport':
+          keywords = '运动场馆';
+          this.sportCurrentPage++;
+          currentPage = this.sportCurrentPage;
+          break;}
+
+      this.$store.dispatch('getAroundPoi', {
+        latitude: this.location.user_location.latitude,
+        longitude: this.location.user_location.longitude,
+        keywords: keywords,
+        page: currentPage,
+        extensions: 'base',
+        sortrule: 'weight' }).
+      then(function (res) {
+        switch (type) {
+          case 'food':
+            _this2.food_list.push.apply(_this2.food_list, _this2.formatPoi(res.data.pois));
+            break;
+          case 'play':
+            _this2.play_list.push.apply(_this2.play_list, _this2.formatPoi(res.data.pois));
+            break;
+          case 'live':
+            _this2.live_list.push.apply(_this2.live_list, _this2.formatPoi(res.data.pois));
+            break;
+          case 'sport':
+            _this2.sport_list.push.apply(_this2.sport_list, _this2.formatPoi(res.data.pois));
+            break;}
+
+        _this2.loading = false;
+      });
+    },
     getHeight: function getHeight() {
       var that = this;
       var height = 0;
@@ -242,7 +348,8 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {
         } });
 
     },
-    initPoi: function initPoi() {var _this = this;
+    initPoi: function initPoi() {var _this3 = this;
+      this.loading = true;
       this.$store.dispatch('getAroundPoi', {
         latitude: this.location.user_location.latitude,
         longitude: this.location.user_location.longitude,
@@ -251,7 +358,41 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {
         extensions: 'base',
         sortrule: 'weight' }).
       then(function (res) {
-        _this.food_list = _this.formatPoi(res.data.pois);
+        _this3.food_list = _this3.formatPoi(res.data.pois);
+        _this3.loading = false;
+      });
+      this.$store.dispatch('getAroundPoi', {
+        latitude: this.location.user_location.latitude,
+        longitude: this.location.user_location.longitude,
+        keywords: '娱乐',
+        page: 1,
+        extensions: 'base',
+        sortrule: 'weight' }).
+      then(function (res) {
+        _this3.play_list = _this3.formatPoi(res.data.pois);
+        _this3.loading = false;
+      });
+      this.$store.dispatch('getAroundPoi', {
+        latitude: this.location.user_location.latitude,
+        longitude: this.location.user_location.longitude,
+        keywords: '住宿',
+        page: 1,
+        extensions: 'base',
+        sortrule: 'weight' }).
+      then(function (res) {
+        _this3.live_list = _this3.formatPoi(res.data.pois);
+        _this3.loading = false;
+      });
+      this.$store.dispatch('getAroundPoi', {
+        latitude: this.location.user_location.latitude,
+        longitude: this.location.user_location.longitude,
+        keywords: '运动场馆',
+        page: 1,
+        extensions: 'base',
+        sortrule: 'weight' }).
+      then(function (res) {
+        _this3.sport_list = _this3.formatPoi(res.data.pois);
+        _this3.loading = false;
       });
     },
     formatPoi: function formatPoi(pois) {
@@ -282,16 +423,25 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {
     tabSelect: function tabSelect(e) {
       this.TabCur = e.currentTarget.dataset.id;
     },
+    tabSwiper: function tabSwiper(e) {
+      this.TabCur = e.detail.current;
+    },
     navigateLocation: function navigateLocation() {
       uni.navigateTo({
         url: '/pages/location/location' });
+
+    },
+    navigateSearch: function navigateSearch() {
+      console.log('12312312312312312');
+      uni.navigateTo({
+        url: '/pages/search/search' });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-qq/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
-/***/ 69:
+/***/ 76:
 /*!***********************************************************************************!*\
   !*** /Users/yuanhy/Desktop/Chat/main.js?{"page":"pages%2Fdiscovery%2Fdiscovery"} ***!
   \***********************************************************************************/
@@ -308,5 +458,5 @@ createPage(_discovery.default);
 
 /***/ })
 
-},[[69,"common/runtime","common/vendor"]]]);
+},[[76,"common/runtime","common/vendor"]]]);
 //# sourceMappingURL=../../../.sourcemap/mp-qq/pages/discovery/discovery.js.map

@@ -4,8 +4,8 @@
 			<block slot="backText">返回</block>
 			<block slot="content">Chat</block>
 		</cu-custom>
-		<search v-if="CurrentPage=='chat'"></search>
-		<!-- <chat v-if="CurrentPage=='chat'"></chat> -->
+		<!-- <search v-if="CurrentPage=='chat'"></search> -->
+		<chat v-if="CurrentPage=='chat'"></chat>
 		<contacts v-if="CurrentPage=='contacts'"></contacts>
 		<addition v-if="CurrentPage=='addition'"></addition>
 		<discovery v-if="CurrentPage=='discovery'"></discovery>
