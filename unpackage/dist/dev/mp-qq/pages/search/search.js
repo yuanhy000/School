@@ -1,6 +1,6 @@
 (global["webpackJsonp"] = global["webpackJsonp"] || []).push([["pages/search/search"],{
 
-/***/ 100:
+/***/ 101:
 /*!*****************************************************************************!*\
   !*** /Users/yuanhy/Desktop/Chat/main.js?{"page":"pages%2Fsearch%2Fsearch"} ***!
   \*****************************************************************************/
@@ -29,7 +29,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _search_vue_vue_type_template_id_f78477e0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./search.vue?vue&type=template&id=f78477e0& */ 60);
 /* harmony import */ var _search_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./search.vue?vue&type=script&lang=js& */ 62);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _search_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _search_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _search_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./search.css?vue&type=style&index=0&lang=css& */ 64);
+/* harmony import */ var _search_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./search.css?vue&type=style&index=0&lang=css& */ 65);
 /* harmony import */ var _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 15);
 
 
@@ -186,11 +186,26 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _qqmapWxJssdk = _interopRequireDefault(__webpack_require__(/*! ../../js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js */ 31));
-var _highLight2 = __webpack_require__(/*! ../../utils/high-light.js */ 155);
+var _highLight2 = __webpack_require__(/*! ../../utils/high-light.js */ 64);
 
 
-var _vuex = __webpack_require__(/*! vuex */ 27);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var zySearch = function zySearch() {return __webpack_require__.e(/*! import() | components/zy-search/zy-search */ "components/zy-search/zy-search").then(__webpack_require__.bind(null, /*! ../../components/zy-search/zy-search.vue */ 132));};
+var _vuex = __webpack_require__(/*! vuex */ 27);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var zySearch = function zySearch() {return __webpack_require__.e(/*! import() | components/zy-search/zy-search */ "components/zy-search/zy-search").then(__webpack_require__.bind(null, /*! ../../components/zy-search/zy-search.vue */ 133));};
 
 
 var qqmapsdk = new _qqmapWxJssdk.default({
@@ -202,36 +217,41 @@ var qqmapsdk = new _qqmapWxJssdk.default({
 
   data: function data() {
     return {
+      StatusBar: this.StatusBar,
+      CustomBar: this.CustomBar,
       searchText: '',
       historyList: uni.getStorageSync('search_cache'),
-      wantList: ['美食', '住宿', '休闲', '娱乐', '美食', '住宿', '休闲'],
+      wantList: ['美食', '住宿', '运动', '娱乐', 'KTV', '商场', '公园', '电影', '景点'],
       inputTimeStamp: 0,
       inputTips: [] };
 
   },
-  watch: {
-    searchText: function searchText() {
-      // this.$store.dispatch('getInputTips', {
-      // 	latitude: this.location.user_location.latitude,
-      // 	longitude: this.location.user_location.longitude,
-      // 	keywords: this.searchText,
-      // 	datatype: 'poi',
-      // }).then(res => {
-      // 	console.log(res)
-      // })
-
-
-    } },
-
+  watch: {},
   computed: _objectSpread({},
   (0, _vuex.mapState)({
-    location: function location(state) {return state.UserLocation;} })),
+    location: function location(state) {return state.UserLocation;} }), {
 
+    style: function style() {
+      var StatusBar = this.StatusBar;
+      var CustomBar = this.CustomBar;
+      var bgImage = this.bgImage;
+      var style = "height:".concat(CustomBar, "px;padding-top:").concat(StatusBar, "px;");
+      if (this.bgImage) {
+        style = "".concat(style, "background-image:url(").concat(bgImage, ");");
+      }
+      return style;
+    } }),
 
   mounted: function mounted() {
 
   },
   methods: {
+    quickSearch: function quickSearch(keyword) {
+      this.$store.dispatch('setSearchKeyword', keyword);
+      uni.navigateBack({
+        delta: 1 });
+
+    },
     searchTips: function searchTips(event) {var _this2 = this;
       this.inputTimeStamp = event.timeStamp;
       setTimeout(function () {
@@ -239,7 +259,7 @@ var qqmapsdk = new _qqmapWxJssdk.default({
         if (_this2.inputTimeStamp == event.timeStamp) {
           _this2.requestTips();
         }
-      }, 1000);
+      }, 600);
     },
     requestTips: function requestTips() {var _this3 = this;
       this.inputTips = [];
@@ -271,21 +291,15 @@ var qqmapsdk = new _qqmapWxJssdk.default({
         return false;
       } else {
         this.setSerachStorage();
-        console.log(this.location);
-        qqmapsdk.search({
-          keyword: this.searchText,
-          location: {
-            latitude: this.location.user_location.latitude,
-            longitude: this.location.user_location.longitude },
-
-          success: function success(res) {
-            console.log(res);
-          },
-          fail: function fail(res) {
-            console.log(res);
-          } });
-
+        this.BackPage();
       }
+    },
+    clearHistory: function clearHistory() {
+      this.historyList = [];
+      uni.setStorage({
+        key: 'search_cache',
+        data: [] });
+
     },
     setSerachStorage: function setSerachStorage() {
       var _this = this;
@@ -328,10 +342,18 @@ var qqmapsdk = new _qqmapWxJssdk.default({
     },
     highLight: function highLight(item, _highLight) {
       return (0, _highLight2.highLightMsg)(item, _highLight);
+    },
+    BackPage: function BackPage() {
+      if (this.searchText != '') {
+        this.$store.dispatch('setSearchKeyword', this.searchText);
+      }
+      uni.navigateBack({
+        delta: 1 });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-qq/dist/index.js */ 1)["default"]))
 
 /***/ })
 
-},[[100,"common/runtime","common/vendor"]]]);
+},[[101,"common/runtime","common/vendor"]]]);
 //# sourceMappingURL=../../../.sourcemap/mp-qq/pages/search/search.js.map

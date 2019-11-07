@@ -26,8 +26,8 @@
 		name: 'cu-custom',
 		computed: {
 			style() {
-				var StatusBar= this.StatusBar;
-				var CustomBar= this.CustomBar;
+				var StatusBar = this.StatusBar;
+				var CustomBar = this.CustomBar;
 				var bgImage = this.bgImage;
 				var style = `height:${CustomBar}px;padding-top:${StatusBar}px;`;
 				if (this.bgImage) {

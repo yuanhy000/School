@@ -119,7 +119,7 @@ var _default =
 
 /***/ }),
 
-/***/ 75:
+/***/ 76:
 /*!*********************************************************************************!*\
   !*** /Users/yuanhy/Desktop/Chat/main.js?{"page":"pages%2Fcontacts%2Fcontacts"} ***!
   \*********************************************************************************/
@@ -136,5 +136,5 @@ createPage(_contacts.default);
 
 /***/ })
 
-},[[75,"common/runtime","common/vendor"]]]);
+},[[76,"common/runtime","common/vendor"]]]);
 //# sourceMappingURL=../../../.sourcemap/mp-qq/pages/contacts/contacts.js.map

@@ -140,7 +140,7 @@ var _default =
 
 /***/ }),
 
-/***/ 85:
+/***/ 86:
 /*!*********************************************************************************!*\
   !*** /Users/yuanhy/Desktop/Chat/main.js?{"page":"pages%2Faddition%2Faddition"} ***!
   \*********************************************************************************/
@@ -157,5 +157,5 @@ createPage(_addition.default);
 
 /***/ })
 
-},[[85,"common/runtime","common/vendor"]]]);
+},[[86,"common/runtime","common/vendor"]]]);
 //# sourceMappingURL=../../../.sourcemap/mp-qq/pages/addition/addition.js.map

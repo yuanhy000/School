@@ -1,9 +1,22 @@
 <template>
 	<view class="bg-white search-container">
-		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
+		<view class="cu-custom fixed" :style="[{height:CustomBar + 'px'}]" style="z-index: 99999;">
+			<view class="cu-bar fixed" :style="style" :class="[bgImage!=''?'none-bg text-white bg-img':'','bg-gradual-tab']">
+				<view class="action" @tap="BackPage">
+					<text class="cuIcon-back"></text>
+					<block slot="backText">返回</block>
+				</view>
+				<view class="content" :style="[{top:StatusBar + 'px'}]">
+					<block slot="content">Search</block>
+				</view>
+				<slot name="right"></slot>
+			</view>
+		</view>
+		<!-- 		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
 			<block slot="backText">返回</block>
 			<block slot="content">Search</block>
-		</cu-custom>
+		</cu-custom> -->
+
 		<view class="cu-bar search">
 			<view class="search-form round flex align-center">
 				<text class="cuIcon-search"></text>
@@ -11,22 +24,23 @@
 				 @confirm="searchStart" @input="searchTips"></input>
 			</view>
 			<button class="cu-btn round bg-theme-green-black text-white margin-right-sm search-txet-size" role="button"
-			 aria-disabled="false">搜索</button>
+			 aria-disabled="false" @click="searchStart">搜索</button>
 		</view>
-		<view class="cu-list menu" v-if="inputTips !=[]">
-			<view class="cu-item text-sm" v-for="(item,index) in inputTips" v-bind:key="index">
+		<view class="cu-list menu" v-if="inputTips !=[] &&searchText != ''">
+			<view class="cu-item text-sm" v-for="(item,index) in inputTips" v-bind:key="index" @click="quickSearch(item.title)">
 				<span v-html="highLight(item.title, searchText)"></span>
 			</view>
 		</view>
-		<view v-if="searchText == ''">
+		<view v-else>
 			<view class="cu-bar search">
 				<view class="flex justify-between align-center search-tab-width ">
 					<text class="margin-left-lg search-txet-size text-theme-color">历史记录</text>
-					<text class="cuIcon-deletefill search-icon-size margin-right-lg text-theme-color"></text>
+					<text class="cuIcon-deletefill search-icon-size margin-right-lg text-theme-color" @click="clearHistory()"></text>
 				</view>
 			</view>
 			<view class="cu-bar search list flex align-center justify-start" v-show="historyList.length!=0">
-				<view v-for="(item,index) in historyList" :key="index" class="cu-btn round list-item margin-right-lg margin-bottom">
+				<view v-for="(item,index) in historyList" :key="index" class="cu-btn round list-item margin-right-lg margin-bottom"
+				 @click="quickSearch(item)">
 					{{item}}
 				</view>
 			</view>
@@ -36,7 +50,8 @@
 				</view>
 			</view>
 			<view class="cu-bar search list flex align-center justify-start">
-				<view v-for="(item,index) in wantList" :key="index" class="cu-btn round list-item margin-right-lg margin-bottom">
+				<view v-for="(item,index) in wantList" :key="index" class="cu-btn round list-item margin-right-lg margin-bottom"
+				 @click="quickSearch(item)">
 					{{item}}
 				</view>
 			</view>
@@ -62,36 +77,41 @@
 		},
 		data() {
 			return {
+				StatusBar: this.StatusBar,
+				CustomBar: this.CustomBar,
 				searchText: '',
 				historyList: uni.getStorageSync('search_cache'),
-				wantList: ['美食', '住宿', '休闲', '娱乐', '美食', '住宿', '休闲', ],
+				wantList: ['美食', '住宿', '运动', '娱乐', 'KTV', '商场', '公园', '电影', '景点'],
 				inputTimeStamp: 0,
 				inputTips: []
 			}
 		},
-		watch: {
-			searchText() {
-				// this.$store.dispatch('getInputTips', {
-				// 	latitude: this.location.user_location.latitude,
-				// 	longitude: this.location.user_location.longitude,
-				// 	keywords: this.searchText,
-				// 	datatype: 'poi',
-				// }).then(res => {
-				// 	console.log(res)
-				// })
-
-
-			}
-		},
+		watch: {},
 		computed: {
 			...mapState({
 				location: state => state.UserLocation
 			}),
+			style() {
+				var StatusBar = this.StatusBar;
+				var CustomBar = this.CustomBar;
+				var bgImage = this.bgImage;
+				var style = `height:${CustomBar}px;padding-top:${StatusBar}px;`;
+				if (this.bgImage) {
+					style = `${style}background-image:url(${bgImage});`;
+				}
+				return style
+			}
 		},
 		mounted() {
 
 		},
 		methods: {
+			quickSearch(keyword) {
+				this.$store.dispatch('setSearchKeyword', keyword);
+				uni.navigateBack({
+					delta: 1
+				});
+			},
 			searchTips(event) {
 				this.inputTimeStamp = event.timeStamp;
 				setTimeout(() => {
@@ -99,7 +119,7 @@
 					if (this.inputTimeStamp == event.timeStamp) {
 						this.requestTips();
 					}
-				}, 1000);
+				}, 600);
 			},
 			requestTips() {
 				this.inputTips = [];
@@ -131,21 +151,15 @@
 					return false;
 				} else {
 					this.setSerachStorage();
-					console.log(this.location)
-					qqmapsdk.search({
-						keyword: this.searchText,
-						location: {
-							latitude: this.location.user_location.latitude,
-							longitude: this.location.user_location.longitude
-						},
-						success: function(res) {
-							console.log(res);
-						},
-						fail: function(res) {
-							console.log(res);
-						}
-					});
+					this.BackPage();
 				}
+			},
+			clearHistory() {
+				this.historyList = [];
+				uni.setStorage({
+					key: 'search_cache',
+					data: []
+				});
 			},
 			setSerachStorage() {
 				let _this = this;
@@ -188,6 +202,14 @@
 			},
 			highLight(item, highLight) {
 				return highLightMsg(item, highLight)
+			},
+			BackPage() {
+				if (this.searchText != '') {
+					this.$store.dispatch('setSearchKeyword', this.searchText);
+				}
+				uni.navigateBack({
+					delta: 1
+				});
 			}
 		},
 	}

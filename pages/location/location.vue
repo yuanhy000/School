@@ -4,14 +4,12 @@
 			<block slot="backText">返回</block>
 			<block slot="content">Location</block>
 		</cu-custom>
-		<map id="myMap" class="map-size" :latitude="location.user_location.latitude" :longitude="location.user_location.longitude"
-		 scale="17">
-		</map>
-		<!-- 		<iframe id="mapPage" width="100%" height="600px" frameborder=0 src="">
-		</iframe> -->
-		<!-- <map id="myMap" class="map-size" latitude="29.52168" longitude="106.56256"
+		<!-- 		<map id="myMap" class="map-size" :latitude="location.user_location.latitude" :longitude="location.user_location.longitude"
 		 scale="17" subkey="QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J">
 		</map> -->
+		<map id="map" longitude="113.324520" latitude="23.099994" scale="14" :controls="controls" bindcontroltap="controltap"
+		 :markers="markers" bindmarkertap="markertap" :polyline="polyline" bindregionchange="regionchange" show-location
+		 style="width: 100%; height: 300px;"></map>
 	</view>
 </template>
 
@@ -23,7 +21,37 @@
 	export default {
 		data() {
 			return {
-
+				markers: [{
+					iconPath: "/resources/others.png",
+					id: 0,
+					latitude: 23.099994,
+					longitude: 113.324520,
+					width: 50,
+					height: 50
+				}],
+				polyline: [{
+					points: [{
+						longitude: 113.3245211,
+						latitude: 23.10229
+					}, {
+						longitude: 113.324520,
+						latitude: 23.21229
+					}],
+					color: "#FF0000DD",
+					width: 2,
+					dottedLine: true
+				}],
+				controls: [{
+					id: 1,
+					iconPath: '/resources/location.png',
+					position: {
+						left: 0,
+						top: 300 - 50,
+						width: 50,
+						height: 50
+					},
+					clickable: true
+				}]
 			};
 		},
 		computed: {
@@ -33,11 +61,12 @@
 		},
 		mounted() {
 			let qqmapsdk = new QQMapWX({
-				key: 'XSWBZ-MHZ3K-U76JO-AU4NT-WKNYK-B2BA4'
+				key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J'
 			});
 
-			this.mapCtx = qq.createMapContext('myMap'); //获取地图对象同canvas相似，获取后才能调用相应的方法
-			console.log(qqmapsdk)
+			let mapCtx = wx.createMapContext('myMap'); //获取地图对象同canvas相似，获取后才能调用相应的方法
+			console.log(mapCtx);
+
 			// const key = 'XSWBZ-MHZ3K-U76JO-AU4NT-WKNYK-B2BA4'; //使用在腾讯位置服务申请的key
 			// const referer = 'test'; //调用插件的app的名称
 			// const location = JSON.stringify({
@@ -50,6 +79,17 @@
 			// 	url: `plugin://chooseLocation/index?key=${key}&referer=${referer}&location=${location}&category=${category}`
 			// });
 
+		},
+		methods: {
+			regionchange(e) {
+				console.log(e.type)
+			},
+			markertap(e) {
+				console.log(e.markerId)
+			},
+			controltap(e) {
+				console.log(e.controlId)
+			}
 		}
 	}
 </script>

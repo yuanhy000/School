@@ -16,7 +16,7 @@
 	-webkit-text-fill-color: transparent;
 }
 
-.active-text-border{
+.active-text-border {
 	border-bottom: 4rpx solid #3E576B;
 }
 
@@ -73,3 +73,7 @@
 	color: #222222;
 }
 
+.tab-item-width {
+	width: 25%;
+	margin: 0 !important;
+}

@@ -236,6 +236,33 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 
 
@@ -249,20 +276,25 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {
       play_list: [],
       live_list: [],
       sport_list: [],
+      search_list: [],
       display_location: true,
+      scroll_left: 0,
       scroll_height: 600,
       screen_height: 800,
+      screen_width: 400,
       search_keywords: '',
       foodCurrentPage: 1,
       playCurrentPage: 1,
       liveCurrentPage: 1,
       sportCurrentPage: 1,
+      searchCurrentPage: 1,
       loading: false };
 
   },
   computed: _objectSpread({},
   (0, _vuex.mapState)({
-    location: function location(state) {return state.UserLocation;} }), {
+    location: function location(state) {return state.UserLocation;},
+    map_poi: function map_poi(state) {return state.MapPoi;} }), {
 
     userLocation: function userLocation() {
       if (this.location.user_address == null) {
@@ -272,14 +304,36 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {
       }
     } }),
 
-  mounted: function mounted() {var _this = this;
+  watch: {
+    '$store.state.MapPoi.search_keyword': function $storeStateMapPoiSearch_keyword() {var _this = this;
+      if (this.map_poi.search_keyword != '') {
+        this.TabCur = 4;
+        this.scroll_left = 3 * (this.screen_width / 4);
+        this.$store.dispatch('getAroundPoi', {
+          latitude: this.location.user_location.latitude,
+          longitude: this.location.user_location.longitude,
+          keywords: this.map_poi.search_keyword,
+          page: 1,
+          extensions: 'base',
+          sortrule: 'weight' }).
+        then(function (res) {
+          _this.search_list = _this.formatPoi(res.data.pois);
+          _this.loading = false;
+        });
+      }
+    } },
+
+  mounted: function mounted() {var _this2 = this;
     this.initPoi();
     setTimeout(function () {
-      _this.getHeight();
+      _this2.getHeight();
     }, 100);
   },
+  destroyed: function destroyed() {
+    this.$store.dispatch('initSearchKeyword');
+  },
   methods: {
-    loadNextPage: function loadNextPage(type) {var _this2 = this;
+    loadNextPage: function loadNextPage(type) {var _this3 = this;
       if (this.loading) {
         return;
       }
@@ -307,6 +361,11 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {
           keywords = '运动场馆';
           this.sportCurrentPage++;
           currentPage = this.sportCurrentPage;
+          break;
+        case 'search':
+          keywords = this.map_poi.search_keyword;
+          this.searchCurrentPage++;
+          currentPage = this.searchCurrentPage;
           break;}
 
       this.$store.dispatch('getAroundPoi', {
@@ -314,24 +373,28 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {
         longitude: this.location.user_location.longitude,
         keywords: keywords,
         page: currentPage,
+        radius: 6000,
         extensions: 'base',
         sortrule: 'weight' }).
       then(function (res) {
         switch (type) {
           case 'food':
-            _this2.food_list.push.apply(_this2.food_list, _this2.formatPoi(res.data.pois));
+            _this3.food_list.push.apply(_this3.food_list, _this3.formatPoi(res.data.pois));
             break;
           case 'play':
-            _this2.play_list.push.apply(_this2.play_list, _this2.formatPoi(res.data.pois));
+            _this3.play_list.push.apply(_this3.play_list, _this3.formatPoi(res.data.pois));
             break;
           case 'live':
-            _this2.live_list.push.apply(_this2.live_list, _this2.formatPoi(res.data.pois));
+            _this3.live_list.push.apply(_this3.live_list, _this3.formatPoi(res.data.pois));
             break;
           case 'sport':
-            _this2.sport_list.push.apply(_this2.sport_list, _this2.formatPoi(res.data.pois));
+            _this3.sport_list.push.apply(_this3.sport_list, _this3.formatPoi(res.data.pois));
+            break;
+          case 'search':
+            _this3.search_list.push.apply(_this3.search_list, _this3.formatPoi(res.data.pois));
             break;}
 
-        _this2.loading = false;
+        _this3.loading = false;
       });
     },
     getHeight: function getHeight() {
@@ -340,6 +403,7 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {
       uni.getSystemInfo({
         success: function success(res) {
           that.screen_height = res.windowHeight;
+          that.screen_width = res.windowWidth;
           var otherHeight = 0;
           var query = uni.createSelectorQuery().in(that);
           query.select('#swiper').boundingClientRect(function (res) {
@@ -348,51 +412,55 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {
         } });
 
     },
-    initPoi: function initPoi() {var _this3 = this;
+    initPoi: function initPoi() {var _this4 = this;
       this.loading = true;
       this.$store.dispatch('getAroundPoi', {
         latitude: this.location.user_location.latitude,
         longitude: this.location.user_location.longitude,
         keywords: '美食',
         page: 1,
+        radius: 6000,
         extensions: 'base',
         sortrule: 'weight' }).
       then(function (res) {
-        _this3.food_list = _this3.formatPoi(res.data.pois);
-        _this3.loading = false;
+        _this4.food_list = _this4.formatPoi(res.data.pois);
+        _this4.loading = false;
       });
       this.$store.dispatch('getAroundPoi', {
         latitude: this.location.user_location.latitude,
         longitude: this.location.user_location.longitude,
         keywords: '娱乐',
         page: 1,
+        radius: 6000,
         extensions: 'base',
         sortrule: 'weight' }).
       then(function (res) {
-        _this3.play_list = _this3.formatPoi(res.data.pois);
-        _this3.loading = false;
+        _this4.play_list = _this4.formatPoi(res.data.pois);
+        _this4.loading = false;
       });
       this.$store.dispatch('getAroundPoi', {
         latitude: this.location.user_location.latitude,
         longitude: this.location.user_location.longitude,
         keywords: '住宿',
         page: 1,
+        radius: 6000,
         extensions: 'base',
         sortrule: 'weight' }).
       then(function (res) {
-        _this3.live_list = _this3.formatPoi(res.data.pois);
-        _this3.loading = false;
+        _this4.live_list = _this4.formatPoi(res.data.pois);
+        _this4.loading = false;
       });
       this.$store.dispatch('getAroundPoi', {
         latitude: this.location.user_location.latitude,
         longitude: this.location.user_location.longitude,
         keywords: '运动场馆',
         page: 1,
+        radius: 6000,
         extensions: 'base',
         sortrule: 'weight' }).
       then(function (res) {
-        _this3.sport_list = _this3.formatPoi(res.data.pois);
-        _this3.loading = false;
+        _this4.sport_list = _this4.formatPoi(res.data.pois);
+        _this4.loading = false;
       });
     },
     formatPoi: function formatPoi(pois) {
@@ -415,16 +483,14 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {
       console.log('click');
       this.getHeight();
     },
-    InputBlur: function InputBlur(e) {
-      this.InputBottom = 0;
-      console.log('leave');
-      this.display_location = true;
-    },
     tabSelect: function tabSelect(e) {
+      console.log(this.map_poi);
       this.TabCur = e.currentTarget.dataset.id;
+      this.scroll_left = (e.currentTarget.dataset.id - 1) * (this.screen_width / 4);
     },
     tabSwiper: function tabSwiper(e) {
       this.TabCur = e.detail.current;
+      this.scroll_left = (this.TabCur - 1) * (this.screen_width / 4);
     },
     navigateLocation: function navigateLocation() {
       uni.navigateTo({
@@ -432,7 +498,6 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {
 
     },
     navigateSearch: function navigateSearch() {
-      console.log('12312312312312312');
       uni.navigateTo({
         url: '/pages/search/search' });
 
@@ -441,7 +506,7 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {
 
 /***/ }),
 
-/***/ 76:
+/***/ 77:
 /*!***********************************************************************************!*\
   !*** /Users/yuanhy/Desktop/Chat/main.js?{"page":"pages%2Fdiscovery%2Fdiscovery"} ***!
   \***********************************************************************************/
@@ -458,5 +523,5 @@ createPage(_discovery.default);
 
 /***/ })
 
-},[[76,"common/runtime","common/vendor"]]]);
+},[[77,"common/runtime","common/vendor"]]]);
 //# sourceMappingURL=../../../.sourcemap/mp-qq/pages/discovery/discovery.js.map
