@@ -1,10 +1,10 @@
 <template>
-	<view>
+	<view class="addition-container">
 		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
 			<block slot="backText">返回</block>
 			<block slot="content">Addition</block>
 		</cu-custom>
-		<scroll-view scroll-y class="DrawerPage">
+		<scroll-view scroll-y class="DrawerPage" id="scroll" :style="{height:scroll_height +'px'}">
 			<view class="cu-tabbar-height bg-white margin-left margin-right margin-top  border-radius bg-white shadow flex align-center ">
 				<input class="margin-left margin-right text-sm" type="text" placeholder="标题 ( 可选 )" v-model="title" />
 			</view>
@@ -60,8 +60,14 @@
 				selectImageList: [],
 				imageUrlList: [],
 				isDisplayLocation: false,
-				isAnonymity: false
+				isAnonymity: false,
+				scroll_height:700,
 			}
+		},
+		mounted(){
+			setTimeout(()=>{
+				this.GetHeight();
+			},100)
 		},
 		methods: {
 			Submit() {
@@ -134,6 +140,21 @@
 						}
 					}
 				})
+			},
+			GetHeight() {
+				let that = this;
+				let height = 0;
+				uni.getSystemInfo({
+					success(res) {
+						that.screen_height = res.windowHeight;
+						that.screen_width = res.windowWidth;
+						let otherHeight = 0;
+						let query = uni.createSelectorQuery().in(that);
+						query.select('#scroll').boundingClientRect(res => {
+							that.scroll_height = that.screen_height - res.top;
+						}).exec();
+					}
+				});
 			},
 		}
 	}

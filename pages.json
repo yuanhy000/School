@@ -30,12 +30,17 @@
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
-		},{
+		}, {
 			"path": "pages/addition-article/addition-article",
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
-		},{
+		}, {
+			"path": "pages/addition-commodity/addition-commodity",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}, {
 			"path": "pages/search/search",
 			"style": {
 				"navigationBarTitleText": "uni-app"

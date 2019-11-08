@@ -133,6 +133,11 @@ var _default =
           uni.navigateTo({
             url: '/pages/addition-article/addition-article' });
 
+          break;
+        case 4:
+          uni.navigateTo({
+            url: '/pages/addition-commodity/addition-commodity' });
+
           break;}
 
     } } };exports.default = _default;

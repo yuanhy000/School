@@ -214,15 +214,21 @@ var _uploadFile = __webpack_require__(/*! ../../utils/uploadFile.js */ 93);funct
 //
 //
 //
-var util = __webpack_require__(/*! ../../utils/util.js */ 98);var _default = { data: function data() {return { title: '', content: '', isInput: false, selectImageList: [], imageUrlList: [], isDisplayLocation: false, isAnonymity: false };}, methods: { Submit: function Submit() {console.log(this.imageUrlList);_vue.default.prototype.$http.request({ url: '/articles/create', method: 'POST', params: { article_title: this.title, article_content: this.content, article_image: this.imageUrlList, is_display_location: this.isDisplayLocation, is_anonymity: this.isAnonymity } }).then(function (res) {console.log(res.data);});}, CheckboxOnclick: function CheckboxOnclick() {this.isDisplayLocation = !this.isDisplayLocation;}, ChooseImage: function ChooseImage() {var _this = this;uni.chooseImage({ count: 9, //默认9
-        sizeType: ['original', 'compressed'], sourceType: ['album'], success: function success(res) {if (_this.selectImageList.length != 0) {_this.selectImageList = _this.selectImageList.concat(res.tempFilePaths);} else {
-            _this.selectImageList = res.tempFilePaths;
+var util = __webpack_require__(/*! ../../utils/util.js */ 98);var _default = { data: function data() {return { title: '', content: '', isInput: false, selectImageList: [], imageUrlList: [], isDisplayLocation: false, isAnonymity: false, scroll_height: 700 };}, mounted: function mounted() {var _this = this;setTimeout(function () {_this.GetHeight();}, 100);}, methods: { Submit: function Submit() {console.log(this.imageUrlList);_vue.default.prototype.$http.request({ url: '/articles/create', method: 'POST', params: { article_title: this.title, article_content: this.content, article_image: this.imageUrlList, is_display_location: this.isDisplayLocation, is_anonymity: this.isAnonymity } }).then(function (res) {console.log(res.data);});}, CheckboxOnclick: function CheckboxOnclick() {this.isDisplayLocation = !this.isDisplayLocation;}, ChooseImage: function ChooseImage() {var _this2 = this;uni.chooseImage({
+        count: 9, //默认9
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album'],
+        success: function success(res) {
+          if (_this2.selectImageList.length != 0) {
+            _this2.selectImageList = _this2.selectImageList.concat(res.tempFilePaths);
+          } else {
+            _this2.selectImageList = res.tempFilePaths;
           }
-          _this.GetImageUrl();
+          _this2.GetImageUrl();
         } });
 
     },
-    GetImageUrl: function GetImageUrl() {var _this2 = this;
+    GetImageUrl: function GetImageUrl() {var _this3 = this;
       var nowTime = util.formatTime(new Date());
       for (var i = this.imageUrlList.length; i < this.selectImageList.length; i++) {
         console.log(this.selectImageList.length);
@@ -232,7 +238,7 @@ var util = __webpack_require__(/*! ../../utils/util.js */ 98);var _default = { d
 
         (0, _uploadFile.uploadFile)(this.selectImageList[i], 'images/' + nowTime + '/').
         then(function (res) {
-          _this2.imageUrlList.push(res);
+          _this3.imageUrlList.push(res);
           wx.hideLoading();
         }).catch(function (res) {
           wx.hideLoading();
@@ -245,7 +251,7 @@ var util = __webpack_require__(/*! ../../utils/util.js */ 98);var _default = { d
         current: e.currentTarget.dataset.url });
 
     },
-    DelImg: function DelImg(e) {var _this3 = this;
+    DelImg: function DelImg(e) {var _this4 = this;
       uni.showModal({
         title: '确认删除',
         content: '确定要删除这张图片吗？',
@@ -253,9 +259,24 @@ var util = __webpack_require__(/*! ../../utils/util.js */ 98);var _default = { d
         confirmText: '确认',
         success: function success(res) {
           if (res.confirm) {
-            _this3.selectImageList.splice(e.currentTarget.dataset.index, 1);
-            _this3.imageUrlList.splice(e.currentTarget.dataset.index, 1);
+            _this4.selectImageList.splice(e.currentTarget.dataset.index, 1);
+            _this4.imageUrlList.splice(e.currentTarget.dataset.index, 1);
           }
+        } });
+
+    },
+    GetHeight: function GetHeight() {
+      var that = this;
+      var height = 0;
+      uni.getSystemInfo({
+        success: function success(res) {
+          that.screen_height = res.windowHeight;
+          that.screen_width = res.windowWidth;
+          var otherHeight = 0;
+          var query = uni.createSelectorQuery().in(that);
+          query.select('#scroll').boundingClientRect(function (res) {
+            that.scroll_height = that.screen_height - res.top;
+          }).exec();
         } });
 
     } } };exports.default = _default;

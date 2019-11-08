@@ -1,0 +1,17 @@
+.bg-gradual-tab {
+	background-image: -o-linear-gradient(30deg, #343A4F, #467385);
+	background-image: linear-gradient(60deg, #343A4F, #467385);
+	color: #ffffff;
+}
+.tabbar-position {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	z-index: 999;
+}
+.bg-tabbar {
+	background-image: -o-linear-gradient(45deg, #8EA7C7, #EECAC9);
+	background-image: linear-gradient(45deg, #8EA7C7, #EECAC9);
+	color: #ffffff;
+}
+

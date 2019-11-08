@@ -204,7 +204,7 @@
 				return highLightMsg(item, highLight)
 			},
 			BackPage() {
-				if (this.searchText != '') {
+				if (this.searchText != '') {20
 					this.$store.dispatch('setSearchKeyword', this.searchText);
 				}
 				uni.navigateBack({

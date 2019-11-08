@@ -18,7 +18,7 @@
 	export default {
 		data() {
 			return {
-				CurrentPage: 'discovery',
+				CurrentPage: 'addition',
 			}
 		},
 		onLoad() {

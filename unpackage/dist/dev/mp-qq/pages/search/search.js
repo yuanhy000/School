@@ -1,6 +1,6 @@
 (global["webpackJsonp"] = global["webpackJsonp"] || []).push([["pages/search/search"],{
 
-/***/ 101:
+/***/ 109:
 /*!*****************************************************************************!*\
   !*** /Users/yuanhy/Desktop/Chat/main.js?{"page":"pages%2Fsearch%2Fsearch"} ***!
   \*****************************************************************************/
@@ -205,7 +205,7 @@ var _qqmapWxJssdk = _interopRequireDefault(__webpack_require__(/*! ../../js_sdk/
 var _highLight2 = __webpack_require__(/*! ../../utils/high-light.js */ 64);
 
 
-var _vuex = __webpack_require__(/*! vuex */ 27);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var zySearch = function zySearch() {return __webpack_require__.e(/*! import() | components/zy-search/zy-search */ "components/zy-search/zy-search").then(__webpack_require__.bind(null, /*! ../../components/zy-search/zy-search.vue */ 133));};
+var _vuex = __webpack_require__(/*! vuex */ 27);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var zySearch = function zySearch() {return __webpack_require__.e(/*! import() | components/zy-search/zy-search */ "components/zy-search/zy-search").then(__webpack_require__.bind(null, /*! ../../components/zy-search/zy-search.vue */ 141));};
 
 
 var qqmapsdk = new _qqmapWxJssdk.default({
@@ -344,7 +344,7 @@ var qqmapsdk = new _qqmapWxJssdk.default({
       return (0, _highLight2.highLightMsg)(item, _highLight);
     },
     BackPage: function BackPage() {
-      if (this.searchText != '') {
+      if (this.searchText != '') {20;
         this.$store.dispatch('setSearchKeyword', this.searchText);
       }
       uni.navigateBack({
@@ -355,5 +355,5 @@ var qqmapsdk = new _qqmapWxJssdk.default({
 
 /***/ })
 
-},[[101,"common/runtime","common/vendor"]]]);
+},[[109,"common/runtime","common/vendor"]]]);
 //# sourceMappingURL=../../../.sourcemap/mp-qq/pages/search/search.js.map
