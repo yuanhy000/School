@@ -14,7 +14,7 @@
 					Change it !!!
 				</view>
 			</view>
-			<view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg">
+		<!-- 	<view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg">
 				<view class="cu-item arrow" v-for="(item,index) in 20" :key="index">
 					<view class="content">
 						<text class="cuIcon-github text-grey"></text>
@@ -22,7 +22,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="cu-tabbar-height tabbar-height"></view>
+			<view class="cu-tabbar-height tabbar-height"></view> -->
 		</scroll-view>
 
 		<view class="DrawerClose" :class="modalName=='viewModal'?'show':''" @tap="hideModal">

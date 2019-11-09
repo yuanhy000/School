@@ -19,8 +19,8 @@ Vue.component('addition', addition)
 import chat from './pages/chat/chat.vue'
 Vue.component('chat', chat)
 
-import contacts from './pages/contacts/contacts.vue'
-Vue.component('contacts', contacts)
+import stores from './pages/store/store.vue'
+Vue.component('store', stores)
 
 import discovery from './pages/discovery/discovery.vue'
 Vue.component('discovery', discovery)

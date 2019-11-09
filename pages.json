@@ -11,7 +11,7 @@
 				"navigationBarTitleText": "uni-app"
 			}
 		}, {
-			"path": "pages/contacts/contacts",
+			"path": "pages/store/store",
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}

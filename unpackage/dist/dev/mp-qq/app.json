@@ -2,7 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/chat/chat",
-    "pages/contacts/contacts",
+    "pages/store/store",
     "pages/discovery/discovery",
     "pages/location/location",
     "pages/addition/addition",
@@ -22,7 +22,7 @@
     "tabbar": "/components/tabbar/tabbar",
     "addition": "/pages/addition/addition",
     "chat": "/pages/chat/chat",
-    "contacts": "/pages/contacts/contacts",
+    "store": "/pages/store/store",
     "discovery": "/pages/discovery/discovery",
     "user": "/pages/user/user",
     "authorization": "/pages/authorization/authorization",

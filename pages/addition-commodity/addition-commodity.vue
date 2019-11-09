@@ -25,16 +25,18 @@
 				</view>
 			</view>
 			<view class="cu-form-group margin-left margin-right margin-top margin-bottom border-radius bg-white shadow flex-direction">
-				<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;" @tap="showModal">
+				<view class="cu-form-group flex justify-between margin-left-sm no-padding" style="width: 100%;" @tap="showModal">
 					<view class="title checkbox-title">
 						选择分类
 					</view>
-					<text class="cuIcon-right text-theme-color"></text>
-					<!-- <checkbox class='round theme' @click="CheckboxOnclick('location')">
-					</checkbox> -->
-					<!-- <view class="action">
-						<button class="cu-btn bg-green shadow" @tap="showModal" data-target="RadioModal">Radio</button>
-					</view> -->
+					<text class="cuIcon-right text-theme-color" v-if="selectCategoryName==''"></text>
+					<view class="title checkbox-title no-margin-right" v-else>
+						{{selectCategoryName}}
+					</view>
+				</view>
+				<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;">
+					<view class="title checkbox-title">价格</view>
+					<input class="margin-left text-sm no-padding title checkbox-title" type="digit" v-model="price" style="text-align:right;" />
 				</view>
 				<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;">
 					<view class="title checkbox-title">显示位置</view>
@@ -82,6 +84,7 @@
 			return {
 				title: '',
 				content: '',
+				price: null,
 				isInput: false,
 				selectImageList: [],
 				imageUrlList: [],
@@ -90,7 +93,8 @@
 				isAnonymity: false,
 				scroll_height:700,
 				selectCategory: false,
-				selectCategoryID: 0
+				selectCategoryID: 0,
+				selectCategoryName: ''
 			}
 		},
 		mounted(){
@@ -105,6 +109,12 @@
 		methods: {
 			ChangeCategory(e) {
 				this.selectCategoryID = e.detail.value;
+				let selectCategory = this.categoryList.find((item) =>{
+					return item.category_id ==  this.selectCategoryID
+				});
+				this.selectCategoryName = selectCategory.category_name;
+				console.log(this.selectCategoryName)
+				console.log(this.selectCategoryID)
 				this.hideModal();
 			},
 			showModal(e) {
@@ -120,6 +130,7 @@
 					params: {
 						commodity_name: this.title,
 						commodity_description: this.content,
+						commodity_price: this.price,
 						commodity_image: this.imageUrlList,
 						category_id: this.selectCategoryID,
 						is_display_location: this.isDisplayLocation,

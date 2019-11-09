@@ -7,12 +7,12 @@
 				</view>
 				<view :class="PageCur=='chat'?'text-tabbar-on':'text-tabbar'">聊天</view>
 			</view>
-			<view class="action " @click="NavChange" data-cur="contacts" @tap="Toggle" :data-class="'scale-up'" :class="[PageCur=='contacts'?'animation-fade':'']">
+			<view class="action " @click="NavChange" data-cur="store" @tap="Toggle" :data-class="'scale-up'" :class="[PageCur=='store'?'animation-fade':'']">
 				<view>
-					<image :src="'/static/tabbar/contacts' + [PageCur=='contacts'?'-on':''] + '.png'" class="tab-img">
+					<image :src="'/static/tabbar/store' + [PageCur=='store'?'-on':''] + '.png'" class="tab-img">
 					</image>
 				</view>
-				<view :class="PageCur=='contacts'?'text-tabbar-on':'text-tabbar'">好友</view>
+				<view :class="PageCur=='store'?'text-tabbar-on':'text-tabbar'">商城</view>
 			</view>
 			<view class="action add-action" @click="NavChange" data-cur="addition">
 				<button class="cu-btn cuIcon-add addition-button shadow" @tap="Toggle" :class="[PageCur=='addition'?'animation-fade':'']">
@@ -40,7 +40,7 @@
 	export default {
 		data() {
 			return {
-				PageCur: 'discovery',
+				PageCur: 'store',
 				animation: 'scale-up',
 			};
 		},

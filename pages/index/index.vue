@@ -6,7 +6,7 @@
 		</cu-custom>
 		<!-- <search v-if="CurrentPage=='chat'"></search> -->
 		<chat v-if="CurrentPage=='chat'"></chat>
-		<contacts v-if="CurrentPage=='contacts'"></contacts>
+		<store v-if="CurrentPage=='store'"></store>
 		<addition v-if="CurrentPage=='addition'"></addition>
 		<discovery v-if="CurrentPage=='discovery'"></discovery>
 		<user v-if="CurrentPage=='user'"></user>
@@ -18,7 +18,7 @@
 	export default {
 		data() {
 			return {
-				CurrentPage: 'addition',
+				CurrentPage: 'store',
 			}
 		},
 		onLoad() {
