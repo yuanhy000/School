@@ -135,4 +135,41 @@ page {
 	letter-spacing: 2rpx;
 	color: #666666;
 }
+.flow-box {
+	position: relative;
+	color: #1a1a1a;
+	padding-bottom: 0px;
+}
+.flow-box .item {
+	position: absolute;
+	left: 10rpx;
+	width: calc(50% - 20rpx);
+	border: 1rpx solid #f9f9f9;
+	background: #fff;
+}
+.flow-box .left {
+	left: 380rpx;
+}
+.flow-box .pic {
+	background: #f6f6f6;
+}
+.flow-box .content {
+	padding: 20rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	    -ms-flex-pack: justify;
+	        justify-content: space-between;
+	-webkit-flex-wrap: wrap;
+	    -ms-flex-wrap: wrap;
+	        flex-wrap: wrap;
+}
+.flow-box .content text {
+	width: 100%;
+	font-size: 24rpx;
+	margin-bottom: 20rpx;
+}
 

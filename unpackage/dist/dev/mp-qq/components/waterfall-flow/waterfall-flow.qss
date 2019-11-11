@@ -1,0 +1,38 @@
+
+.flow-box.data-v-31c9631a {
+	position: relative;
+	color: #1a1a1a;
+	padding-bottom: 0px;
+}
+.flow-box .item.data-v-31c9631a {
+	position: absolute;
+	left: 10rpx;
+	width: calc(50% - 20rpx);
+	border-radius: 20rpx;
+	border: none;
+	background-color: transparent;
+}
+.flow-box .left.data-v-31c9631a {
+	left: 380rpx;
+}
+.flow-box .user.data-v-31c9631a {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	width: 220rpx;
+	overflow: hidden;
+	font-size: 26rpx;
+	color: #666;
+}
+.item-picture.data-v-31c9631a {
+	border-top-right-radius: 20rpx;
+	border-top-left-radius: 20rpx;
+	z-index: 500;
+}
+.commodity-name-text.data-v-31c9631a {
+	font-weight: 700;
+	font-size: 28rpx;
+	color: #222222;
+}
+

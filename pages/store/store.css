@@ -118,3 +118,38 @@ page {
 	letter-spacing: 2rpx;
 	color: #666666;
 }
+
+.flow-box {
+	position: relative;
+	color: #1a1a1a;
+	padding-bottom: var(--window-bottom);
+}
+
+.flow-box .item {
+	position: absolute;
+	left: 10upx;
+	width: calc(50% - 20upx);
+	border: 1upx solid #f9f9f9;
+	background: #fff;
+}
+
+.flow-box .left {
+	left: 380upx;
+}
+
+.flow-box .pic {
+	background: #f6f6f6;
+}
+
+.flow-box .content {
+	padding: 20upx;
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.flow-box .content text {
+	width: 100%;
+	font-size: 24upx;
+	margin-bottom: 20upx;
+}

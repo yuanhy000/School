@@ -17,6 +17,11 @@
     "backgroundColor": "#F8F8F8",
     "navigationStyle": "custom"
   },
+	"permission": {
+		"scope.userLocation": {
+			"desc": "你的位置信息将用于小程序位置接口的效果展示"
+		}
+	},
   "usingComponents": {
     "cu-custom": "/colorui/components/cu-custom",
     "tabbar": "/components/tabbar/tabbar",

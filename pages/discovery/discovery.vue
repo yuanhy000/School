@@ -12,7 +12,7 @@
 			</button>
 		</view>
 		<!-- <search :showWant="true"></search> -->
-		<scroll-view class="bg-white nav" scroll-x scroll-with-animation=true :scroll-left="scroll_left">
+		<scroll-view class="bg-white nav shadow" style="border-bottom: 1px solid #c8c8c8;" scroll-x scroll-with-animation=true :scroll-left="scroll_left">
 			<!-- <view class="flex text-center"> -->
 			<view class="cu-item tab-item-width flex text-center" :class="index==TabCur?'text-theme-color active-text-border':''"
 			 v-for="(item,index) in menu_list" :key="index" @tap="tabSelect" :data-id="index">
