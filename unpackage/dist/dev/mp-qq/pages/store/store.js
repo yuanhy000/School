@@ -148,6 +148,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -190,24 +191,84 @@ var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _i
 //
 //
 //
-var WaterfallFlow = function WaterfallFlow() {return __webpack_require__.e(/*! import() | components/waterfall-flow/waterfall-flow */ "components/waterfall-flow/waterfall-flow").then(__webpack_require__.bind(null, /*! ../../components/waterfall-flow/waterfall-flow.vue */ 143));};var _default = { data: function data() {return { displayCategory: false, categoryList: [], currentCategory: {}, categoryName: '', commodityList: [], scroll_height: 700, loading: false };}, components: { WaterfallFlow: WaterfallFlow }, mounted: function mounted() {var _this = this;this.loading = true;_vue.default.prototype.$http.get('/categories/get').then(function (res) {console.log(res);_this.categoryList = res.data.data.categories;});_vue.default.prototype.$http.request({ url: '/commodities/recommend', method: 'POST' }).then(function (res) {// console.log(res)
-      _this.commodityList = res.data.data;console.log(_this.commodityList);_this.loading = false;});setTimeout(function () {_this.getHeight();}, 100);}, methods: { getHeight: function getHeight() {var that = this;var height = 0;uni.getSystemInfo({ success: function success(res) {that.screen_height = res.windowHeight;var otherHeight = 0;
+//
+var WaterfallFlow = function WaterfallFlow() {return __webpack_require__.e(/*! import() | components/waterfall-flow/waterfall-flow */ "components/waterfall-flow/waterfall-flow").then(__webpack_require__.bind(null, /*! ../../components/waterfall-flow/waterfall-flow.vue */ 143));};var _default = { data: function data() {return { displayCategory: false, categoryList: [], currentCategory: {}, currentCategoryId: -1, categoryName: '', commodityList: [], scroll_height: 700, loading: false, links: {}, loadFinish: false, initList: false };}, components: { WaterfallFlow: WaterfallFlow }, mounted: function mounted() {var _this = this;this.loading = true;_vue.default.prototype.$http.get('/categories/get').then(function (res) {_this.categoryList = res.data.data.categories;});_vue.default.prototype.$http.request({ url: '/commodities/recommend', method: 'POST' }).then(function (res) {_this.commodityList = res.data.data;_this.links = res.data.links;setTimeout(function () {_this.loading = false;}, 200);});setTimeout(function () {_this.getHeight();}, 100);}, methods: { navigateCommodity: function navigateCommodity(commodity_id) {console.log(commodity_id);},
+    loadCategoryCommodity: function loadCategoryCommodity() {var _this2 = this;
+      this.commodityList = [];
+      this.loadFinish = false;
+      this.initList = !this.initList;
+      if (this.currentCategoryId == -1) {
+        _vue.default.prototype.$http.request({
+          url: '/commodities/recommend',
+          method: 'POST' }).
+        then(function (res) {
+          _this2.commodityList = res.data.data;
+          _this2.links = res.data.links;
+          setTimeout(function () {
+            _this2.loading = false;
+          }, 200);
+        });
+      } else {
+        _vue.default.prototype.$http.request({
+          url: '/commodities/category',
+          method: 'POST',
+          params: {
+            category_id: this.currentCategoryId } }).
+
+        then(function (res) {
+          _this2.commodityList = res.data.data;
+          _this2.links = res.data.links;
+          setTimeout(function () {
+            _this2.loading = false;
+          }, 200);
+        });
+      }
+    },
+    loadNextPage: function loadNextPage(category_id) {var _this3 = this;
+      this.loading = true;
+      if (!this.links.next) {
+        this.loadFinish = true;
+        this.loading = false;
+        return;
+      }
+      _vue.default.prototype.$http.post(this.links.next).then(function (res) {
+        _this3.commodityList.push.apply(_this3.commodityList, res.data.data);
+        _this3.links = res.data.links;
+        setTimeout(function () {
+          _this3.loading = false;
+        }, 200);
+      });
+    },
+    getHeight: function getHeight() {
+      var that = this;
+      var height = 0;
+      uni.getSystemInfo({
+        success: function success(res) {
+          that.screen_height = res.windowHeight;
+          var otherHeight = 0;
           var query = uni.createSelectorQuery().in(that);
           query.select('#commodities').boundingClientRect(function (res) {
-            that.scroll_height = that.screen_height - res.top;
+            that.scroll_height = that.screen_height - res.top - 55;
           }).exec();
         } });
 
     },
     ChangeCategory: function ChangeCategory(index) {
+      if (index == this.currentCategoryId) {
+        this.hideModal();
+        return;
+      }
       if (index == -1) {
-        this.currentCategory = {};
+        this.currentCategoryId = -1;
         this.categoryName = '全部推荐';
+        this.loadCategoryCommodity();
+        this.hideModal();
+      } else {
+        this.currentCategoryId = this.categoryList[index].category_id;
+        this.categoryName = this.categoryList[index].category_name;
+        this.loadCategoryCommodity();
         this.hideModal();
       }
-      this.currentCategory = this.categoryList[index];
-      this.categoryName = this.currentCategory.category_name;
-      this.hideModal();
     },
     showModal: function showModal(e) {
       this.displayCategory = true;

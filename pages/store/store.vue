@@ -14,8 +14,9 @@
 				</view>
 			</view>
 
-			<scroll-view scroll-y :style="{height:scroll_height +'px'}" id="commodities" class="padding-bottom-xl flow-box">
-				<waterfall-flow :list="commodityList" :loading="loading" @click="choose"></waterfall-flow>
+			<scroll-view scroll-y :style="{height:scroll_height +'px'}" id="commodities" class="padding-bottom-xl flow-box"
+			 @scrolltolower="loadNextPage(currentCategoryId)">
+				<waterfall-flow :list="commodityList" @click="navigateCommodity" :init="initList"></waterfall-flow>
 				<loading v-if="loading"></loading>
 				<view class="cu-tabbar-height tabbar-height"></view>
 			</scroll-view>
@@ -49,10 +50,14 @@
 				displayCategory: false,
 				categoryList: [],
 				currentCategory: {},
+				currentCategoryId: -1,
 				categoryName: '',
 				commodityList: [],
 				scroll_height: 700,
 				loading: false,
+				links: {},
+				loadFinish: false,
+				initList: false
 			}
 		},
 		components: {
@@ -61,23 +66,72 @@
 		mounted() {
 			this.loading = true;
 			Vue.prototype.$http.get('/categories/get').then(res => {
-				console.log(res);
 				this.categoryList = res.data.data.categories;
 			});
 			Vue.prototype.$http.request({
 				url: '/commodities/recommend',
 				method: 'POST'
 			}).then(res => {
-				// console.log(res)
 				this.commodityList = res.data.data;
-				console.log(this.commodityList);
-				this.loading = false;
+				this.links = res.data.links;
+				setTimeout(() => {
+					this.loading = false;
+				}, 200);
 			});
 			setTimeout(() => {
 				this.getHeight();
 			}, 100)
 		},
 		methods: {
+			navigateCommodity(commodity_id) {
+				console.log(commodity_id);
+			},
+			loadCategoryCommodity() {
+				this.commodityList = [];
+				this.loadFinish = false;
+				this.initList = !this.initList;
+				if (this.currentCategoryId == -1) {
+					Vue.prototype.$http.request({
+						url: '/commodities/recommend',
+						method: 'POST'
+					}).then(res => {
+						this.commodityList = res.data.data;
+						this.links = res.data.links;
+						setTimeout(() => {
+							this.loading = false;
+						}, 200);
+					});
+				} else {
+					Vue.prototype.$http.request({
+						url: '/commodities/category',
+						method: 'POST',
+						params: {
+							category_id: this.currentCategoryId
+						}
+					}).then(res => {
+						this.commodityList = res.data.data;
+						this.links = res.data.links;
+						setTimeout(() => {
+							this.loading = false;
+						}, 200);
+					});
+				}
+			},
+			loadNextPage(category_id) {
+				this.loading = true;
+				if (!this.links.next) {
+					this.loadFinish = true;
+					this.loading = false;
+					return;
+				}
+				Vue.prototype.$http.post(this.links.next).then(res => {
+					this.commodityList.push.apply(this.commodityList, res.data.data);
+					this.links = res.data.links;
+					setTimeout(() => {
+						this.loading = false;
+					}, 200);
+				})
+			},
 			getHeight() {
 				let that = this;
 				let height = 0;
@@ -87,20 +141,27 @@
 						let otherHeight = 0;
 						let query = uni.createSelectorQuery().in(that);
 						query.select('#commodities').boundingClientRect(res => {
-							that.scroll_height = that.screen_height - res.top;
+							that.scroll_height = that.screen_height - res.top - 55;
 						}).exec();
 					}
 				});
 			},
 			ChangeCategory(index) {
+				if (index == this.currentCategoryId) {
+					this.hideModal();
+					return;
+				}
 				if (index == -1) {
-					this.currentCategory = {};
+					this.currentCategoryId = -1;
 					this.categoryName = '全部推荐';
+					this.loadCategoryCommodity();
+					this.hideModal();
+				} else {
+					this.currentCategoryId = this.categoryList[index].category_id;
+					this.categoryName = this.categoryList[index].category_name;
+					this.loadCategoryCommodity();
 					this.hideModal();
 				}
-				this.currentCategory = this.categoryList[index];
-				this.categoryName = this.currentCategory.category_name;
-				this.hideModal();
 			},
 			showModal(e) {
 				this.displayCategory = true;

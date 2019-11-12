@@ -122,6 +122,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default2 =
 {
   props: {
@@ -135,6 +144,10 @@ var _default2 =
     // 加载动画
     loading: {
       type: Boolean,
+      default: false },
+
+    init: {
+      type: Boolean,
       default: false } },
 
 
@@ -145,7 +158,8 @@ var _default2 =
       boxHeight: [],
       top: [],
       left: [],
-      loadingTop: 0 };
+      loadingTop: 0,
+      display: false };
 
   },
   watch: {
@@ -154,19 +168,33 @@ var _default2 =
       this.mark = oldVal.length;
       if (newVal != oldVal) {
         this.newList = this.list;
+        // this.display = false;
         this.$nextTick(function () {var _this = this;
           setTimeout(function () {
+            _this.display = true;
+          }, 260);
+          setTimeout(function () {
             _this.waterFall();
-          }, 120);
+          }, 300);
         });
       }
+    },
+    init: function init(newVal, oldVal) {
+      this.mark = 0;
+      this.newList = [];
+      this.boxHeight = [];
+      this.top = [];
+      this.left = [];
+      this.loadingTop = 0;
+      this.display = false;
     } },
 
   methods: {
     // 瀑布流定位
     waterFall: function waterFall() {var _this2 = this;
       var query = uni.createSelectorQuery().in(this);
-      query.selectAll('.flow-box .item').boundingClientRect(function (res) {
+      query.selectAll('.commodityItem').boundingClientRect(function (res) {
+        console.log(res);
         var len = _this2.newList.length;
         var height = 0;
         for (var i = _this2.mark; i < len; i++) {
@@ -195,9 +223,8 @@ var _default2 =
       }).exec();
     },
     // 选中
-    choose: function choose(e) {
-      var index = e.currentTarget.dataset.index;
-      this.$emit('click', this.newList[index]);
+    choose: function choose(commodity_id) {
+      this.$emit('click', commodity_id);
     } } };exports.default = _default2;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-qq/dist/index.js */ 1)["default"]))
 

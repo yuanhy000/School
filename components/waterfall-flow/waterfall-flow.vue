@@ -1,17 +1,26 @@
 <template>
-	<view class="flow-box margin-top-sm margin-bottom margin-left-xs margin-right-xs" :style="'height: ' + loadingTop + 'px'">
-		<view class="item" :class="left[index] == 1 ? 'left' : ''" :style="'top:' + top[index] + 'px;'" v-for="(item, index) in newList"
-		 :key="index" :data-index="index" @click="choose">
-			<view class="bg-white shadow border-radius margin-bottom-sm">
-				<image class="item-picture" mode="widthFix" :src="item.commodity_images[0].image_url" style="width: 100%; display: block;"></image>
-				<view class="flex-direction cu-tabbar-height padding-top-sm padding-left-sm">
-					<text class="text-sm commodity-name-text ">{{item.commodity_name}}</text>
+	<view class="flow-box margin-top-sm margin-bottom margin-left-xs margin-right-xs" v-show="display">
+		<view class="commodityItem animation-fade" :class="left[index] == 1 ? 'left' : ''" :style="'top:' + top[index] + 'px;'"
+		 :id="'item'+index" v-for="(item, index) in newList" :key="index" :data-index="index" @click="choose(item.commodity_id)"
+		 :data-class="'scale-up'">
+			<view class="bg-white shadow border-radius margin-bottom">
+				<image class="item-picture" mode="widthFix" :src="item.commodity_images[0].image_url" style="width: 100%; display: block;"
+				 lazy-load=true></image>
+				<view class="flex-direction padding-top-sm padding-left-sm padding-right-sm justify-around commodity-info">
+					<text class="text-sm commodity-name-text">{{item.commodity_name}}</text>
+					<text class="commodity-description-text">{{item.commodity_description}}</text>
+					<view class="flex justify-between align-center">
+						<text class="price-text">¥<text style="font-size: 32rpx;margin-left: 4rpx;">{{item.commodity_price}}</text></text>
+						<text class="text-xs cuIcon-likefill price-text" v-if="item.commodity_likes!=0"><text class="margin-left-xs">{{item.commodity_likes}}</text></text>
+					</view>
+				</view>
+				<view class="commodity-user-info flex align-center">
+					<image class="cu-avatar round avatar-shadow" :src="item.commodity_user.user_avatar"> </image>
+					<text class="commodity-user-name margin-left-sm">{{item.commodity_user.user_name}}</text>
 				</view>
 			</view>
 		</view>
-		<!-- 		<view class="loading" v-show="loading" :style="'top: ' + loadingTop + 'px'">
-			<image src="/static/nairenk-waterfall-flow/loading.gif" style="width: 80upx; height: 80upx;"></image>
-		</view> -->
+		<view class="cu-tabbar-height tabbar-height"></view>
 	</view>
 </template>
 
@@ -29,6 +38,10 @@
 			loading: {
 				type: Boolean,
 				default: false
+			},
+			init: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
@@ -38,7 +51,8 @@
 				boxHeight: [],
 				top: [],
 				left: [],
-				loadingTop: 0
+				loadingTop: 0,
+				display: false,
 			}
 		},
 		watch: {
@@ -47,19 +61,33 @@
 				this.mark = oldVal.length;
 				if (newVal != oldVal) {
 					this.newList = this.list;
+					// this.display = false;
 					this.$nextTick(function() {
 						setTimeout(() => {
+							this.display = true;
+						}, 260)
+						setTimeout(() => {
 							this.waterFall();
-						}, 120)
+						}, 300)
 					})
 				}
+			},
+			init: function(newVal, oldVal) {
+				this.mark = 0;
+				this.newList = [];
+				this.boxHeight = [];
+				this.top = [];
+				this.left = [];
+				this.loadingTop = 0;
+				this.display = false;
 			}
 		},
 		methods: {
 			// 瀑布流定位
 			waterFall() {
 				const query = uni.createSelectorQuery().in(this);
-				query.selectAll('.flow-box .item').boundingClientRect(res => {
+				query.selectAll('.commodityItem').boundingClientRect(res => {
+					console.log(res)
 					let len = this.newList.length;
 					let height = 0;
 					for (let i = this.mark; i < len; i++) {
@@ -88,9 +116,8 @@
 				}).exec();
 			},
 			// 选中
-			choose(e) {
-				let index = e.currentTarget.dataset.index;
-				this.$emit('click', this.newList[index]);
+			choose(commodity_id) {
+				this.$emit('click', commodity_id);
 			}
 		}
 	}
@@ -103,7 +130,7 @@
 		padding-bottom: var(--window-bottom);
 	}
 
-	.flow-box .item {
+	.flow-box .commodityItem {
 		position: absolute;
 		left: 10upx;
 		width: calc(50% - 20upx);
@@ -134,5 +161,40 @@
 		font-weight: 700;
 		font-size: 28rpx;
 		color: #222222;
+	}
+
+	.commodity-description-text {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		display: inline-block;
+		font-size: 23rpx;
+		width: 100%;
+		line-height: 40rpx;
+	}
+
+	.like-color {
+		color: #DE5145;
+	}
+
+	.price-text {
+		color: #DE5145;
+		font-size: 26rpx;
+		font-weight: 700;
+	}
+
+	.commodity-info {
+		padding-bottom: 20rpx;
+		border-bottom: 2rpx solid #c8c8c8;
+	}
+
+	.commodity-user-info {
+		padding: 14rpx;
+	}
+
+	.commodity-user-name {
+		font-weight: 700;
+		color: #222222;
+		font-size: 26rpx;
 	}
 </style>

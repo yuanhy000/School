@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "uni-app",
+  "usingComponents": {
+    "waterfall-flow": "/components/waterfall-flow/waterfall-flow"
+  }
+}

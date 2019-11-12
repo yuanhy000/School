@@ -43,11 +43,11 @@
 					<checkbox class='round theme' @click="CheckboxOnclick('location')">
 					</checkbox>
 				</view>
-				<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;">
+<!-- 				<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;">
 					<view class="title checkbox-title">是否匿名</view>
 					<checkbox class='round theme' @click="CheckboxOnclick('anonymity')">
 					</checkbox>
-				</view>
+				</view> -->
 			</view>
 			<view class='cu-btn bg-gradual-tab lg block shadow radius margin-xl' @tap="Submit" data-target="viewModal">
 				发布物品
@@ -76,6 +76,9 @@
 	import {
 		uploadFile
 	} from '../../utils/uploadFile.js'
+	import {
+		mapState
+	} from 'vuex';
 
 	const util = require('../../utils/util.js');
 
@@ -90,12 +93,17 @@
 				imageUrlList: [],
 				categoryList:[],
 				isDisplayLocation: false,
-				isAnonymity: false,
+				// isAnonymity: false,
 				scroll_height:700,
 				selectCategory: false,
 				selectCategoryID: 0,
-				selectCategoryName: ''
+				selectCategoryName: '',
 			}
+		},
+		computed:{
+			...mapState({
+				location: state => state.UserLocation,
+			}),
 		},
 		mounted(){
 			Vue.prototype.$http.get('/categories/get').then(res=>{
@@ -124,6 +132,7 @@
 				this.selectCategory = false;
 			},
 			Submit() {
+				console.log(this.location)
 				Vue.prototype.$http.request({
 					url: '/commodities/create',
 					method: 'POST',
@@ -134,7 +143,7 @@
 						commodity_image: this.imageUrlList,
 						category_id: this.selectCategoryID,
 						is_display_location: this.isDisplayLocation,
-						is_anonymity: this.isAnonymity
+						location: this.location.user_location.latitude + ',' + this.location.user_location.longitude
 					}
 				}).then(res => {
 					console.log(res.data)
@@ -182,18 +191,18 @@
 				});
 			},
 			DelImg(e) {
-				uni.showModal({
-					title: '确认删除',
-					content: '确定要删除这张图片吗？',
-					cancelText: '取消',
-					confirmText: '确认',
-					success: res => {
-						if (res.confirm) {
+				// uni.showModal({
+				// 	title: '确认删除',
+				// 	content: '确定要删除这张图片吗？',
+				// 	cancelText: '取消',
+				// 	confirmText: '确认',
+				// 	success: res => {
+				// 		if (res.confirm) {
 							this.selectImageList.splice(e.currentTarget.dataset.index, 1)
 							this.imageUrlList.splice(e.currentTarget.dataset.index, 1)
-						}
-					}
-				})
+				// 		}
+				// 	}
+				// })
 			},
 			GetHeight() {
 				let that = this;

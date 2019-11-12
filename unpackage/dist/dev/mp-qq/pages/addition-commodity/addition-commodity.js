@@ -197,81 +197,90 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _uploadFile = __webpack_require__(/*! ../../utils/uploadFile.js */ 95);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var util = __webpack_require__(/*! ../../utils/util.js */ 100);var _default = { data: function data() {return { title: '', content: '', price: null, isInput: false, selectImageList: [], imageUrlList: [], categoryList: [], isDisplayLocation: false, isAnonymity: false, scroll_height: 700, selectCategory: false, selectCategoryID: 0, selectCategoryName: '' };}, mounted: function mounted() {var _this = this;_vue.default.prototype.$http.get('/categories/get').then(function (res) {_this.categoryList = res.data.data.categories;});setTimeout(function () {_this.GetHeight();}, 100);}, methods: { ChangeCategory: function ChangeCategory(e) {var _this2 = this;this.selectCategoryID = e.detail.value;var selectCategory = this.categoryList.find(function (item) {return item.category_id == _this2.selectCategoryID;});this.selectCategoryName = selectCategory.category_name;console.log(this.selectCategoryName);console.log(this.selectCategoryID);this.hideModal();}, showModal: function showModal(e) {this.selectCategory = true;}, hideModal: function hideModal(e) {this.selectCategory = false;}, Submit: function Submit() {_vue.default.prototype.$http.request({ url: '/commodities/create', method: 'POST', params: { commodity_name: this.title, commodity_description: this.content, commodity_price: this.price, commodity_image: this.imageUrlList, category_id: this.selectCategoryID, is_display_location: this.isDisplayLocation, is_anonymity: this.isAnonymity } }).then(function (res) {console.log(res.data);});}, CheckboxOnclick: function CheckboxOnclick() {this.isDisplayLocation = !this.isDisplayLocation;}, ChooseImage: function ChooseImage() {var _this3 = this;uni.chooseImage({ count: 9, //默认9
-        sizeType: ['original', 'compressed'], sourceType: ['album'],
+var _uploadFile = __webpack_require__(/*! ../../utils/uploadFile.js */ 95);
+
+
+var _vuex = __webpack_require__(/*! vuex */ 27);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+
+
+
+var util = __webpack_require__(/*! ../../utils/util.js */ 100);var _default =
+
+{
+  data: function data() {
+    return {
+      title: '',
+      content: '',
+      price: null,
+      isInput: false,
+      selectImageList: [],
+      imageUrlList: [],
+      categoryList: [],
+      isDisplayLocation: false,
+      // isAnonymity: false,
+      scroll_height: 700,
+      selectCategory: false,
+      selectCategoryID: 0,
+      selectCategoryName: '' };
+
+  },
+  computed: _objectSpread({},
+  (0, _vuex.mapState)({
+    location: function location(state) {return state.UserLocation;} })),
+
+
+  mounted: function mounted() {var _this = this;
+    _vue.default.prototype.$http.get('/categories/get').then(function (res) {
+      _this.categoryList = res.data.data.categories;
+    });
+
+    setTimeout(function () {
+      _this.GetHeight();
+    }, 100);
+  },
+  methods: {
+    ChangeCategory: function ChangeCategory(e) {var _this2 = this;
+      this.selectCategoryID = e.detail.value;
+      var selectCategory = this.categoryList.find(function (item) {
+        return item.category_id == _this2.selectCategoryID;
+      });
+      this.selectCategoryName = selectCategory.category_name;
+      console.log(this.selectCategoryName);
+      console.log(this.selectCategoryID);
+      this.hideModal();
+    },
+    showModal: function showModal(e) {
+      this.selectCategory = true;
+    },
+    hideModal: function hideModal(e) {
+      this.selectCategory = false;
+    },
+    Submit: function Submit() {
+      console.log(this.location);
+      _vue.default.prototype.$http.request({
+        url: '/commodities/create',
+        method: 'POST',
+        params: {
+          commodity_name: this.title,
+          commodity_description: this.content,
+          commodity_price: this.price,
+          commodity_image: this.imageUrlList,
+          category_id: this.selectCategoryID,
+          is_display_location: this.isDisplayLocation,
+          location: this.location.user_location.latitude + ',' + this.location.user_location.longitude } }).
+
+      then(function (res) {
+        console.log(res.data);
+      });
+    },
+    CheckboxOnclick: function CheckboxOnclick() {
+      this.isDisplayLocation = !this.isDisplayLocation;
+    },
+    ChooseImage: function ChooseImage() {var _this3 = this;
+      uni.chooseImage({
+        count: 9, //默认9
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album'],
         success: function success(res) {
           if (_this3.selectImageList.length != 0) {
             _this3.selectImageList = _this3.selectImageList.concat(res.tempFilePaths);
@@ -305,19 +314,19 @@ var util = __webpack_require__(/*! ../../utils/util.js */ 100);var _default = { 
         current: e.currentTarget.dataset.url });
 
     },
-    DelImg: function DelImg(e) {var _this5 = this;
-      uni.showModal({
-        title: '确认删除',
-        content: '确定要删除这张图片吗？',
-        cancelText: '取消',
-        confirmText: '确认',
-        success: function success(res) {
-          if (res.confirm) {
-            _this5.selectImageList.splice(e.currentTarget.dataset.index, 1);
-            _this5.imageUrlList.splice(e.currentTarget.dataset.index, 1);
-          }
-        } });
-
+    DelImg: function DelImg(e) {
+      // uni.showModal({
+      // 	title: '确认删除',
+      // 	content: '确定要删除这张图片吗？',
+      // 	cancelText: '取消',
+      // 	confirmText: '确认',
+      // 	success: res => {
+      // 		if (res.confirm) {
+      this.selectImageList.splice(e.currentTarget.dataset.index, 1);
+      this.imageUrlList.splice(e.currentTarget.dataset.index, 1);
+      // 		}
+      // 	}
+      // })
     },
     GetHeight: function GetHeight() {
       var that = this;
