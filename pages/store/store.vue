@@ -84,7 +84,9 @@
 		},
 		methods: {
 			navigateCommodity(commodity_id) {
-				console.log(commodity_id);
+				uni.navigateTo({
+					url: '/pages/commodity/commodity?commodity_id=' + commodity_id
+				})
 			},
 			loadCategoryCommodity() {
 				this.commodityList = [];

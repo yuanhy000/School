@@ -1,6 +1,4 @@
 {
   "navigationBarTitleText": "uni-app",
-  "usingComponents": {
-    "zy-search": "/components/zy-search/zy-search"
-  }
+  "usingComponents": {}
 }

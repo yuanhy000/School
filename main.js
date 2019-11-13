@@ -37,6 +37,9 @@ Vue.component('search', search)
 import loading from './components/loading/loading.vue'
 Vue.component('loading', loading)
 
+import notification from './components/notification/notification.vue'
+Vue.component('notification', notification)
+
 
 // import vantTransition from './vantui/components/vant/transition/index'
 // Vue.component('vantTransition', vantTransition)

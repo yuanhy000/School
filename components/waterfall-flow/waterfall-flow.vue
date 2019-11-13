@@ -15,7 +15,7 @@
 					</view>
 				</view>
 				<view class="commodity-user-info flex align-center">
-					<image class="cu-avatar round avatar-shadow" :src="item.commodity_user.user_avatar"> </image>
+					<image class="cu-avatar avatar-shadow" style="border-radius: 10rpx;" :src="item.commodity_user.user_avatar"> </image>
 					<text class="commodity-user-name margin-left-sm">{{item.commodity_user.user_name}}</text>
 				</view>
 			</view>
@@ -80,6 +80,9 @@
 				this.left = [];
 				this.loadingTop = 0;
 				this.display = false;
+				setTimeout(() => {
+					this.display = true;
+				}, 260)
 			}
 		},
 		methods: {
@@ -87,7 +90,7 @@
 			waterFall() {
 				const query = uni.createSelectorQuery().in(this);
 				query.selectAll('.commodityItem').boundingClientRect(res => {
-					console.log(res)
+					// console.log(res)
 					let len = this.newList.length;
 					let height = 0;
 					for (let i = this.mark; i < len; i++) {
@@ -189,7 +192,7 @@
 	}
 
 	.commodity-user-info {
-		padding: 14rpx;
+		padding: 16rpx;
 	}
 
 	.commodity-user-name {

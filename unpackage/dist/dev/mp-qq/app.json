@@ -28,6 +28,7 @@
     "user": "/pages/user/user",
     "authorization": "/pages/authorization/authorization",
     "search": "/pages/search/search",
-    "loading": "/components/loading/loading"
+    "loading": "/components/loading/loading",
+    "notification": "/components/notification/notification"
   }
 }

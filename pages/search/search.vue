@@ -60,7 +60,6 @@
 </template>
 
 <script>
-	import zySearch from '../../components/zy-search/zy-search.vue'
 	import QQMapWX from '../../js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js';
 	import {
 		highLightMsg
@@ -72,9 +71,6 @@
 		key: 'XSWBZ-MHZ3K-U76JO-AU4NT-WKNYK-B2BA4'
 	});
 	export default {
-		components: {
-			zySearch
-		},
 		data() {
 			return {
 				StatusBar: this.StatusBar,

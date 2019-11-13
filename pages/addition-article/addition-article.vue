@@ -4,7 +4,7 @@
 			<block slot="backText">返回</block>
 			<block slot="content">Addition</block>
 		</cu-custom>
-		<scroll-view scroll-y class="DrawerPage" id="scroll" :style="{height:scroll_height +'px'}">
+		<scroll-view scroll-y id="scroll" :style="{height:scroll_height +'px'}">
 			<view class="cu-tabbar-height bg-white margin-left margin-right margin-top  border-radius bg-white shadow flex align-center ">
 				<input class="margin-left margin-right text-sm" type="text" placeholder="标题 ( 可选 )" v-model="title" />
 			</view>

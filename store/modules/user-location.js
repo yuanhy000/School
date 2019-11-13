@@ -1,5 +1,9 @@
 import QQMapWX from '../../js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js';
 
+let qqmapsdk = new QQMapWX({
+	key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J'
+});
+
 export default {
 	state: {
 		user_address: null,
@@ -50,9 +54,6 @@ export default {
 			commit,
 			dispatch
 		}) {
-			let qqmapsdk = new QQMapWX({
-				key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J'
-			});
 			qq.getLocation({
 				type: 'gcj02',
 				success(res) {
@@ -68,7 +69,7 @@ export default {
 				}
 			})
 		},
-
+		
 		setUserLocation({
 			commit
 		}, location) {

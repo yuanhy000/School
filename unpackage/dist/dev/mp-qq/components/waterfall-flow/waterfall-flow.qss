@@ -58,7 +58,7 @@
 	border-bottom: 2rpx solid #c8c8c8;
 }
 .commodity-user-info.data-v-31c9631a {
-	padding: 14rpx;
+	padding: 16rpx;
 }
 .commodity-user-name.data-v-31c9631a {
 	font-weight: 700;
