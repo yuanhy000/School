@@ -26,7 +26,7 @@
 			<swiper-item>
 				<scroll-view scroll-y :style="{height:scroll_height +'px'}" class="padding-bottom-xl" @scrolltolower="loadNextPage('food')">
 					<block class="swiper-item swiper-item-container margin-bottom" v-for="(item, index) in food_list" v-bind:key="index">
-						<view class=" bg-white margin-left margin-right margin-top  border-radius bg-white shadow flex align-center padding-top padding-left padding-bottom">
+						<view class=" bg-white margin-left margin-right margin-top  border-radius bg-white shadow flex align-center padding-top padding-left padding-bottom animation-fade">
 							<image class="cu-avatar xl border-radius bg-white shadow margin-right" :src="item.photos.length != 0 ? item.photos[0].url:'./../../static/discovery/food_default.png'" lazy-load=true>
 							</image>
 							<view class="flex-direction justify-start poi-info">
@@ -51,7 +51,7 @@
 			<swiper-item>
 				<scroll-view scroll-y :style="{height:scroll_height +'px'}" class="padding-bottom-xl" @scrolltolower="loadNextPage('play')">
 					<block class="swiper-item swiper-item-container margin-bottom" v-for="(item, index) in play_list" v-bind:key="index">
-						<view class=" bg-white margin-left margin-right margin-top  border-radius bg-white shadow flex align-center padding-top padding-left padding-bottom">
+						<view class=" bg-white margin-left margin-right margin-top  border-radius bg-white shadow flex align-center padding-top padding-left padding-bottom animation-fade">
 							<image class="cu-avatar xl border-radius bg-white shadow margin-right" :src="item.photos.length != 0 ? item.photos[0].url:'./../../static/discovery/play.png'">
 							</image>
 							<view class="flex-direction justify-start poi-info">
@@ -76,7 +76,7 @@
 			<swiper-item>
 				<scroll-view scroll-y :style="{height:scroll_height +'px'}" class="padding-bottom-xl" @scrolltolower="loadNextPage('live')">
 					<block class="swiper-item swiper-item-container margin-bottom" v-for="(item, index) in live_list" v-bind:key="index">
-						<view class=" bg-white margin-left margin-right margin-top  border-radius bg-white shadow flex align-center padding-top padding-left padding-bottom">
+						<view class=" bg-white margin-left margin-right margin-top  border-radius bg-white shadow flex align-center padding-top padding-left padding-bottom animation-fade">
 							<image class="cu-avatar xl border-radius bg-white shadow margin-right" :src="item.photos.length != 0 ? item.photos[0].url:'./../../static/discovery/house_default.png'">
 							</image>
 							<view class="flex-direction justify-start poi-info">
@@ -101,7 +101,7 @@
 			<swiper-item>
 				<scroll-view scroll-y :style="{height:scroll_height +'px'}" class="padding-bottom-xl" @scrolltolower="loadNextPage('sport')">
 					<block class="swiper-item swiper-item-container margin-bottom" v-for="(item, index) in sport_list" v-bind:key="index">
-						<view class=" bg-white margin-left margin-right margin-top  border-radius bg-white shadow flex align-center padding-top padding-left padding-bottom">
+						<view class=" bg-white margin-left margin-right margin-top  border-radius bg-white shadow flex align-center padding-top padding-left padding-bottom animation-fade">
 							<image class="cu-avatar xl border-radius bg-white shadow margin-right" :src="item.photos.length != 0 ? item.photos[0].url:'./../../static/discovery/sport.png'">
 							</image>
 							<view class="flex-direction justify-start poi-info">

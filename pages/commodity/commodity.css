@@ -1,6 +1,7 @@
 .info-border-bottom {
 	border-bottom: 2rpx solid #f1f1f1;
 }
+
 .info-border-top {
 	border-top: 4rpx solid #f1f1f1;
 }
@@ -58,4 +59,45 @@
 .commodity-icon {
 	font-size: 44rpx !important;
 	margin: 0 !important;
+}
+
+.none-default-image {
+	width: 60%;
+}
+
+.comment-container-title {
+	width: 100%;
+	padding-bottom: 30rpx;
+	font-weight: 700;
+	/* text-align: center; */
+	color: #222222;
+}
+
+.left {
+	width: 100px;
+	height: 2px;
+	background: -webkit-linear-gradient(left, rgba(59, 76, 96, 0.6), #f1f1f1);
+	background: -o-linear-gradient(left, rgba(59, 76, 96, 0.6), #f1f1f1);
+	background: -moz-linear-gradient(left, rgba(59, 76, 96, 0.6), #f1f1f1);
+	background: linear-gradient(to left, rgba(59, 76, 96, 0.6), #f1f1f1);
+}
+
+.right {
+	width: 100px;
+	height: 2px;
+	background: -webkit-linear-gradient(right, rgba(59, 76, 96, 0.6), #f1f1f1);
+	background: -o-linear-gradient(right, rgba(59, 76, 96, 0.6), #f1f1f1);
+	background: -moz-linear-gradient(right, rgba(59, 76, 96, 0.6), #f1f1f1);
+	background: linear-gradient(to right, rgba(59, 76, 96, 0.6), #f1f1f1);
+}
+
+.commodity-recommend-title {
+	font-size: 30rpx;
+	font-weight: 700;
+}
+
+.time-text {
+	margin-left: 85rpx;
+	font-size: 24rpx;
+	color: #bbb;
 }

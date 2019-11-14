@@ -32,32 +32,64 @@
 					<image :src="item.image_url" class="commodity-image margin-bottom-sm" mode="widthFix"></image>
 				</block>
 			</view>
-			<view class="padding-top padding-bottom-sm padding-left-sm padding-right flex align-center bg-white margin-top">
-				<text>评论列表</text>
+			<view class="padding-top padding-left padding-right flex align-center bg-white margin-top flex-column">
+				<view class="comment-container-title info-border-bottom">
+					<text>全部留言</text>
+				</view>
+				<image src="../../static/commodity/none-default.png" class="none-default-image" mode="widthFix" v-if="!hasComment"></image>
+				<view class="flex-column max-width padding-top-xs" v-else>
+					<block v-for="(item,index) in commodityInfo.commodity_comments" :key="index">
+						<view class="margin-top-sm">
+							<view class="flex align-center justify-between">
+								<view class="flex align-center">
+									<image class="cu-avatar avatar-shadow margin-right-sm" style="border-radius: 10rpx;" :src="item.comment_user.user_avatar">
+									</image>
+									<text class="view-user-name">{{item.comment_user.user_name}}</text>
+								</view>
+								<view @click="likeComment(index,item.comment_id)">
+									<text class="cuIcon-appreciate text-theme-color" v-if="!item.comment_like"></text>
+									<text class="cuIcon-appreciatefill text-theme-color" v-else></text>
+									<text class="text-theme-color margin-left-xs" v-show="item.comment_likes>0">{{item.comment_likes}}</text>
+								</view>
+							</view>
+							<text class="text-content text-df flex margin-top-xs " style="margin-left: 85rpx; color: #222;">{{item.comment_content}}</text>
+							<text class="info-border-bottom max-width padding-bottom-sm flex margin-right padding-top-xs time-text">{{item.display_time}}</text>
+						</view>
+					</block>
+				</view>
+			</view>
+			<view class="padding-top-xs padding-bottom-sm padding-left padding-right margin-top flex align-center justify-center">
+				<view class="left"></view>
+				<view class="margin-left margin-right">
+					<text class="cuIcon-like margin-right-xs text-theme-color commodity-recommend-title"></text>
+					<text class="text-theme-color commodity-recommend-title">猜你喜欢</text>
+				</view>
+				<view class="right"></view>
 			</view>
 		</scroll-view>
-		<view class="cu-bar padding-right bg-white info-border-top animation-fade" v-show="display">
+		<view class="cu-bar padding-right bg-white info-border-top animation-fade-quick" v-show="display">
 			<view class="flex">
-				<view class="action flex-column align-center padding-right-xl" v-if="!isInput">
-					<text class="cuIcon-appreciatefill text-theme-color commodity-icon"></text>
+				<view class="action flex-column align-center padding-right-xl" v-if="!isInput" @click="likeCommodity">
+					<text class="cuIcon-appreciatefill text-theme-color commodity-icon animation-fade-quick" v-if="commodityInfo.commodity_like"></text>
+					<text class="cuIcon-appreciate text-theme-color commodity-icon animation-fade-quick" v-else></text>
 					<text class="text-xs text-theme-color">超赞</text>
 				</view>
-				<view class="action flex-column align-center padding-right-xl" v-if="!isInput" @click="beginInput">
-					<text class="cuIcon-messagefill text-theme-color commodity-icon"></text>
-					<text class="text-xs text-theme-color">留言</text>
-				</view>
-				<view class="action flex-column align-center padding-right-xl" v-if="!isInput">
-					<text class="cuIcon-favorfill text-theme-color commodity-icon"></text>
+				<view class="action flex-column align-center padding-right-xl" v-if="!isInput" @click="CollectCommodity">
+					<text class="cuIcon-favorfill text-theme-color commodity-icon animation-fade-quick" v-if="commodityInfo.commodity_collect"></text>
+					<text class="cuIcon-favor text-theme-color commodity-icon animation-fade-quick" v-else></text>
 					<text class="text-xs text-theme-color">收藏</text>
 				</view>
+				<view class="action flex-column align-center padding-right-xl" v-if="!isInput" @click="beginInput">
+					<text class="cuIcon-message text-theme-color commodity-icon animation-fade-quick"></text>
+					<text class="text-xs text-theme-color">留言</text>
+				</view>
 			</view>
-			<view class="search-form round" v-if="isInput">
+			<view class="search-form round animation-fade-quick" v-if="isInput">
 				<text class="cuIcon-comment"></text>
-				<input @focus="InputFocus" @blur="InputBlur" :adjust-position="false" type="text" placeholder="看对眼就留言,问问更多细节～"
-				 v-model="inputComment" confirm-type="search"></input>
+				<input :adjust-position="false" type="text" placeholder="看对眼就留言,问问更多细节～" v-model="inputComment" confirm-type="search"></input>
 			</view>
-			<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm" v-if="!isInput">我想要</button>
-			<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm" v-else @click="submitComment">留言</button>
+			<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm animation-fade-quick" v-if="!isInput">我想要</button>
+			<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm animation-fade-quick" v-else @click="submitComment">留言</button>
 		</view>
 		<notification ref="notification" :isdistance="true"></notification>
 	</view>
@@ -82,6 +114,14 @@
 				inputComment: ''
 			}
 		},
+		computed: {
+			hasComment: function() {
+				if (this.commodityInfo.length != 0) {
+					return this.commodityInfo.commodity_comments.length != 0;
+				}
+				return false;
+			}
+		},
 		onLoad(option) {
 			this.commodity_id = option.commodity_id;
 			let that = this;
@@ -95,6 +135,9 @@
 				this.commodityInfo = res.data.data;
 				for (let item in this.commodityInfo.commodity_images) {
 					this.imageList.push(this.commodityInfo.commodity_images[item].image_url);
+				}
+				for (let index in this.commodityInfo.commodity_comments) {
+					this.formatTime(index);
 				}
 				let location = this.commodityInfo.commodity_location.split(',')
 				qqmapsdk.reverseGeocoder({
@@ -117,15 +160,91 @@
 			}, 200);
 		},
 		methods: {
+			likeComment(index, comment_id) {
+				Vue.prototype.$http.request({
+					url: '/likes/comment',
+					method: 'POST',
+					params: {
+						comment_id: comment_id,
+					},
+				}).then(res => {
+					this.commodityInfo.commodity_comments[index].comment_like = !this.commodityInfo.commodity_comments[index].comment_like;
+					if (this.commodityInfo.commodity_comments[index].comment_like) {
+						this.commodityInfo.commodity_comments[index].comment_likes++;
+					} else {
+						this.commodityInfo.commodity_comments[index].comment_likes--;
+					}
+					this.$refs.notification.open({
+						type: 'success',
+						content: '操作成功',
+						timeout: 1500,
+						isClick: false
+					});
+				})
+			},
+			likeCommodity() {
+				Vue.prototype.$http.request({
+					url: '/likes/commodity',
+					method: 'POST',
+					params: {
+						commodity_id: this.commodity_id,
+					},
+				}).then(res => {
+					this.commodityInfo.commodity_like = !this.commodityInfo.commodity_like;
+					this.$refs.notification.open({
+						type: 'success',
+						content: '操作成功',
+						timeout: 1500,
+						isClick: false
+					});
+				})
+			},
+			CollectCommodity() {
+				Vue.prototype.$http.request({
+					url: '/collections/commodity',
+					method: 'POST',
+					params: {
+						commodity_id: this.commodity_id,
+					},
+				}).then(res => {
+					this.commodityInfo.commodity_collect = !this.commodityInfo.commodity_collect;
+					this.$refs.notification.open({
+						type: 'success',
+						content: '操作成功',
+						timeout: 1500,
+						isClick: false
+					});
+				})
+			},
 			submitComment() {
 				if (this.inputComment == '') {
 					this.$refs.notification.open({
 						type: 'warn',
 						content: '留言不能为空～',
-						timeout: 2000,
-						isClick: true
+						timeout: 1500,
+						isClick: false
 					});
 				}
+				Vue.prototype.$http.request({
+					url: '/comments/commodity/create',
+					method: 'POST',
+					params: {
+						commodity_id: this.commodity_id,
+						comment_content: this.inputComment,
+						parent_id: 0
+					},
+				}).then(res => {
+					this.commodityInfo.commodity_comments.unshift(res.data.data);
+					this.formatTime(0);
+					this.cancelInput();
+					this.inputComment = '';
+					this.$refs.notification.open({
+						type: 'success',
+						content: '操作成功',
+						timeout: 1500,
+						isClick: false
+					});
+				})
 			},
 			beginInput() {
 				this.isInput = true;
@@ -154,6 +273,48 @@
 					}
 				});
 			},
+			formatTime(index) {
+				let time = this.commodityInfo.commodity_comments[index].comment_created.split(' ');
+				let currentTime = new Date().toLocaleDateString();
+				let differenceDay = Math.abs(Math.ceil((new Date(currentTime) - new Date(time[0])) / (1000 * 60 * 60 * 24)));
+				let differenceWeekDay = 7 - differenceDay;
+				if (differenceDay === 0) {
+					this.commodityInfo.commodity_comments[index].display_time = '今天 ' + time[1];
+				} else if (differenceDay === 1) {
+					this.commodityInfo.commodity_comments[index].display_time = '昨天 ' + time[1];
+				} else if (differenceDay === 2) {
+					this.commodityInfo.commodity_comments[index].display_time = '前天 ' + time[1];
+				} else {
+					if (differenceWeekDay > 0) {
+						let targetWeekDay = new Date(this.commodityInfo.commodity_comments[index].comment_created).getDay();
+						switch (targetWeekDay) {
+							case 0:
+								this.commodityInfo.commodity_comments[index].display_time = '星期天 ' + time[1];
+								break;
+							case 1:
+								this.commodityInfo.commodity_comments[index].display_time = '星期一 ' + time[1];
+								break;
+							case 2:
+								this.commodityInfo.commodity_comments[index].display_time = '星期二 ' + time[1];
+								break;
+							case 3:
+								this.commodityInfo.commodity_comments[index].display_time = '星期三 ' + time[1];
+								break;
+							case 4:
+								this.commodityInfo.commodity_comments[index].display_time = '星期四 ' + time[1];
+								break;
+							case 5:
+								this.commodityInfo.commodity_comments[index].display_time = '星期五 ' + time[1];
+								break;
+							case 6:
+								this.commodityInfo.commodity_comments[index].display_time = '星期六 ' + time[1];
+								break;
+						}
+					} else {
+						this.commodityInfo.commodity_comments[index].display_time = this.commodityInfo.commodity_comments[index].created_at;
+					}
+				}
+			}
 		}
 	}
 </script>

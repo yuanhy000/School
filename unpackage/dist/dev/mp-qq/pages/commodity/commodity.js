@@ -188,6 +188,38 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _qqmapWxJssdk = _interopRequireDefault(__webpack_require__(/*! ../../js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js */ 31));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
@@ -254,7 +286,94 @@ var _qqmapWxJssdk = _interopRequireDefault(__webpack_require__(/*! ../../js_sdk/
 //
 //
 //
-var qqmapsdk = new _qqmapWxJssdk.default({ key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J' });var _default = { data: function data() {return { display: false, commodity_id: 0, scroll_height: 700, commodityInfo: [], imageList: [], displayLocation: '', isInput: false, inputComment: '' };}, onLoad: function onLoad(option) {var _this = this;this.commodity_id = option.commodity_id;var that = this;_vue.default.prototype.$http.request({ url: '/commodities/detail', method: 'POST', params: { commodity_id: this.commodity_id } }).then(function (res) {_this.commodityInfo = res.data.data;for (var item in _this.commodityInfo.commodity_images) {_this.imageList.push(_this.commodityInfo.commodity_images[item].image_url);}var location = _this.commodityInfo.commodity_location.split(',');qqmapsdk.reverseGeocoder({ location: { latitude: location[0], longitude: location[1] }, success: function success(res) {that.displayLocation = res.result.address_component.city + res.result.address_component.district;} });});}, mounted: function mounted() {var _this2 = this;setTimeout(function () {_this2.display = true;}, 100);setTimeout(function () {_this2.getHeight();}, 200);}, methods: { submitComment: function submitComment() {if (this.inputComment == '') {this.$refs.notification.open({ type: 'warn', content: '留言不能为空～', timeout: 2000, isClick: true });}}, beginInput: function beginInput() {this.isInput = true;}, cancelInput: function cancelInput() {
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var qqmapsdk = new _qqmapWxJssdk.default({ key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J' });var _default = { data: function data() {return { display: false, commodity_id: 0, scroll_height: 700, commodityInfo: [], imageList: [], displayLocation: '', isInput: false, inputComment: '' };}, computed: { hasComment: function hasComment() {if (this.commodityInfo.length != 0) {return this.commodityInfo.commodity_comments.length != 0;}return false;} }, onLoad: function onLoad(option) {var _this = this;this.commodity_id = option.commodity_id;var that = this;_vue.default.prototype.$http.request({ url: '/commodities/detail', method: 'POST', params: { commodity_id: this.commodity_id } }).then(function (res) {_this.commodityInfo = res.data.data;for (var item in _this.commodityInfo.commodity_images) {_this.imageList.push(_this.commodityInfo.commodity_images[item].image_url);}for (var index in _this.commodityInfo.commodity_comments) {_this.formatTime(index);}var location = _this.commodityInfo.commodity_location.split(',');qqmapsdk.reverseGeocoder({ location: { latitude: location[0], longitude: location[1] }, success: function success(res) {that.displayLocation = res.result.address_component.city + res.result.address_component.district;} });});}, mounted: function mounted() {var _this2 = this;setTimeout(function () {_this2.display = true;}, 100);setTimeout(function () {_this2.getHeight();}, 200);}, methods: { likeComment: function likeComment(index, comment_id) {var _this3 = this;_vue.default.prototype.$http.request({ url: '/likes/comment', method: 'POST', params: { comment_id: comment_id } }).then(function (res) {_this3.commodityInfo.commodity_comments[index].comment_like = !_this3.commodityInfo.commodity_comments[index].comment_like;if (_this3.commodityInfo.commodity_comments[index].comment_like) {_this3.commodityInfo.commodity_comments[index].comment_likes++;} else {_this3.commodityInfo.commodity_comments[index].comment_likes--;}_this3.$refs.notification.open({ type: 'success', content: '操作成功', timeout: 1500, isClick: false });});}, likeCommodity: function likeCommodity() {var _this4 = this;_vue.default.prototype.$http.request({ url: '/likes/commodity', method: 'POST', params: { commodity_id: this.commodity_id } }).then(function (res) {_this4.commodityInfo.commodity_like = !_this4.commodityInfo.commodity_like;_this4.$refs.notification.open({ type: 'success', content: '操作成功', timeout: 1500,
+          isClick: false });
+
+      });
+    },
+    CollectCommodity: function CollectCommodity() {var _this5 = this;
+      _vue.default.prototype.$http.request({
+        url: '/collections/commodity',
+        method: 'POST',
+        params: {
+          commodity_id: this.commodity_id } }).
+
+      then(function (res) {
+        _this5.commodityInfo.commodity_collect = !_this5.commodityInfo.commodity_collect;
+        _this5.$refs.notification.open({
+          type: 'success',
+          content: '操作成功',
+          timeout: 1500,
+          isClick: false });
+
+      });
+    },
+    submitComment: function submitComment() {var _this6 = this;
+      if (this.inputComment == '') {
+        this.$refs.notification.open({
+          type: 'warn',
+          content: '留言不能为空～',
+          timeout: 1500,
+          isClick: false });
+
+      }
+      _vue.default.prototype.$http.request({
+        url: '/comments/commodity/create',
+        method: 'POST',
+        params: {
+          commodity_id: this.commodity_id,
+          comment_content: this.inputComment,
+          parent_id: 0 } }).
+
+      then(function (res) {
+        _this6.commodityInfo.commodity_comments.unshift(res.data.data);
+        _this6.formatTime(0);
+        _this6.cancelInput();
+        _this6.inputComment = '';
+        _this6.$refs.notification.open({
+          type: 'success',
+          content: '操作成功',
+          timeout: 1500,
+          isClick: false });
+
+      });
+    },
+    beginInput: function beginInput() {
+      this.isInput = true;
+    },
+    cancelInput: function cancelInput() {
       this.isInput = false;
     },
     viewImage: function viewImage(e) {
@@ -277,6 +396,48 @@ var qqmapsdk = new _qqmapWxJssdk.default({ key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-Z
           }).exec();
         } });
 
+    },
+    formatTime: function formatTime(index) {
+      var time = this.commodityInfo.commodity_comments[index].comment_created.split(' ');
+      var currentTime = new Date().toLocaleDateString();
+      var differenceDay = Math.abs(Math.ceil((new Date(currentTime) - new Date(time[0])) / (1000 * 60 * 60 * 24)));
+      var differenceWeekDay = 7 - differenceDay;
+      if (differenceDay === 0) {
+        this.commodityInfo.commodity_comments[index].display_time = '今天 ' + time[1];
+      } else if (differenceDay === 1) {
+        this.commodityInfo.commodity_comments[index].display_time = '昨天 ' + time[1];
+      } else if (differenceDay === 2) {
+        this.commodityInfo.commodity_comments[index].display_time = '前天 ' + time[1];
+      } else {
+        if (differenceWeekDay > 0) {
+          var targetWeekDay = new Date(this.commodityInfo.commodity_comments[index].comment_created).getDay();
+          switch (targetWeekDay) {
+            case 0:
+              this.commodityInfo.commodity_comments[index].display_time = '星期天 ' + time[1];
+              break;
+            case 1:
+              this.commodityInfo.commodity_comments[index].display_time = '星期一 ' + time[1];
+              break;
+            case 2:
+              this.commodityInfo.commodity_comments[index].display_time = '星期二 ' + time[1];
+              break;
+            case 3:
+              this.commodityInfo.commodity_comments[index].display_time = '星期三 ' + time[1];
+              break;
+            case 4:
+              this.commodityInfo.commodity_comments[index].display_time = '星期四 ' + time[1];
+              break;
+            case 5:
+              this.commodityInfo.commodity_comments[index].display_time = '星期五 ' + time[1];
+              break;
+            case 6:
+              this.commodityInfo.commodity_comments[index].display_time = '星期六 ' + time[1];
+              break;}
+
+        } else {
+          this.commodityInfo.commodity_comments[index].display_time = this.commodityInfo.commodity_comments[index].created_at;
+        }
+      }
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-qq/dist/index.js */ 1)["default"]))
 
