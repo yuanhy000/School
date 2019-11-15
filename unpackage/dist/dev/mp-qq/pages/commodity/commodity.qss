@@ -92,4 +92,8 @@
 	font-size: 24rpx;
 	color: #bbb;
 }
-
+.commodity-other-info{
+	text-align: right;
+	color: #BBBBBB;
+	font-size: 24rpx;
+}

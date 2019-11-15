@@ -28,9 +28,14 @@
 				</view>
 			</view>
 			<view class="commodity-image-container flex-column align-center bg-white info-border-bottom padding-left padding-right padding-bottom-sm">
-				<block v-for="(item,index) in commodityInfo.commodity_images" :key="index" @click="viewImage" :data-url="commodityInfo.commodity_images[index].image_url">
+				<view v-for="(item,index) in commodityInfo.commodity_images" :key="index" @click="viewImage" :data-url="commodityInfo.commodity_images[index].image_url"
+				 class="max-width">
 					<image :src="item.image_url" class="commodity-image margin-bottom-sm" mode="widthFix"></image>
-				</block>
+				</view>
+				<view class="flex align-center max-width justify-end padding-bottom-xs padding-top-xs">
+					<text class="commodity-other-info margin-right-sm">超赞 ·<text class="margin-left-xs">{{commodityInfo.commodity_likes}}</text></text>
+					<text class="commodity-other-info">浏览 ·<text class="margin-left-xs">{{commodityInfo.commodity_views}}</text></text>
+				</view>
 			</view>
 			<view class="padding-top padding-left padding-right flex align-center bg-white margin-top flex-column">
 				<view class="comment-container-title info-border-bottom">
@@ -39,7 +44,7 @@
 				<image src="../../static/commodity/none-default.png" class="none-default-image" mode="widthFix" v-if="!hasComment"></image>
 				<view class="flex-column max-width padding-top-xs" v-else>
 					<block v-for="(item,index) in commodityInfo.commodity_comments" :key="index">
-						<view class="margin-top-sm">
+						<view class="margin-top-sm" v-show="index < comment_page*4">
 							<view class="flex align-center justify-between">
 								<view class="flex align-center">
 									<image class="cu-avatar avatar-shadow margin-right-sm" style="border-radius: 10rpx;" :src="item.comment_user.user_avatar">
@@ -56,6 +61,10 @@
 							<text class="info-border-bottom max-width padding-bottom-sm flex margin-right padding-top-xs time-text">{{item.display_time}}</text>
 						</view>
 					</block>
+					<view class="max-width flex align-center justify-center padding-top-sm padding-bottom-sm" @click="displayMoreComments"
+					 v-show="commodityInfo.commodity_comments.length > comment_page*4">
+						<text class="text-theme-color" style="font-weight: 700;">加载更多留言<text class="cuIcon-unfold margin-left-xs"></text></text>
+					</view>
 				</view>
 			</view>
 			<view class="padding-top-xs padding-bottom-sm padding-left padding-right margin-top flex align-center justify-center">
@@ -66,6 +75,7 @@
 				</view>
 				<view class="right"></view>
 			</view>
+			<waterfall-flow :list="commodityInfo.commodity_recommend" @click="navigateCommodity" :align="true" :init="initList"></waterfall-flow>
 		</scroll-view>
 		<view class="cu-bar padding-right bg-white info-border-top animation-fade-quick" v-show="display">
 			<view class="flex">
@@ -98,6 +108,7 @@
 <script>
 	import Vue from 'vue';
 	import QQMapWX from '../../js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js';
+	import WaterfallFlow from '../../components/waterfall-flow/waterfall-flow.vue';
 	let qqmapsdk = new QQMapWX({
 		key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J'
 	});
@@ -111,8 +122,12 @@
 				imageList: [],
 				displayLocation: '',
 				isInput: false,
-				inputComment: ''
+				inputComment: '',
+				comment_page: 1,
 			}
+		},
+		components: {
+			WaterfallFlow: WaterfallFlow
 		},
 		computed: {
 			hasComment: function() {
@@ -149,6 +164,7 @@
 						that.displayLocation = res.result.address_component.city + res.result.address_component.district;
 					}
 				})
+				console.log(this.commodityInfo.commodity_comments.slice(1, 5))
 			});
 		},
 		mounted() {
@@ -160,6 +176,14 @@
 			}, 200);
 		},
 		methods: {
+			navigateCommodity(commodity_id) {
+				uni.navigateTo({
+					url: '/pages/commodity/commodity?commodity_id=' + commodity_id
+				})
+			},
+			displayMoreComments() {
+				this.comment_page++;
+			},
 			likeComment(index, comment_id) {
 				Vue.prototype.$http.request({
 					url: '/likes/comment',
@@ -191,6 +215,11 @@
 					},
 				}).then(res => {
 					this.commodityInfo.commodity_like = !this.commodityInfo.commodity_like;
+					if (this.commodityInfo.commodity_like) {
+						this.commodityInfo.commodity_likes++;
+					} else {
+						this.commodityInfo.commodity_likes--;
+					}
 					this.$refs.notification.open({
 						type: 'success',
 						content: '操作成功',

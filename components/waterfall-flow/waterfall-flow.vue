@@ -4,7 +4,7 @@
 		 :id="'item'+index" v-for="(item, index) in newList" :key="index" :data-index="index" @click="choose(item.commodity_id)"
 		 :data-class="'scale-up'">
 			<view class="bg-white shadow border-radius margin-bottom">
-				<image class="item-picture" mode="widthFix" :src="item.commodity_images[0].image_url" style="width: 100%; display: block;"
+				<image class="item-picture" :mode="align?'aspectFill':'widthFix'" :src="item.commodity_images[0].image_url" style="width: 100%; display: block;"
 				 lazy-load=true></image>
 				<view class="flex-direction padding-top-sm padding-left-sm padding-right-sm justify-around commodity-info">
 					<text class="text-sm commodity-name-text">{{item.commodity_name}}</text>
@@ -15,7 +15,8 @@
 					</view>
 				</view>
 				<view class="commodity-user-info flex align-center">
-					<image class="cu-avatar avatar-shadow" style="border-radius: 10rpx;" :src="item.commodity_user.user_avatar"> </image>
+					<image class="cu-avatar avatar-shadow" style="border-radius: 10rpx;" :src="item.commodity_user.user_avatar">
+					</image>
 					<text class="commodity-user-name margin-left-sm">{{item.commodity_user.user_name}}</text>
 				</view>
 			</view>
@@ -40,6 +41,10 @@
 				default: false
 			},
 			init: {
+				type: Boolean,
+				default: false
+			},
+			align: {
 				type: Boolean,
 				default: false
 			}

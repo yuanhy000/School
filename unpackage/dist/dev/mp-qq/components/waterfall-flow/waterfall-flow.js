@@ -131,6 +131,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var _default2 =
 {
   props: {
@@ -147,6 +148,10 @@ var _default2 =
       default: false },
 
     init: {
+      type: Boolean,
+      default: false },
+
+    align: {
       type: Boolean,
       default: false } },
 
