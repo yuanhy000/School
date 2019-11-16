@@ -4,67 +4,69 @@
 			<block slot="backText">返回</block>
 			<block slot="content">Addition</block>
 		</cu-custom>
-		<scroll-view scroll-y class="DrawerPage" id="scroll" :style="{height:scroll_height +'px'}">
-			<view class="cu-tabbar-height bg-white margin-left margin-right margin-top  border-radius bg-white shadow flex align-center ">
-				<input class="margin-left margin-right text-sm" type="text" placeholder="物品名称" v-model="title" />
-			</view>
-			<view class="cu-form-group margin-left margin-top margin-right margin-bottom border-radius bg-white shadow">
-				<textarea class="textarea-font-size" placeholder="详细描述..." v-model="content" />
+		<scroll-view scroll-y id="scroll" :style="{height:scroll_height +'px'}">
+			<view class="padding-top">
+				<view class="cu-tabbar-height bg-white margin-left margin-right border-radius bg-white shadow flex align-center ">
+					<input class="margin-left margin-right text-sm" type="text" placeholder="物品名称" v-model="title" />
 				</view>
-			<view class="cu-form-group margin-left margin-right margin-top margin-bottom border-rad ius bg-white border-radius shadow">
-				<view class="grid col-4 grid-square flex-sub  margin-top">
-					<view class="bg-img" v-for="(item,index) in selectImageList" :key="index" @tap="ViewImage" :data-url="selectImageList[index]">
-						<image :src="selectImageList[index]" mode="aspectFill"></image>
-						<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
-							<text class='cuIcon-close'></text>
+				<view class="cu-form-group margin-left margin-top margin-right margin-bottom border-radius bg-white shadow">
+					<textarea class="textarea-font-size" placeholder="详细描述..." v-model="content" />
+				</view>
+				<view class="cu-form-group margin-left margin-right margin-top margin-bottom border-rad ius bg-white border-radius shadow">
+					<view class="grid col-4 grid-square flex-sub  margin-top">
+						<view class="bg-img" v-for="(item,index) in selectImageList" :key="index" @tap="ViewImage" :data-url="selectImageList[index]">
+							<image :src="selectImageList[index]" mode="aspectFill"></image>
+							<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
+								<text class='cuIcon-close'></text>
+							</view>
+						</view>
+						<view class="solids" @tap="ChooseImage" v-if="selectImageList.length<9">
+							<text class='cuIcon-cameraaddfill text-theme-color'></text>
 						</view>
 					</view>
-					<view class="solids" @tap="ChooseImage" v-if="selectImageList.length<9">
-						<text class='cuIcon-cameraaddfill text-theme-color'></text>
+				</view>
+				<view class="cu-form-group margin-left margin-right margin-top margin-bottom border-radius bg-white shadow flex-direction">
+					<view class="cu-form-group flex justify-between margin-left-sm no-padding" style="width: 100%;" @tap="showModal">
+						<view class="title checkbox-title">
+							选择分类
+						</view>
+						<text class="cuIcon-right text-theme-color" v-if="selectCategoryName==''"></text>
+						<view class="title checkbox-title no-margin-right" v-else>
+							{{selectCategoryName}}
+						</view>
 					</view>
-				</view>
-			</view>
-			<view class="cu-form-group margin-left margin-right margin-top margin-bottom border-radius bg-white shadow flex-direction">
-				<view class="cu-form-group flex justify-between margin-left-sm no-padding" style="width: 100%;" @tap="showModal">
-					<view class="title checkbox-title">
-						选择分类
+					<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;">
+						<view class="title checkbox-title">价格</view>
+						<input class="margin-left text-sm no-padding title checkbox-title" type="digit" v-model="price" style="text-align:right;" />
 					</view>
-					<text class="cuIcon-right text-theme-color" v-if="selectCategoryName==''"></text>
-					<view class="title checkbox-title no-margin-right" v-else>
-						{{selectCategoryName}}
+					<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;">
+						<view class="title checkbox-title">显示位置</view>
+						<checkbox class='round theme' @click="CheckboxOnclick('location')">
+						</checkbox>
 					</view>
-				</view>
-				<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;">
-					<view class="title checkbox-title">价格</view>
-					<input class="margin-left text-sm no-padding title checkbox-title" type="digit" v-model="price" style="text-align:right;" />
-				</view>
-				<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;">
-					<view class="title checkbox-title">显示位置</view>
-					<checkbox class='round theme' @click="CheckboxOnclick('location')">
-					</checkbox>
-				</view>
-<!-- 				<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;">
+					<!-- 				<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;">
 					<view class="title checkbox-title">是否匿名</view>
 					<checkbox class='round theme' @click="CheckboxOnclick('anonymity')">
 					</checkbox>
 				</view> -->
-			</view>
-			<view class='cu-btn bg-gradual-tab lg block shadow radius margin-xl' @tap="Submit" data-target="viewModal">
-				发布物品
-			</view>
-			<view class="cu-modal" :class="selectCategory?'show':''" @tap="hideModal">
-				<view class="cu-dialog" @tap.stop="">
-					<radio-group class="block" @change="ChangeCategory">
-						<view class="cu-list menu text-left">
-							<view class="cu-item" v-for="(item,index) in categoryList" :key="index">
-								<label class="flex justify-between align-center flex-sub">
-									<view class="title checkbox-title">{{item.category_name}}</view>
-									<radio class="round theme" :class="radio=='radio' + index?'checked':''" :checked="radio=='radio' + index?true:false"
-									 :value="item.category_id"></radio>
-								</label>
+				</view>
+				<view class='cu-btn bg-gradual-tab lg block shadow radius margin-xl' @tap="Submit" data-target="viewModal">
+					发布物品
+				</view>
+				<view class="cu-modal" :class="selectCategory?'show':''" @tap="hideModal">
+					<view class="cu-dialog" @tap.stop="">
+						<radio-group class="block" @change="ChangeCategory">
+							<view class="cu-list menu text-left">
+								<view class="cu-item" v-for="(item,index) in categoryList" :key="index">
+									<label class="flex justify-between align-center flex-sub">
+										<view class="title checkbox-title">{{item.category_name}}</view>
+										<radio class="round theme" :class="radio=='radio' + index?'checked':''" :checked="radio=='radio' + index?true:false"
+										 :value="item.category_id"></radio>
+									</label>
+								</view>
 							</view>
-						</view>
-					</radio-group>
+						</radio-group>
+					</view>
 				</view>
 			</view>
 		</scroll-view>
@@ -91,34 +93,34 @@
 				isInput: false,
 				selectImageList: [],
 				imageUrlList: [],
-				categoryList:[],
+				categoryList: [],
 				isDisplayLocation: false,
 				// isAnonymity: false,
-				scroll_height:700,
+				scroll_height: 700,
 				selectCategory: false,
 				selectCategoryID: 0,
 				selectCategoryName: '',
 			}
 		},
-		computed:{
+		computed: {
 			...mapState({
 				location: state => state.UserLocation,
 			}),
 		},
-		mounted(){
-			Vue.prototype.$http.get('/categories/get').then(res=>{
+		mounted() {
+			Vue.prototype.$http.get('/categories/get').then(res => {
 				this.categoryList = res.data.data.categories;
 			});
-					
-			setTimeout(()=>{
+
+			setTimeout(() => {
 				this.GetHeight();
-			},100)
+			}, 100)
 		},
 		methods: {
 			ChangeCategory(e) {
 				this.selectCategoryID = e.detail.value;
-				let selectCategory = this.categoryList.find((item) =>{
-					return item.category_id ==  this.selectCategoryID
+				let selectCategory = this.categoryList.find((item) => {
+					return item.category_id == this.selectCategoryID
 				});
 				this.selectCategoryName = selectCategory.category_name;
 				console.log(this.selectCategoryName)
@@ -198,8 +200,8 @@
 				// 	confirmText: '确认',
 				// 	success: res => {
 				// 		if (res.confirm) {
-							this.selectImageList.splice(e.currentTarget.dataset.index, 1)
-							this.imageUrlList.splice(e.currentTarget.dataset.index, 1)
+				this.selectImageList.splice(e.currentTarget.dataset.index, 1)
+				this.imageUrlList.splice(e.currentTarget.dataset.index, 1)
 				// 		}
 				// 	}
 				// })

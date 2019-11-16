@@ -5,39 +5,41 @@
 			<block slot="content">Addition</block>
 		</cu-custom>
 		<scroll-view scroll-y id="scroll" :style="{height:scroll_height +'px'}">
-			<view class="cu-tabbar-height bg-white margin-left margin-right margin-top  border-radius bg-white shadow flex align-center ">
-				<input class="margin-left margin-right text-sm" type="text" placeholder="标题 ( 可选 )" v-model="title" />
-			</view>
-			<view class="cu-form-group margin-left margin-top margin-right margin-bottom border-radius bg-white shadow">
-				<textarea class="textarea-font-size" placeholder="分享新鲜事..." v-model="content" />
+			<view class="padding-top">
+				<view class="cu-tabbar-height bg-white margin-left margin-right  border-radius bg-white shadow flex align-center ">
+					<input class="margin-left margin-right text-sm" type="text" placeholder="标题 ( 可选 )" v-model="title" />
 				</view>
-			<view class="cu-form-group margin-left margin-right margin-top margin-bottom border-rad ius bg-white border-radius shadow">
-				<view class="grid col-4 grid-square flex-sub  margin-top">
-					<view class="bg-img" v-for="(item,index) in selectImageList" :key="index" @tap="ViewImage" :data-url="selectImageList[index]">
-						<image :src="selectImageList[index]" mode="aspectFill"></image>
-						<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
-							<text class='cuIcon-close'></text>
+				<view class="cu-form-group margin-left margin-top margin-right margin-bottom border-radius bg-white shadow">
+					<textarea class="textarea-font-size" placeholder="分享新鲜事..." v-model="content" />
+					</view>
+				<view class="cu-form-group margin-left margin-right margin-top margin-bottom border-rad ius bg-white border-radius shadow">
+					<view class="grid col-4 grid-square flex-sub  margin-top">
+						<view class="bg-img" v-for="(item,index) in selectImageList" :key="index" @tap="ViewImage" :data-url="selectImageList[index]">
+							<image :src="selectImageList[index]" mode="aspectFill"></image>
+							<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
+								<text class='cuIcon-close'></text>
+							</view>
+						</view>
+						<view class="solids" @tap="ChooseImage" v-if="selectImageList.length<9">
+							<text class='cuIcon-cameraaddfill text-theme-color'></text>
 						</view>
 					</view>
-					<view class="solids" @tap="ChooseImage" v-if="selectImageList.length<9">
-						<text class='cuIcon-cameraaddfill text-theme-color'></text>
+				</view>
+				<view class="cu-form-group margin-left margin-right margin-top margin-bottom border-radius bg-white shadow flex-direction">
+					<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;">
+						<view class="title checkbox-title">显示位置</view>
+						<checkbox class='round theme' @click="CheckboxOnclick('location')">
+						</checkbox>
+					</view>
+					<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;">
+						<view class="title checkbox-title">是否匿名</view>
+						<checkbox class='round theme' @click="CheckboxOnclick('anonymity')">
+						</checkbox>
 					</view>
 				</view>
-			</view>
-			<view class="cu-form-group margin-left margin-right margin-top margin-bottom border-radius bg-white shadow flex-direction">
-				<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;">
-					<view class="title checkbox-title">显示位置</view>
-					<checkbox class='round theme' @click="CheckboxOnclick('location')">
-					</checkbox>
+				<view class='cu-btn bg-gradual-tab lg block shadow radius margin-xl' @tap="Submit" data-target="viewModal">
+					发布动态
 				</view>
-				<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;">
-					<view class="title checkbox-title">是否匿名</view>
-					<checkbox class='round theme' @click="CheckboxOnclick('anonymity')">
-					</checkbox>
-				</view>
-			</view>
-			<view class='cu-btn bg-gradual-tab lg block shadow radius margin-xl' @tap="Submit" data-target="viewModal">
-				发布动态
 			</view>
 		</scroll-view>
 	</view>
@@ -61,13 +63,13 @@
 				imageUrlList: [],
 				isDisplayLocation: false,
 				isAnonymity: false,
-				scroll_height:700,
+				scroll_height: 700,
 			}
 		},
-		mounted(){
-			setTimeout(()=>{
+		mounted() {
+			setTimeout(() => {
 				this.GetHeight();
-			},100)
+			}, 100)
 		},
 		methods: {
 			Submit() {

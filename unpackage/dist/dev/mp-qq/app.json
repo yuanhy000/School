@@ -9,7 +9,9 @@
     "pages/addition-article/addition-article",
     "pages/addition-commodity/addition-commodity",
     "pages/search/search",
-    "pages/commodity/commodity"
+    "pages/search-commodity/search-commodity",
+    "pages/commodity/commodity",
+    "pages/choose-index/choose-index"
   ],
   "window": {
     "navigationBarTextStyle": "white",

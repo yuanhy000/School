@@ -46,7 +46,17 @@
 				"navigationBarTitleText": "uni-app"
 			}
 		}, {
+			"path": "pages/search-commodity/search-commodity",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}, {
 			"path": "pages/commodity/commodity",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}, {
+			"path": "pages/choose-index/choose-index",
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}

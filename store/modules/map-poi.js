@@ -9,6 +9,7 @@ export default {
 	state: {
 		is_search: false,
 		search_keyword: '',
+		search_commodity: '',
 	},
 	mutations: {
 		SET_SEARCH_KEYWORD(state, payload) {
@@ -18,10 +19,26 @@ export default {
 		INIT_SEARCH_KEYWORD(state, payload) {
 			state.is_search = false;
 			state.search_keyword = '';
+			state.search_commodity = '';
+		},
+		SET_SEARCH_COMMODITY(state, payload) {
+			state.search_commodity = payload.search_commodity;
+		},
+		ClAEAR_SEARCH_COMMODITY(state, payload) {
+			state.search_commodity = '';
 		},
 
 	},
 	actions: {
+		setSearchCommodity({
+			commit
+		}, search_commodity) {
+			commit({
+				type: 'SET_SEARCH_COMMODITY',
+				search_commodity: search_commodity
+			})
+		},
+
 		setSearchKeyword({
 			commit
 		}, search_keyword) {
@@ -36,6 +53,14 @@ export default {
 		}) {
 			commit({
 				type: 'INIT_SEARCH_KEYWORD',
+			})
+		},
+
+		clearSearchCommodity({
+			commit
+		}) {
+			commit({
+				type: 'ClAEAR_SEARCH_COMMODITY',
 			})
 		},
 

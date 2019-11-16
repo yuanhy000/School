@@ -10,11 +10,11 @@
 				</view>
 			</view>
 			<view class='padding margin text-center'>
-				<view class='cu-btn bg-gradual-tab lg block shadow radius margin-xl' @tap="showModal" data-target="viewModal">
+				<view class='cu-btn bg-gradual-tab lg block shadow radius margin-xl' @tap="navigateSchool" data-target="viewModal">
 					Change it !!!
 				</view>
 			</view>
-		<!-- 	<view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg">
+			<!-- 	<view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg">
 				<view class="cu-item arrow" v-for="(item,index) in 20" :key="index">
 					<view class="content">
 						<text class="cuIcon-github text-grey"></text>
@@ -65,8 +65,7 @@
 		components: {
 			imageButton: imageButton
 		},
-		mounted() {
-		},
+		mounted() {},
 		methods: {
 			bindGetUserInfo(event) {
 				const userInfo = event.detail.userInfo
@@ -86,6 +85,11 @@
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
+			},
+			navigateSchool() {
+				uni.navigateTo({
+					url: '/pages/choose-index/choose-index'
+				})
 			}
 		},
 	}

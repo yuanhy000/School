@@ -147,7 +147,7 @@
 					return false;
 				} else {
 					this.setSerachStorage();
-					this.BackPage();
+					this.setSearch();
 				}
 			},
 			clearHistory() {
@@ -199,10 +199,13 @@
 			highLight(item, highLight) {
 				return highLightMsg(item, highLight)
 			},
-			BackPage() {
-				if (this.searchText != '') {20
-					this.$store.dispatch('setSearchKeyword', this.searchText);
+			setSearch() {
+				if (this.searchText != '') {
+					this.$store.dispatch('setSearchCommodity', this.searchText);
 				}
+				this.BackPage();
+			},
+			BackPage() {
 				uni.navigateBack({
 					delta: 1
 				});
