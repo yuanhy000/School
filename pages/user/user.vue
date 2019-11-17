@@ -38,7 +38,7 @@
 				</view>
 			</view>
 		</scroll-view>
-
+		<notification ref="notification" :isdistance="true" style="z-index: 999;"></notification>
 	</view>
 </template>
 
@@ -59,13 +59,31 @@
 		},
 		computed: {
 			...mapState({
-				user: state => state.AuthUser
+				user: state => state.AuthUser,
+				notification: state => state.Notification
 			}),
+		},
+		watch: {
+			'$store.state.notification.notification_display': function() {
+				console.log(this.notification.notification_display)
+				if (this.notification.notification_display) {
+					this.$refs.notification.open({
+						type: this.notification.notification_type,
+						content: this.notification.notification_content,
+						timeout: 1500,
+						isClick: false
+					});
+				}
+			}
 		},
 		components: {
 			imageButton: imageButton
 		},
-		mounted() {},
+		mounted() {
+			setTimeout(() => {
+				console.log(this.notification)
+			}, 200)
+		},
 		methods: {
 			bindGetUserInfo(event) {
 				const userInfo = event.detail.userInfo
@@ -87,6 +105,7 @@
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
 			},
 			navigateSchool() {
+				console.log(this.notification)
 				uni.navigateTo({
 					url: '/pages/choose-index/choose-index'
 				})

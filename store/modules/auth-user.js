@@ -9,6 +9,11 @@ export default {
 		user_sex: null,
 		user_created: null,
 		user_avatar: null,
+		user_shcool: null,
+		user_tip: {
+			display: false,
+			content: ''
+		}
 	},
 
 	mutations: {
@@ -27,11 +32,21 @@ export default {
 			state.user_name = null;
 			state.user_sex = null;
 			state.user_created = null;
+			state.user_shcool = null;
 		},
 
 		AUTHORIZED(state) {
 			state.authentication = true;
-		}
+		},
+
+		CLEAR_TIP(state) {
+			state.user_tip = false;
+		},
+
+		SET_SCHOOL(state, payload) {
+			state.user_shcool = payload.user_shcool;
+			state.user_tip = true;
+		},
 	},
 
 	actions: {
@@ -40,6 +55,26 @@ export default {
 			dispatch
 		}) {
 			return Vue.prototype.$http.get('/user').then(res => {
+				commit({
+					type: 'SET_AUTH_USER',
+					user: res.data
+				})
+			}).catch(error => {
+				dispatch('refreshToken');
+			})
+		},
+
+		setSchool({
+			commit,
+			dispatch
+		}, school) {
+			return Vue.prototype.$http.request({
+				url: '/users/school/set',
+				method: 'POST',
+				params: {
+					school: school
+				},
+			}).then(res => {
 				commit({
 					type: 'SET_AUTH_USER',
 					user: res.data
@@ -81,6 +116,13 @@ export default {
 		}) {
 			commit({
 				type: 'INIT_AUTH_USER',
+			})
+		},
+		clearTip({
+			commit
+		}) {
+			commit({
+				type: 'CLEAR_TIP',
 			})
 		},
 

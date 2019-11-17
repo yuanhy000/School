@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "uni-app",
   "usingComponents": {
-    "sort-picker-list": "/components/nickro-sortPickerList/nickro-sortPickerList"
+    "indexes": "/components/indexes/indexes"
   }
 }
