@@ -16,8 +16,8 @@ Vue.component('tabbar', tabbar)
 import addition from './pages/addition/addition.vue'
 Vue.component('addition', addition)
 
-import chat from './pages/chat/chat.vue'
-Vue.component('chat', chat)
+import information from './pages/information/information.vue'
+Vue.component('information', information)
 
 import stores from './pages/store/store.vue'
 Vue.component('store', stores)

@@ -1,17 +1,19 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/chat/chat",
+    "pages/information/information",
     "pages/store/store",
     "pages/discovery/discovery",
     "pages/location/location",
     "pages/addition/addition",
     "pages/addition-article/addition-article",
+    "pages/addition-activity/addition-activity",
     "pages/addition-commodity/addition-commodity",
     "pages/search/search",
     "pages/search-commodity/search-commodity",
     "pages/commodity/commodity",
-    "pages/choose-index/choose-index"
+    "pages/choose-index/choose-index",
+    "pages/apply-organization/apply-organization"
   ],
   "window": {
     "navigationBarTextStyle": "white",
@@ -24,7 +26,7 @@
     "cu-custom": "/colorui/components/cu-custom",
     "tabbar": "/components/tabbar/tabbar",
     "addition": "/pages/addition/addition",
-    "chat": "/pages/chat/chat",
+    "information": "/pages/information/information",
     "store": "/pages/store/store",
     "discovery": "/pages/discovery/discovery",
     "user": "/pages/user/user",

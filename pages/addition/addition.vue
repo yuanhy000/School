@@ -16,10 +16,26 @@
 				<text class="text-df">{{item}}</text>
 			</button>
 		</block>
+		<view class="cu-modal" :class="showToast?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">发布提示</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-theme-color"></text>
+					</view>
+				</view>
+				<view class="padding-xl" style="letter-spacing: 2rpx;font-size: 26rpx;">
+					{{toastContent}}
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
 <script>
+	import {
+		mapState
+	} from 'vuex';
 	export default {
 		data() {
 			return {
@@ -54,9 +70,19 @@
 					type: 'image',
 					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg'
 				}],
+				showToast: false,
+				toastContent: ''
 			}
 		},
+		computed: {
+			...mapState({
+				user: state => state.AuthUser,
+			}),
+		},
 		methods: {
+			hideModal(e) {
+				this.showToast = false;
+			},
 			buttonSelect(e) {
 				this.selectIndex = e.currentTarget.dataset.id;
 				switch (this.selectIndex) {
@@ -65,7 +91,17 @@
 							url: '/pages/addition-article/addition-article'
 						});
 						break;
-					case 4:
+					case 1:
+						if (this.user.user_organization == '') {
+							this.toastContent = '只有学生组织才可发布活动，快去认证吧'
+							this.showToast = true;
+							return;
+						}
+						uni.navigateTo({
+							url: '/pages/addition-activity/addition-activity'
+						});
+						break;
+					case 3:
 						uni.navigateTo({
 							url: '/pages/addition-commodity/addition-commodity'
 						});

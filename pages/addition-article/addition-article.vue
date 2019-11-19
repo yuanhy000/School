@@ -42,6 +42,19 @@
 				</view>
 			</view>
 		</scroll-view>
+		<view class="cu-modal" :class="showToast?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">发布提示</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-theme-color"></text>
+					</view>
+				</view>
+				<view class="padding-xl" style="letter-spacing: 2rpx;font-size: 26rpx;">
+					{{toastContent}}
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -50,6 +63,9 @@
 	import {
 		uploadFile
 	} from '../../utils/uploadFile.js'
+	import {
+		mapState
+	} from 'vuex';
 
 	const util = require('../../utils/util.js');
 
@@ -64,7 +80,14 @@
 				isDisplayLocation: false,
 				isAnonymity: false,
 				scroll_height: 700,
+				showToast:false,
+				toastContent: ''
 			}
+		},
+		computed: {
+			...mapState({
+				location: state => state.UserLocation,
+			}),
 		},
 		mounted() {
 			setTimeout(() => {
@@ -72,8 +95,15 @@
 			}, 100)
 		},
 		methods: {
+			hideModal(e) {
+				this.showToast = false;
+			},
 			Submit() {
-				console.log(this.imageUrlList)
+				if(this.content == ''){
+					this.toastContent = '发布内容不能为空'
+					this.showToast = true;
+					return ;
+				}
 				Vue.prototype.$http.request({
 					url: '/articles/create',
 					method: 'POST',
@@ -82,7 +112,8 @@
 						article_content: this.content,
 						article_image: this.imageUrlList,
 						is_display_location: this.isDisplayLocation,
-						is_anonymity: this.isAnonymity
+						is_anonymity: this.isAnonymity,
+						location: this.location.user_location.latitude + ',' + this.location.user_location.longitude
 					}
 				}).then(res => {
 					console.log(res.data)
@@ -109,7 +140,6 @@
 			GetImageUrl() {
 				let nowTime = util.formatTime(new Date());
 				for (let i = this.imageUrlList.length; i < this.selectImageList.length; i++) {
-					console.log(this.selectImageList.length)
 					uni.showLoading({
 						title: '上传中 ' + (i + 1) + '/' + this.selectImageList.length,
 						mask: true
@@ -130,18 +160,8 @@
 				});
 			},
 			DelImg(e) {
-				uni.showModal({
-					title: '确认删除',
-					content: '确定要删除这张图片吗？',
-					cancelText: '取消',
-					confirmText: '确认',
-					success: res => {
-						if (res.confirm) {
-							this.selectImageList.splice(e.currentTarget.dataset.index, 1)
-							this.imageUrlList.splice(e.currentTarget.dataset.index, 1)
-						}
-					}
-				})
+				this.selectImageList.splice(e.currentTarget.dataset.index, 1);
+				this.imageUrlList.splice(e.currentTarget.dataset.index, 1);
 			},
 			GetHeight() {
 				let that = this;

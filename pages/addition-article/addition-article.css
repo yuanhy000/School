@@ -9,7 +9,7 @@
 }
 
 .textarea-font-size {
-	font-size: 26rpx !important;
+	font-size: 24rpx !important;
 	height: 6rem !important;
 	width: 100%;
 	margin: 32rpx 0 30rpx;
@@ -22,6 +22,6 @@
 }
 
 .checkbox-title {
-	font-size: 26rpx !important;
+	font-size: 24rpx !important;
 	letter-spacing: 2rpx;
 }

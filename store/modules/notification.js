@@ -19,6 +19,7 @@ export default {
 			state.notification_display = false;
 			state.notification_content = '';
 			state.notification_type = '';
+			console.log(state)
 		},
 	},
 

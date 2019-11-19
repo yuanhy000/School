@@ -10,10 +10,7 @@ export default {
 		user_created: null,
 		user_avatar: null,
 		user_shcool: null,
-		user_tip: {
-			display: false,
-			content: ''
-		}
+		user_organization: null,
 	},
 
 	mutations: {
@@ -37,10 +34,6 @@ export default {
 
 		AUTHORIZED(state) {
 			state.authentication = true;
-		},
-
-		CLEAR_TIP(state) {
-			state.user_tip = false;
 		},
 
 		SET_SCHOOL(state, payload) {
@@ -116,13 +109,6 @@ export default {
 		}) {
 			commit({
 				type: 'INIT_AUTH_USER',
-			})
-		},
-		clearTip({
-			commit
-		}) {
-			commit({
-				type: 'CLEAR_TIP',
 			})
 		},
 

@@ -1,11 +1,11 @@
 <template>
 	<view>
 		<view class="cu-bar tabbar bg-white">
-			<view class="action" @click="NavChange" data-cur="chat" @tap="Toggle" :data-class="'scale-up'" :class="[PageCur=='chat'?'animation-fade':'']">
+			<view class="action" @click="NavChange" data-cur="information" @tap="Toggle" :data-class="'scale-up'" :class="[PageCur=='information'?'animation-fade':'']">
 				<view>
-					<image :src="'/static/tabbar/chat' + [PageCur=='chat'?'-on':''] + '.png'" class="tab-img"></image>
+					<image :src="'/static/tabbar/chat' + [PageCur=='information'?'-on':''] + '.png'" class="tab-img"></image>
 				</view>
-				<view :class="PageCur=='chat'?'text-tabbar-on':'text-tabbar'">聊天</view>
+				<view :class="PageCur=='information'?'text-tabbar-on':'text-tabbar'">聊天</view>
 			</view>
 			<view class="action " @click="NavChange" data-cur="store" @tap="Toggle" :data-class="'scale-up'" :class="[PageCur=='store'?'animation-fade':'']">
 				<view>
@@ -40,7 +40,7 @@
 	export default {
 		data() {
 			return {
-				PageCur: 'store',
+				PageCur: 'information',
 				animation: 'scale-up',
 			};
 		},

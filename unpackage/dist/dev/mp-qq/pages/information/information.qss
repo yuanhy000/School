@@ -1,0 +1,20 @@
+.tab-item-container.data-v-34b500aa {
+	width: 30%;
+	font-size: 28rpx;
+	color: #888;
+	letter-spacing: 4rpx;
+}
+.max-width.data-v-34b500aa {
+	width: 100% !important;
+}
+.item-select-container.data-v-34b500aa {
+	padding: 15rpx 30rpx;
+	background-color: #EEEEEE;
+	border-radius: 15rpx;
+	color: #222;
+}
+.tab-item-text.data-v-34b500aa {
+	color: #888;
+	font-size: 24rpx;
+}
+

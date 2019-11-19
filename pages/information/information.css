@@ -1,0 +1,22 @@
+.tab-item-container {
+	width: 30%;
+	font-size: 28rpx;
+	color: #888;
+	letter-spacing: 4rpx;
+}
+
+.max-width {
+	width: 100% !important;
+}
+
+.item-select-container {
+	padding: 15rpx 30rpx;
+	background-color: #EEEEEE;
+	border-radius: 15rpx;
+	color: #222;
+}
+
+.tab-item-text {
+	color: #888;
+	font-size: 24rpx;
+}

@@ -10,8 +10,14 @@
 				</view>
 			</view>
 			<view class='padding margin text-center'>
-				<view class='cu-btn bg-gradual-tab lg block shadow radius margin-xl' @tap="navigateSchool" data-target="viewModal">
-					Change it !!!
+				<view class='cu-btn bg-gradual-tab lg block shadow radius margin-xl text-sm' @tap="navigateSchool" data-target="viewModal">
+					Set School
+				</view>
+			</view>
+			<view class='padding margin text-center'>
+				<view class='cu-btn bg-gradual-tab lg block shadow radius margin-xl text-sm' @tap="navigateOrganization"
+				 data-target="viewModal">
+					Apply Organization
 				</view>
 			</view>
 			<!-- 	<view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg">
@@ -64,8 +70,7 @@
 			}),
 		},
 		watch: {
-			'$store.state.notification.notification_display': function() {
-				console.log(this.notification.notification_display)
+			'$store.state.Notification.notification_content': function() {
 				if (this.notification.notification_display) {
 					this.$refs.notification.open({
 						type: this.notification.notification_type,
@@ -74,16 +79,13 @@
 						isClick: false
 					});
 				}
+				this.$store.dispatch('initNotification')
 			}
 		},
 		components: {
 			imageButton: imageButton
 		},
-		mounted() {
-			setTimeout(() => {
-				console.log(this.notification)
-			}, 200)
-		},
+		mounted() {},
 		methods: {
 			bindGetUserInfo(event) {
 				const userInfo = event.detail.userInfo
@@ -105,9 +107,13 @@
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
 			},
 			navigateSchool() {
-				console.log(this.notification)
 				uni.navigateTo({
 					url: '/pages/choose-index/choose-index'
+				})
+			},
+			navigateOrganization() {
+				uni.navigateTo({
+					url: '/pages/apply-organization/apply-organization'
 				})
 			}
 		},

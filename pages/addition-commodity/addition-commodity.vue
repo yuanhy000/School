@@ -11,7 +11,7 @@
 				</view>
 				<view class="cu-form-group margin-left margin-top margin-right margin-bottom border-radius bg-white shadow">
 					<textarea class="textarea-font-size" placeholder="详细描述..." v-model="content" />
-				</view>
+					</view>
 				<view class="cu-form-group margin-left margin-right margin-top margin-bottom border-rad ius bg-white border-radius shadow">
 					<view class="grid col-4 grid-square flex-sub  margin-top">
 						<view class="bg-img" v-for="(item,index) in selectImageList" :key="index" @tap="ViewImage" :data-url="selectImageList[index]">
@@ -70,6 +70,19 @@
 				</view>
 			</view>
 		</scroll-view>
+		<view class="cu-modal" :class="showToast?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">发布提示</view>
+					<view class="action" @tap="hideToast">
+						<text class="cuIcon-close text-theme-color"></text>
+					</view>
+				</view>
+				<view class="padding-xl" style="letter-spacing: 2rpx;font-size: 26rpx;">
+					{{toastContent}}
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -100,6 +113,8 @@
 				selectCategory: false,
 				selectCategoryID: 0,
 				selectCategoryName: '',
+				showToast: false,
+				toastContent: ''
 			}
 		},
 		computed: {
@@ -117,14 +132,15 @@
 			}, 100)
 		},
 		methods: {
+			hideToast(e) {
+				this.showToast = false;
+			},
 			ChangeCategory(e) {
 				this.selectCategoryID = e.detail.value;
 				let selectCategory = this.categoryList.find((item) => {
 					return item.category_id == this.selectCategoryID
 				});
 				this.selectCategoryName = selectCategory.category_name;
-				console.log(this.selectCategoryName)
-				console.log(this.selectCategoryID)
 				this.hideModal();
 			},
 			showModal(e) {
@@ -134,7 +150,31 @@
 				this.selectCategory = false;
 			},
 			Submit() {
-				console.log(this.location)
+				if (this.title == '') {
+					this.toastContent = '物品名称不能为空'
+					this.showToast = true;
+					return;
+				}
+				if (this.content == '') {
+					this.toastContent = '物品描述不能为空'
+					this.showToast = true;
+					return;
+				}
+				if (this.imageUrlList.length == 0) {
+					this.toastContent = '发布需附带相关物品图片'
+					this.showToast = true;
+					return;
+				}
+				if (this.selectCategoryID == 0) {
+					this.toastContent = '先选择一个分类再发布'
+					this.showToast = true;
+					return;
+				}
+				if (this.price == null) {
+					this.toastContent = '商品价格不能为空'
+					this.showToast = true;
+					return;
+				}
 				Vue.prototype.$http.request({
 					url: '/commodities/create',
 					method: 'POST',

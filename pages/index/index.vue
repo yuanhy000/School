@@ -5,7 +5,7 @@
 			<block slot="content">Chat</block>
 		</cu-custom>
 		<!-- <search v-if="CurrentPage=='chat'"></search> -->
-		<chat v-if="CurrentPage=='chat'"></chat>
+		<information v-if="CurrentPage=='information'"></information>
 		<store v-if="CurrentPage=='store'"></store>
 		<addition v-if="CurrentPage=='addition'"></addition>
 		<discovery v-if="CurrentPage=='discovery'"></discovery>
@@ -18,7 +18,7 @@
 	export default {
 		data() {
 			return {
-				CurrentPage: 'store',
+				CurrentPage: 'information',
 			}
 		},
 		onLoad() {

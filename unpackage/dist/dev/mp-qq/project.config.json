@@ -38,6 +38,20 @@
 					"pathName": "pages/choose-index/choose-index",
 					"query": "",
 					"scene": ""
+				},
+				{
+					"id": -1,
+					"name": "apply",
+					"pathName": "pages/apply-organization/apply-organization",
+					"query": "",
+					"scene": ""
+				},
+				{
+					"id": -1,
+					"name": "information",
+					"pathName": "pages/information/information",
+					"query": "",
+					"scene": ""
 				}
 			]
 		}

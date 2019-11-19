@@ -12,10 +12,6 @@
 				<slot name="right"></slot>
 			</view>
 		</view>
-		<!-- 		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
-			<block slot="backText">返回</block>
-			<block slot="content">Search</block>
-		</cu-custom> -->
 
 		<view class="cu-bar search">
 			<view class="search-form round flex align-center">

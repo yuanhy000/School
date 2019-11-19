@@ -6,7 +6,7 @@
 				"navigationBarTitleText": "uni-app"
 			}
 		}, {
-			"path": "pages/chat/chat",
+			"path": "pages/information/information",
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
@@ -36,6 +36,11 @@
 				"navigationBarTitleText": "uni-app"
 			}
 		}, {
+			"path": "pages/addition-activity/addition-activity",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}, {
 			"path": "pages/addition-commodity/addition-commodity",
 			"style": {
 				"navigationBarTitleText": "uni-app"
@@ -57,6 +62,11 @@
 			}
 		}, {
 			"path": "pages/choose-index/choose-index",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}, {
+			"path": "pages/apply-organization/apply-organization",
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
