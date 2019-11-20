@@ -52,6 +52,13 @@
 					"pathName": "pages/information/information",
 					"query": "",
 					"scene": ""
+				},
+				{
+					"id": -1,
+					"name": "article",
+					"pathName": "pages/article/article",
+					"query": "article_id=11",
+					"scene": ""
 				}
 			]
 		}

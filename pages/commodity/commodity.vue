@@ -164,7 +164,6 @@
 						that.displayLocation = res.result.address_component.city + res.result.address_component.district;
 					}
 				})
-				console.log(this.commodityInfo.commodity_comments.slice(1, 5))
 			});
 		},
 		mounted() {

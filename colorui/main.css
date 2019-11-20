@@ -3951,3 +3951,8 @@ scroll-view.cu-steps .cu-item {
 .max-width {
 	width: 100%;
 }
+
+.flex-column {
+	display: flex;
+	flex-direction: column;
+}

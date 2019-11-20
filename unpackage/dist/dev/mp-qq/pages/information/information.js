@@ -144,8 +144,65 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _vuex = __webpack_require__(/*! vuex */ 27);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+var _vuex = __webpack_require__(/*! vuex */ 27);
+
+
+var _qqmapWxJssdk = _interopRequireDefault(__webpack_require__(/*! ../../js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js */ 31));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
 //
@@ -183,7 +240,68 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _interopRequireDefault(
 //
 //
 //
-var _default = { data: function data() {return { currentNav: 1, currentTab: 1, menu_list: ['关注', '活动', '动态', '招募'], scroll_height: 700 };}, mounted: function mounted() {var _this = this;setTimeout(function () {_this.getHeight();}, 100);_vue.default.prototype.$http.request({ url: '/information/recommend', method: 'POST' }).then(function (res) {});}, methods: { getHeight: function getHeight() {var that = this;var height = 0;uni.getSystemInfo({ success: function success(res) {that.screen_height = res.windowHeight;that.screen_width = res.windowWidth;var otherHeight = 0;var query = uni.createSelectorQuery().in(that);query.select('#swiper').boundingClientRect(function (res) {that.scroll_height = that.screen_height - res.top;}).exec();} });},
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var qqmapsdk = new _qqmapWxJssdk.default({ key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J' });var _default = { data: function data() {return { currentNav: 1, currentTab: 2, articleInfo: [], activityInfo: [], menu_list: ['关注', '活动', '动态', '招募'], scroll_height: 700, displayLocation: '', imageList: [], article_height: 700, fixTabbar: false, tabbar_top: _vue.default.prototype.CustomBar };}, mounted: function mounted() {var _this = this;var that = this;setTimeout(function () {_this.getHeight();}, 100);_vue.default.prototype.$http.request({ url: '/information/recommend', method: 'POST' }).then(function (res) {_this.articleInfo = res.data.data.articles.data;for (var item in _this.articleInfo) {for (var index in _this.articleInfo[item].article_images) {_this.imageList.push(_this.articleInfo[item].article_images[index].image_url);}}for (var _index in _this.articleInfo) {_this.formatTime(_index);}setTimeout(function () {var query = uni.createSelectorQuery().in(that);query.select('#article').boundingClientRect(function (res) {console.log(res);that.article_height = res.height;}).exec();}, 300);});}, methods: { pageScroll: function pageScroll(e) {if (e.detail.scrollTop >= 50) {this.fixTabbar = true;} else {this.fixTabbar = false;}}, navigateArticle: function navigateArticle(article_id) {uni.navigateTo({ url: '/pages/article/article?article_id=' + article_id });}, viewImage: function viewImage(e) {uni.previewImage({ urls: this.imageList, current: e.currentTarget.dataset.url });}, likeArticle: function likeArticle(index, article_id) {var _this2 = this;_vue.default.prototype.$http.request({ url: '/likes/article', method: 'POST', params: { article_id: article_id } }).then(function (res) {_this2.articleInfo[index].article_like = !_this2.articleInfo[index].article_like;_this2.articleInfo[index].article_like ? _this2.articleInfo[index].article_likes++ : _this2.articleInfo[index].article_likes--;_this2.$refs.notification.open({ type: 'success', content: '操作成功', timeout: 1500, isClick: false });});}, getHeight: function getHeight() {var that = this;var height = 0;uni.getSystemInfo({ success: function success(res) {that.screen_height = res.windowHeight;that.screen_width = res.windowWidth;var otherHeight = 0;
+          var query = uni.createSelectorQuery().in(that);
+          query.select('#information').boundingClientRect(function (res) {
+            that.scroll_height = that.screen_height - res.top;
+          }).exec();
+        } });
+
+    },
     navSelect: function navSelect(index) {
       this.currentNav = index;
     },
@@ -194,6 +312,48 @@ var _default = { data: function data() {return { currentNav: 1, currentTab: 1, m
     tabSwiper: function tabSwiper(e) {
       this.currentTab = e.detail.current;
       // this.scroll_left = (this.TabCur - 1) * (this.screen_width / 4);
+    },
+    formatTime: function formatTime(index) {
+      var time = this.articleInfo[index].article_created.split(' ');
+      var currentTime = new Date().toLocaleDateString();
+      var differenceDay = Math.abs(Math.ceil((new Date(currentTime) - new Date(time[0])) / (1000 * 60 * 60 * 24)));
+      var differenceWeekDay = 7 - differenceDay;
+      if (differenceDay === 0) {
+        this.articleInfo[index].display_time = '今天 ' + time[1];
+      } else if (differenceDay === 1) {
+        this.articleInfo[index].display_time = '昨天 ' + time[1];
+      } else if (differenceDay === 2) {
+        this.articleInfo[index].display_time = '前天 ' + time[1];
+      } else {
+        if (differenceWeekDay > 0) {
+          var targetWeekDay = new Date(this.articleInfo[index].article_created).getDay();
+          switch (targetWeekDay) {
+            case 0:
+              this.articleInfo[index].display_time = '星期天 ' + time[1];
+              break;
+            case 1:
+              this.articleInfo[index].display_time = '星期一 ' + time[1];
+              break;
+            case 2:
+              this.articleInfo[index].display_time = '星期二 ' + time[1];
+              break;
+            case 3:
+              this.articleInfo[index].display_time = '星期三 ' + time[1];
+              break;
+            case 4:
+              this.articleInfo[index].display_time = '星期四 ' + time[1];
+              break;
+            case 5:
+              this.articleInfo[index].display_time = '星期五 ' + time[1];
+              break;
+            case 6:
+              this.articleInfo[index].display_time = '星期六 ' + time[1];
+              break;}
+
+        } else {
+          this.articleInfo[index].display_time = this.articleInfo[index].created_at;
+        }
+      }
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-qq/dist/index.js */ 1)["default"]))
 

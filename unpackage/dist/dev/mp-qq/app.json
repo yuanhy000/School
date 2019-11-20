@@ -13,7 +13,8 @@
     "pages/search-commodity/search-commodity",
     "pages/commodity/commodity",
     "pages/choose-index/choose-index",
-    "pages/apply-organization/apply-organization"
+    "pages/apply-organization/apply-organization",
+    "pages/article/article"
   ],
   "window": {
     "navigationBarTextStyle": "white",

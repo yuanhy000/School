@@ -20,3 +20,43 @@
 	color: #888;
 	font-size: 24rpx;
 }
+
+.article-avatar {
+	width: 80rpx;
+	height: 80rpx;
+}
+
+.aricle-user-name {
+	font-size: 26rpx;
+	color: #222;
+	letter-spacing: 1rpx;
+}
+
+.article-create-time {
+	font-size: 24rpx;
+	color: #888888;
+	letter-spacing: 1rpx;
+}
+
+.operation-item {
+	height: 100%;
+	width: 33%;
+}
+
+.operation-border-top {
+	border-top: 1rpx solid #EEEEEE;
+}
+
+.operation-icon {
+	font-size: 34rpx;
+	margin-right: 10rpx;
+}
+
+.avatar-border {
+	border: 1rpx solid #eee;
+}
+
+.fixTabbar {
+	position: fixed;
+	z-index: 888;
+}
