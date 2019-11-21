@@ -60,3 +60,24 @@
 	position: fixed;
 	z-index: 888;
 }
+
+.activity_content {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 5;
+	overflow: hidden;
+}
+
+.activity_attention {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+}
+
+.fix-loading {
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	z-index: 666;
+}

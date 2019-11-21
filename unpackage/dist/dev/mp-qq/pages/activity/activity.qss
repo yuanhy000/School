@@ -81,8 +81,8 @@
 	letter-spacing: 1rpx;
 }
 .commodity-other-info {
-	text-align: right;
-	color: #BBBBBB;
+	text-align: left;
+	color: #888888;
 	font-size: 24rpx;
 }
 .commodity-icon {
@@ -110,4 +110,4 @@
 	font-size: 24rpx;
 	color: #bbb;
 }
-	
+

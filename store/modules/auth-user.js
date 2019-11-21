@@ -5,16 +5,16 @@ export default {
 	state: {
 		authentication: false,
 		user_id: null,
+		user_number: null,
 		user_name: null,
 		user_sex: null,
 		user_created: null,
 		user_avatar: null,
-		user_shcool: null,
+		user_school: null,
 		user_organization: null,
 	},
 
 	mutations: {
-
 		SET_AUTH_USER(state, payload) {
 			let authenticationTemp = state.authentication;
 			for (let item in state) {
@@ -26,6 +26,7 @@ export default {
 		INIT_AUTH_USER(state) {
 			state.authentication = false;
 			state.user_id = null;
+			user_number = null;
 			state.user_name = null;
 			state.user_sex = null;
 			state.user_created = null;

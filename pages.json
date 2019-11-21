@@ -75,6 +75,16 @@
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
+		}, {
+			"path": "pages/activity/activity",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}, {
+			"path": "pages/activity-register/activity-register",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
 		}
 	],
 	"permission": {

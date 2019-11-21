@@ -5215,6 +5215,24 @@ scroll-view.cu-steps .cu-item {
 	position: fixed;
 	z-index: 888;
 }
+.activity_content.data-v-34b500aa {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 5;
+	overflow: hidden;
+}
+.activity_attention.data-v-34b500aa {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+}
+.fix-loading.data-v-34b500aa {
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	z-index: 666;
+}
 
 .store-container {
 	position: fixed;

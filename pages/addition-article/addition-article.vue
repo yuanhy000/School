@@ -10,7 +10,7 @@
 					<input class="margin-left margin-right text-sm" type="text" placeholder="标题 ( 可选 )" v-model="title" />
 				</view>
 				<view class="cu-form-group margin-left margin-top margin-right margin-bottom border-radius bg-white shadow">
-					<textarea class="textarea-font-size" placeholder="分享新鲜事..." v-model="content" />
+					<textarea class="textarea-font-size" placeholder="分享新鲜事..." v-model="content" maxlength="400" />
 					</view>
 				<view class="cu-form-group margin-left margin-right margin-top margin-bottom border-rad ius bg-white border-radius shadow">
 					<view class="grid col-4 grid-square flex-sub  margin-top">

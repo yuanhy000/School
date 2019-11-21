@@ -14,7 +14,9 @@
     "pages/commodity/commodity",
     "pages/choose-index/choose-index",
     "pages/apply-organization/apply-organization",
-    "pages/article/article"
+    "pages/article/article",
+    "pages/activity/activity",
+    "pages/activity-register/activity-register"
   ],
   "window": {
     "navigationBarTextStyle": "white",

@@ -41,15 +41,14 @@ var _discovery = _interopRequireDefault(__webpack_require__(/*! ./pages/discover
 
 
 
-var _search = _interopRequireDefault(__webpack_require__(/*! ./pages/search/search.vue */ 64));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}_vue.default.prototype.$http = (0, _index.default)();_vue.default.prototype.$store = _index2.default;var cuCustom = function cuCustom() {return __webpack_require__.e(/*! import() | colorui/components/cu-custom */ "colorui/components/cu-custom").then(__webpack_require__.bind(null, /*! ./colorui/components/cu-custom.vue */ 169));};_vue.default.component('cu-custom', cuCustom);var tabbar = function tabbar() {return Promise.all(/*! import() | components/tabbar/tabbar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/tabbar/tabbar")]).then(__webpack_require__.bind(null, /*! ./components/tabbar/tabbar.vue */ 174));};_vue.default.component('tabbar', tabbar);_vue.default.component('addition', _addition.default);_vue.default.component('information', _information.default);_vue.default.component('store', _store.default);_vue.default.component('discovery', _discovery.default);var user = function user() {return Promise.all(/*! import() | pages/user/user */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/user/user")]).then(__webpack_require__.bind(null, /*! ./pages/user/user.vue */ 181));};_vue.default.component('user', user);var authorization = function authorization() {return __webpack_require__.e(/*! import() | pages/authorization/authorization */ "pages/authorization/authorization").then(__webpack_require__.bind(null, /*! ./pages/authorization/authorization.vue */ 188));};_vue.default.component('authorization', authorization);
-_vue.default.component('search', _search.default);var loading = function loading() {return __webpack_require__.e(/*! import() | components/loading/loading */ "components/loading/loading").then(__webpack_require__.bind(null, /*! ./components/loading/loading.vue */ 193));};
+var _search = _interopRequireDefault(__webpack_require__(/*! ./pages/search/search.vue */ 64));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}_vue.default.prototype.$http = (0, _index.default)();_vue.default.prototype.$store = _index2.default;var cuCustom = function cuCustom() {return __webpack_require__.e(/*! import() | colorui/components/cu-custom */ "colorui/components/cu-custom").then(__webpack_require__.bind(null, /*! ./colorui/components/cu-custom.vue */ 183));};_vue.default.component('cu-custom', cuCustom);var tabbar = function tabbar() {return Promise.all(/*! import() | components/tabbar/tabbar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/tabbar/tabbar")]).then(__webpack_require__.bind(null, /*! ./components/tabbar/tabbar.vue */ 188));};_vue.default.component('tabbar', tabbar);_vue.default.component('addition', _addition.default);_vue.default.component('information', _information.default);_vue.default.component('store', _store.default);_vue.default.component('discovery', _discovery.default);var user = function user() {return Promise.all(/*! import() | pages/user/user */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/user/user")]).then(__webpack_require__.bind(null, /*! ./pages/user/user.vue */ 195));};_vue.default.component('user', user);var authorization = function authorization() {return __webpack_require__.e(/*! import() | pages/authorization/authorization */ "pages/authorization/authorization").then(__webpack_require__.bind(null, /*! ./pages/authorization/authorization.vue */ 202));};_vue.default.component('authorization', authorization);
+_vue.default.component('search', _search.default);var loading = function loading() {return __webpack_require__.e(/*! import() | components/loading/loading */ "components/loading/loading").then(__webpack_require__.bind(null, /*! ./components/loading/loading.vue */ 207));};
 
 
-_vue.default.component('loading', loading);var notification = function notification() {return __webpack_require__.e(/*! import() | components/notification/notification */ "components/notification/notification").then(__webpack_require__.bind(null, /*! ./components/notification/notification.vue */ 200));};
+_vue.default.component('loading', loading);var notification = function notification() {return __webpack_require__.e(/*! import() | components/notification/notification */ "components/notification/notification").then(__webpack_require__.bind(null, /*! ./components/notification/notification.vue */ 214));};
 
 
 _vue.default.component('notification', notification);
-
 
 // import vantTransition from './vantui/components/vant/transition/index'
 // Vue.component('vantTransition', vantTransition)
@@ -650,6 +649,69 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _vuex = __webpack_require__(/*! vuex */ 27);
 
@@ -746,26 +808,92 @@ var _qqmapWxJssdk = _interopRequireDefault(__webpack_require__(/*! ../../js_sdk/
 //
 //
 //
-var qqmapsdk = new _qqmapWxJssdk.default({ key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J' });var _default = { data: function data() {return { currentNav: 1, currentTab: 2, articleInfo: [], activityInfo: [], menu_list: ['关注', '活动', '动态', '招募'], scroll_height: 700, displayLocation: '', imageList: [], article_height: 700, fixTabbar: false, tabbar_top: _vue.default.prototype.CustomBar };}, mounted: function mounted() {var _this = this;var that = this;setTimeout(function () {_this.getHeight();}, 100);_vue.default.prototype.$http.request({ url: '/information/recommend', method: 'POST' }).then(function (res) {_this.articleInfo = res.data.data.articles.data;for (var item in _this.articleInfo) {for (var index in _this.articleInfo[item].article_images) {_this.imageList.push(_this.articleInfo[item].article_images[index].image_url);}}for (var _index in _this.articleInfo) {_this.formatTime(_index);}setTimeout(function () {var query = uni.createSelectorQuery().in(that);query.select('#article').boundingClientRect(function (res) {console.log(res);that.article_height = res.height;}).exec();}, 300);});}, methods: { pageScroll: function pageScroll(e) {if (e.detail.scrollTop >= 50) {this.fixTabbar = true;} else {this.fixTabbar = false;}}, navigateArticle: function navigateArticle(article_id) {uni.navigateTo({ url: '/pages/article/article?article_id=' + article_id });}, viewImage: function viewImage(e) {uni.previewImage({ urls: this.imageList, current: e.currentTarget.dataset.url });}, likeArticle: function likeArticle(index, article_id) {var _this2 = this;_vue.default.prototype.$http.request({ url: '/likes/article', method: 'POST', params: { article_id: article_id } }).then(function (res) {_this2.articleInfo[index].article_like = !_this2.articleInfo[index].article_like;_this2.articleInfo[index].article_like ? _this2.articleInfo[index].article_likes++ : _this2.articleInfo[index].article_likes--;_this2.$refs.notification.open({ type: 'success', content: '操作成功', timeout: 1500, isClick: false });});}, getHeight: function getHeight() {var that = this;var height = 0;uni.getSystemInfo({ success: function success(res) {that.screen_height = res.windowHeight;that.screen_width = res.windowWidth;var otherHeight = 0;
-          var query = uni.createSelectorQuery().in(that);
-          query.select('#information').boundingClientRect(function (res) {
-            that.scroll_height = that.screen_height - res.top;
-          }).exec();
-        } });
-
-    },
-    navSelect: function navSelect(index) {
-      this.currentNav = index;
-    },
-    tabSelect: function tabSelect(e) {
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var qqmapsdk = new _qqmapWxJssdk.default({ key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J' });var _default = { data: function data() {return { currentNav: 1, currentTab: 1, articleInfo: [], activityInfo: [], menu_list: ['关注', '活动', '动态', '招募'], scroll_height: 700, displayLocation: '', imageList: [], article_height: 700, activity_height: 700, fixTabbar: false, tabbar_top: _vue.default.prototype.CustomBar, loadingItem: false, loading: true, activity_scroll: 0, article_scroll: 0, page_scroll: 0 };}, mounted: function mounted() {var _this = this;var that = this;setTimeout(function () {_this.getHeight();}, 100);_vue.default.prototype.$http.request({ url: '/information/recommend', method: 'POST' }).then(function (res) {_this.articleInfo = res.data.data.articles.data;for (var item in _this.articleInfo) {for (var index in _this.articleInfo[item].article_images) {_this.imageList.push(_this.articleInfo[item].article_images[index].image_url);}}for (var _index in _this.articleInfo) {_this.formatArticleTime(_index);}setTimeout(function () {var query = uni.createSelectorQuery().in(that);query.select('#article').boundingClientRect(function (res) {console.log(res);that.article_height = res.height;}).exec();}, 300);_this.activityInfo = res.data.data.activities.data;for (var _item in _this.activityInfo) {for (var _index2 in _this.activityInfo[_item].activity_images) {_this.imageList.push(_this.activityInfo[_item].activity_images[_index2].image_url);}}for (var _index3 in _this.activityInfo) {_this.formatActivityTime(_index3);}setTimeout(function () {var query = uni.createSelectorQuery().in(that);query.select('#activity').boundingClientRect(function (res) {console.log(res);that.activity_height = res.height;}).exec();}, 300);_this.loading = false;});}, methods: { pageScroll: function pageScroll(e) {if (e.detail.scrollTop >= 50) {this.fixTabbar = true;} else {this.fixTabbar = false;}if (this.currentTab == 1) {this.activity_scroll = e.detail.scrollTop;} else if (this.currentTab == 2) {this.article_scroll = e.detail.scrollTop;}}, navigateArticle: function navigateArticle(article_id, comment) {uni.navigateTo({ url: '/pages/article/article?article_id=' + article_id + '&comment=' + comment });}, navigateActivity: function navigateActivity(activity_id, comment) {uni.navigateTo({ url: '/pages/activity/activity?activity_id=' + activity_id + '&comment=' + comment });}, viewImage: function viewImage(e) {uni.previewImage({ urls: this.imageList, current: e.currentTarget.dataset.url });}, likeActivity: function likeActivity(index, activity_id) {var _this2 = this;_vue.default.prototype.$http.request({ url: '/likes/activity', method: 'POST', params: { activity_id: activity_id } }).then(function (res) {_this2.activityInfo[index].activity_like = !_this2.activityInfo[index].activity_like;_this2.activityInfo[index].activity_like ? _this2.activityInfo[index].activity_likes++ : _this2.activityInfo[index].activity_likes--;_this2.$refs.notification.open({ type: 'success', content: '操作成功', timeout: 1500, isClick: false });});}, likeArticle: function likeArticle(index, article_id) {var _this3 = this;_vue.default.prototype.$http.request({ url: '/likes/article', method: 'POST', params: { article_id: article_id } }).then(function (res) {_this3.articleInfo[index].article_like = !_this3.articleInfo[index].article_like;_this3.articleInfo[index].article_like ? _this3.articleInfo[index].article_likes++ : _this3.articleInfo[index].article_likes--;_this3.$refs.notification.open({ type: 'success', content: '操作成功', timeout: 1500, isClick: false });});}, getHeight: function getHeight() {var that = this;var height = 0;uni.getSystemInfo({ success: function success(res) {that.screen_height = res.windowHeight;that.screen_width = res.windowWidth;var otherHeight = 0;var query = uni.createSelectorQuery().in(that);query.select('#information').boundingClientRect(function (res) {that.scroll_height = that.screen_height - res.top;}).exec();} });}, navSelect: function navSelect(index) {this.currentNav = index;}, tabSelect: function tabSelect(e) {
       this.currentTab = e.currentTarget.dataset.id;
+      this.setScrollHeight();
       // this.scroll_left = (e.currentTarget.dataset.id - 1) * (this.screen_width / 4);
     },
     tabSwiper: function tabSwiper(e) {
       this.currentTab = e.detail.current;
+      this.setScrollHeight();
       // this.scroll_left = (this.TabCur - 1) * (this.screen_width / 4);
     },
-    formatTime: function formatTime(index) {
+    setScrollHeight: function setScrollHeight() {var _this4 = this;
+      this.loadingItem = true;
+      if (this.currentTab == 1) {
+        this.page_scroll = this.activity_scroll;
+      } else if (this.currentTab == 2) {
+        this.page_scroll = this.article_scroll;
+      }
+      setTimeout(function () {
+        _this4.loadingItem = false;
+      }, 500);
+
+    },
+    formatArticleTime: function formatArticleTime(index) {
       var time = this.articleInfo[index].article_created.split(' ');
       var currentTime = new Date().toLocaleDateString();
       var differenceDay = Math.abs(Math.ceil((new Date(currentTime) - new Date(time[0])) / (1000 * 60 * 60 * 24)));
@@ -804,6 +932,48 @@ var qqmapsdk = new _qqmapWxJssdk.default({ key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-Z
 
         } else {
           this.articleInfo[index].display_time = this.articleInfo[index].created_at;
+        }
+      }
+    },
+    formatActivityTime: function formatActivityTime(index) {
+      var time = this.activityInfo[index].activity_created.split(' ');
+      var currentTime = new Date().toLocaleDateString();
+      var differenceDay = Math.abs(Math.ceil((new Date(currentTime) - new Date(time[0])) / (1000 * 60 * 60 * 24)));
+      var differenceWeekDay = 7 - differenceDay;
+      if (differenceDay === 0) {
+        this.activityInfo[index].display_time = '今天 ' + time[1];
+      } else if (differenceDay === 1) {
+        this.activityInfo[index].display_time = '昨天 ' + time[1];
+      } else if (differenceDay === 2) {
+        this.activityInfo[index].display_time = '前天 ' + time[1];
+      } else {
+        if (differenceWeekDay > 0) {
+          var targetWeekDay = new Date(this.activityInfo[index].activity_created).getDay();
+          switch (targetWeekDay) {
+            case 0:
+              this.activityInfo[index].display_time = '星期天 ' + time[1];
+              break;
+            case 1:
+              this.activityInfo[index].display_time = '星期一 ' + time[1];
+              break;
+            case 2:
+              this.activityInfo[index].display_time = '星期二 ' + time[1];
+              break;
+            case 3:
+              this.activityInfo[index].display_time = '星期三 ' + time[1];
+              break;
+            case 4:
+              this.activityInfo[index].display_time = '星期四 ' + time[1];
+              break;
+            case 5:
+              this.activityInfo[index].display_time = '星期五 ' + time[1];
+              break;
+            case 6:
+              this.activityInfo[index].display_time = '星期六 ' + time[1];
+              break;}
+
+        } else {
+          this.activityInfo[index].display_time = this.activityInfo[index].created_at;
         }
       }
     } } };exports.default = _default;

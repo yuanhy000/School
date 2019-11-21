@@ -1,6 +1,7 @@
 <template>
 	<view id="information">
-		<scroll-view scroll-y :style="{height:scroll_height +'px'}" class="padding-bottom-xl" @scroll="pageScroll">
+		<scroll-view scroll-y :style="{height:scroll_height +'px'}" class="padding-bottom-xl" @scroll="pageScroll"
+		 :scroll-top="page_scroll">
 			<scroll-view class="nav text-center" style="border-bottom: 1px solid #c8c8c8;" scroll-x scroll-with-animation=true
 			 :scroll-left="scroll_left">
 				<view class="cu-item tab-item-container" :class="currentNav==0?'text-theme-color active-text-border':''" @click="navSelect(0)">头条</view>
@@ -19,19 +20,80 @@
 					</view>
 				</view>
 				<view style="height: 90rpx;" v-if="fixTabbar"></view>
-				<swiper :duration="400" class="discovery-swiper" id="swiper" :current="currentTab" @change="tabSwiper" circular=true
-				 :style="{height:article_height +'px'}">
+				<loading v-if="loading" class="animation-fade"></loading>
+				<swiper :duration="400" class="discovery-swiper animation-fade" id="swiper" :current="currentTab" @change="tabSwiper"
+				 v-else circular=true :style="{height: (currentTab==1 ? activity_height : article_height) +'px'}">
 					<swiper-item style="height: 400rpx; background-color: #DD5044;">
 					</swiper-item>
-					<swiper-item style="height: 400rpx; background-color: #405E72;">
+
+					<swiper-item>
+						<view class="padding-bottom-xl padding-top animation-fade" v-if="!loadingItem" id="activity">
+							<block v-for="(item,index) in activityInfo" v-bind:key="index">
+								<view class="cu-item shadow bg-white margin-bottom-xl margin-left margin-right" @click="navigateActivity(item.activity_id,0)"
+								 style="border-radius: 30rpx;">
+									<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white"
+									 style="border-radius: 30rpx;">
+										<image class="cu-avatar article-avatar avatar-shadow margin-right round avatar-border" :src="item.activity_user.user_avatar">
+										</image>
+										</image>
+										<view class="flex-column justify-center">
+											<text class="aricle-user-name margin-bottom-xs">{{item.activity_user.user_name}}</text>
+											<view>
+												<text class="article-create-time">{{item.display_time}}</text>
+												<text class="article-create-time margin-left">来自{{item.activity_user.user_school}}</text>
+											</view>
+										</view>
+									</view>
+									<view class="text-content padding-left padding-right margin-bottom-xs text-bold text-black margin-top-xs">
+										{{item.activity_name}}
+									</view>
+									<view class="text-content padding-left padding-right margin-bottom activity_content">
+										{{item.activity_content}}
+									</view>
+									<view class="text-content padding-left padding-right margin-bottom-xs text-bold text-black margin-top-xs">
+										注意事项
+									</view>
+									<view class="text-content padding-left padding-right margin-bottom activity_attention">
+										{{item.activity_attention}}
+									</view>
+									<view class="grid flex-sub padding-lr col-3 grid-square margin-bottom-xs">
+										<block v-for="(imgItem,index) in item.activity_images" :key="index">
+											<view class="bg-img" :style="{backgroundImage: 'url('+imgItem.image_url+')'}" @click.stop="viewImage"
+											 :data-url="imgItem.image_url">
+											</view>
+										</block>
+									</view>
+									<view class="article-create-time margin-left margin-bottom">{{item.activity_school}} ·
+										{{item.activity_organization}}</view>
+									<view class="max-width flex align-center operation-border-top" style="height: 90rpx;">
+										<view class="operation-item flex align-center justify-center" @click.stop="likeActivity(index,item.activity_id)">
+											<text class="cuIcon-appreciatefill text-theme-color operation-icon" v-if="item.activity_like"></text>
+											<text class="cuIcon-appreciate text-theme-color operation-icon" v-else></text>
+											<text class="text-theme-color">{{item.activity_likes}}</text>
+										</view>
+										<view class="operation-item flex align-center justify-center" @click.stop="navigateArticle(item.activity_id,1)">
+											<text class="cuIcon-comment text-theme-color operation-icon"></text>
+											<text class="text-theme-color">{{item.activity_comments_count}}</text>
+										</view>
+										<view class="operation-item flex align-center justify-center">
+											<text class="cuIcon-share text-theme-color operation-icon"></text>
+											<text class="text-theme-color">分享</text>
+										</view>
+									</view>
+								</view>
+							</block>
+							<!-- </scroll-view> -->
+						</view>
 					</swiper-item>
 
 					<swiper-item>
 						<!-- <scroll-view scroll-y :style="{height:scroll_height +'px'}" class="padding-bottom-xl"> -->
-						<view class="padding-bottom-xl" id="article">
+						<view class="padding-bottom-xl padding-top animation-fade" v-if="!loadingItem" id="article">
 							<block v-for="(item,index) in articleInfo" v-bind:key="index">
-								<view class="cu-item shadow bg-white margin-bottom-xl" @click="navigateArticle(item.article_id)">
-									<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white">
+								<view class="cu-item shadow bg-white margin-bottom-xl margin-left margin-right" @click="navigateArticle(item.article_id,0)"
+								 style="border-radius: 30rpx;">
+									<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white"
+									 style="border-radius: 30rpx;">
 										<image class="cu-avatar article-avatar avatar-shadow margin-right round avatar-border" :src="item.article_user.user_avatar"
 										 v-if="!item.article_anonymity">
 										</image>
@@ -50,7 +112,7 @@
 									<view class="text-content padding-left padding-right margin-bottom-xs text-bold text-black margin-top-xs">
 										{{item.article_title}}
 									</view>
-									<view class="text-content padding-left padding-right margin-bottom">
+									<view class="text-content padding-left padding-right margin-bottom activity_content">
 										{{item.article_content}}
 									</view>
 									<view class="grid flex-sub padding-lr col-3 grid-square margin-bottom">
@@ -66,7 +128,7 @@
 											<text class="cuIcon-appreciate text-theme-color operation-icon" v-else></text>
 											<text class="text-theme-color">{{item.article_likes}}</text>
 										</view>
-										<view class="operation-item flex align-center justify-center">
+										<view class="operation-item flex align-center justify-center" @click.stop="navigateArticle(item.article_id,1)">
 											<text class="cuIcon-comment text-theme-color operation-icon"></text>
 											<text class="text-theme-color">{{item.article_comments_count}}</text>
 										</view>
@@ -87,6 +149,7 @@
 			</view>
 			<notification ref="notification" :isdistance="true"></notification>
 		</scroll-view>
+		<loading v-if="loadingItem" class="animation-fade fix-loading"></loading>
 	</view>
 </template>
 
@@ -103,7 +166,7 @@
 		data() {
 			return {
 				currentNav: 1,
-				currentTab: 2,
+				currentTab: 1,
 				articleInfo: [],
 				activityInfo: [],
 				menu_list: ['关注', '活动', '动态', '招募'],
@@ -111,8 +174,14 @@
 				displayLocation: '',
 				imageList: [],
 				article_height: 700,
+				activity_height: 700,
 				fixTabbar: false,
 				tabbar_top: Vue.prototype.CustomBar,
+				loadingItem: false,
+				loading: true,
+				activity_scroll: 0,
+				article_scroll: 0,
+				page_scroll: 0,
 			};
 		},
 		mounted() {
@@ -132,7 +201,7 @@
 					}
 				}
 				for (let index in this.articleInfo) {
-					this.formatTime(index);
+					this.formatArticleTime(index);
 				}
 				setTimeout(() => {
 					let query = uni.createSelectorQuery().in(that);
@@ -141,6 +210,24 @@
 						that.article_height = res.height;
 					}).exec();
 				}, 300)
+
+				this.activityInfo = res.data.data.activities.data;
+				for (let item in this.activityInfo) {
+					for (let index in this.activityInfo[item].activity_images) {
+						this.imageList.push(this.activityInfo[item].activity_images[index].image_url);
+					}
+				}
+				for (let index in this.activityInfo) {
+					this.formatActivityTime(index);
+				}
+				setTimeout(() => {
+					let query = uni.createSelectorQuery().in(that);
+					query.select('#activity').boundingClientRect(res => {
+						console.log(res)
+						that.activity_height = res.height;
+					}).exec();
+				}, 300)
+				this.loading = false;
 			})
 		},
 		methods: {
@@ -150,10 +237,20 @@
 				} else {
 					this.fixTabbar = false;
 				}
+				if (this.currentTab == 1) {
+					this.activity_scroll = e.detail.scrollTop;
+				} else if (this.currentTab == 2) {
+					this.article_scroll = e.detail.scrollTop;
+				}
 			},
-			navigateArticle(article_id) {
+			navigateArticle(article_id, comment) {
 				uni.navigateTo({
-					url: '/pages/article/article?article_id=' + article_id
+					url: '/pages/article/article?article_id=' + article_id + '&comment=' + comment
+				})
+			},
+			navigateActivity(activity_id, comment) {
+				uni.navigateTo({
+					url: '/pages/activity/activity?activity_id=' + activity_id + '&comment=' + comment
 				})
 			},
 			viewImage(e) {
@@ -161,6 +258,24 @@
 					urls: this.imageList,
 					current: e.currentTarget.dataset.url
 				});
+			},
+			likeActivity(index, activity_id) {
+				Vue.prototype.$http.request({
+					url: '/likes/activity',
+					method: 'POST',
+					params: {
+						activity_id: activity_id,
+					},
+				}).then(res => {
+					this.activityInfo[index].activity_like = !this.activityInfo[index].activity_like;
+					this.activityInfo[index].activity_like ? this.activityInfo[index].activity_likes++ : this.activityInfo[index].activity_likes--;
+					this.$refs.notification.open({
+						type: 'success',
+						content: '操作成功',
+						timeout: 1500,
+						isClick: false
+					});
+				})
 			},
 			likeArticle(index, article_id) {
 				Vue.prototype.$http.request({
@@ -200,13 +315,27 @@
 			},
 			tabSelect(e) {
 				this.currentTab = e.currentTarget.dataset.id;
+				this.setScrollHeight();
 				// this.scroll_left = (e.currentTarget.dataset.id - 1) * (this.screen_width / 4);
 			},
 			tabSwiper(e) {
 				this.currentTab = e.detail.current;
+				this.setScrollHeight();
 				// this.scroll_left = (this.TabCur - 1) * (this.screen_width / 4);
 			},
-			formatTime(index) {
+			setScrollHeight() {
+				this.loadingItem = true;
+				if (this.currentTab == 1) {
+					this.page_scroll = this.activity_scroll;
+				} else if (this.currentTab == 2) {
+					this.page_scroll = this.article_scroll;
+				}
+				setTimeout(() => {
+					this.loadingItem = false
+				}, 500);
+
+			},
+			formatArticleTime(index) {
 				let time = this.articleInfo[index].article_created.split(' ');
 				let currentTime = new Date().toLocaleDateString();
 				let differenceDay = Math.abs(Math.ceil((new Date(currentTime) - new Date(time[0])) / (1000 * 60 * 60 * 24)));
@@ -245,6 +374,48 @@
 						}
 					} else {
 						this.articleInfo[index].display_time = this.articleInfo[index].created_at;
+					}
+				}
+			},
+			formatActivityTime(index) {
+				let time = this.activityInfo[index].activity_created.split(' ');
+				let currentTime = new Date().toLocaleDateString();
+				let differenceDay = Math.abs(Math.ceil((new Date(currentTime) - new Date(time[0])) / (1000 * 60 * 60 * 24)));
+				let differenceWeekDay = 7 - differenceDay;
+				if (differenceDay === 0) {
+					this.activityInfo[index].display_time = '今天 ' + time[1];
+				} else if (differenceDay === 1) {
+					this.activityInfo[index].display_time = '昨天 ' + time[1];
+				} else if (differenceDay === 2) {
+					this.activityInfo[index].display_time = '前天 ' + time[1];
+				} else {
+					if (differenceWeekDay > 0) {
+						let targetWeekDay = new Date(this.activityInfo[index].activity_created).getDay();
+						switch (targetWeekDay) {
+							case 0:
+								this.activityInfo[index].display_time = '星期天 ' + time[1];
+								break;
+							case 1:
+								this.activityInfo[index].display_time = '星期一 ' + time[1];
+								break;
+							case 2:
+								this.activityInfo[index].display_time = '星期二 ' + time[1];
+								break;
+							case 3:
+								this.activityInfo[index].display_time = '星期三 ' + time[1];
+								break;
+							case 4:
+								this.activityInfo[index].display_time = '星期四 ' + time[1];
+								break;
+							case 5:
+								this.activityInfo[index].display_time = '星期五 ' + time[1];
+								break;
+							case 6:
+								this.activityInfo[index].display_time = '星期六 ' + time[1];
+								break;
+						}
+					} else {
+						this.activityInfo[index].display_time = this.activityInfo[index].created_at;
 					}
 				}
 			}

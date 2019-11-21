@@ -62,7 +62,7 @@
 						</view>
 					</block>
 					<view class="max-width flex align-center justify-center padding-top-sm padding-bottom-sm" @click="displayMoreComments"
-					 v-show="commodityInfo.commodity_comments.length > comment_page*4">
+					 v-if="commodityInfo.commodity_comments.length > comment_page*4">
 						<text class="text-theme-color" style="font-weight: 700;">加载更多留言<text class="cuIcon-unfold margin-left-xs"></text></text>
 					</view>
 				</view>

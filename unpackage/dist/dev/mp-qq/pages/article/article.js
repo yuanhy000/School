@@ -229,6 +229,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _qqmapWxJssdk = _interopRequireDefault(__webpack_require__(/*! ../../js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js */ 31));
 var _waterfallFlow = _interopRequireDefault(__webpack_require__(/*! ../../components/waterfall-flow/waterfall-flow.vue */ 160));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
@@ -337,22 +341,28 @@ var _waterfallFlow = _interopRequireDefault(__webpack_require__(/*! ../../compon
 //
 //
 //
-var qqmapsdk = new _qqmapWxJssdk.default({ key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J' });var _default = { data: function data() {return { display: false, article_id: 0, scroll_height: 700, articleInfo: [], imageList: [], isInput: false, inputComment: '', comment_page: 1 };}, computed: { hasComment: function hasComment() {if (this.articleInfo.length != 0) {return this.articleInfo.article_comments.length != 0;}return false;} }, onLoad: function onLoad(option) {var _this = this;this.article_id = option.article_id;var that = this;_vue.default.prototype.$http.request({ url: '/articles/detail', method: 'POST', params: { article_id: this.article_id } }).then(function (res) {_this.articleInfo = res.data.data;for (var item in _this.articleInfo.article_images) {_this.imageList.push(_this.articleInfo.article_images[item].image_url);}_this.formatTime();for (var index in _this.articleInfo.article_comments) {_this.formatCommentsTime(index);}});}, mounted: function mounted() {var _this2 = this;setTimeout(function () {_this2.display = true;}, 100);setTimeout(function () {_this2.getHeight();}, 200);}, methods: { likeComment: function likeComment(index, comment_id) {var _this3 = this;_vue.default.prototype.$http.request({ url: '/likes/comment', method: 'POST', params: { comment_id: comment_id } }).then(function (res) {_this3.articleInfo.article_comments[index].comment_like = !_this3.articleInfo.article_comments[index].comment_like;if (_this3.articleInfo.article_comments[index].comment_like) {_this3.articleInfo.article_comments[index].comment_likes++;} else {_this3.articleInfo.article_comments[index].comment_likes--;}_this3.$refs.notification.open({ type: 'success', content: '操作成功', timeout: 1500, isClick: false });});}, submitComment: function submitComment() {var _this4 = this;if (this.inputComment == '') {this.$refs.notification.open({ type: 'warn', content: '留言不能为空～', timeout: 1500, isClick: false });}_vue.default.prototype.$http.request({ url: '/comments/article/create', method: 'POST', params: { article_id: this.article_id, comment_content: this.inputComment, parent_id: 0 } }).then(function (res) {_this4.articleInfo.article_comments.unshift(res.data.data);_this4.formatCommentsTime(0);_this4.cancelInput();_this4.inputComment = '';_this4.$refs.notification.open({ type: 'success', content: '操作成功', timeout: 1500, isClick: false });});}, beginInput: function beginInput() {
-      this.isInput = true;
-    },
-    cancelInput: function cancelInput() {
-      this.isInput = false;
-    },
-    likeArticle: function likeArticle(index, article_id) {var _this5 = this;
+//
+//
+//
+//
+var qqmapsdk = new _qqmapWxJssdk.default({ key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J' });var _default = { data: function data() {return { display: false, article_id: 0, scroll_height: 700, articleInfo: [], imageList: [], isInput: false, inputComment: '', comment_page: 1, scroll_top: 0 };}, computed: { hasComment: function hasComment() {if (this.articleInfo.length != 0) {return this.articleInfo.article_comments.length != 0;}return false;} }, onLoad: function onLoad(option) {var _this = this;this.article_id = option.article_id;var that = this;_vue.default.prototype.$http.request({ url: '/articles/detail', method: 'POST', params: { article_id: this.article_id } }).then(function (res) {_this.articleInfo = res.data.data;for (var item in _this.articleInfo.article_images) {_this.imageList.push(_this.articleInfo.article_images[item].image_url);}_this.formatTime();for (var index in _this.articleInfo.article_comments) {_this.formatCommentsTime(index);}setTimeout(function () {_this.getHeight();if (option.comment == 1) {var query = uni.createSelectorQuery().in(_this);query.select('#comment').boundingClientRect(function (res) {console.log(res);_this.scroll_top = res.top;}).exec();}}, 200);});}, mounted: function mounted() {var _this2 = this;setTimeout(function () {_this2.display = true;}, 100);}, methods: { tooglrUserFollow: function tooglrUserFollow() {var _this3 = this;_vue.default.prototype.$http.request({ url: '/users/follow', method: 'POST', params: { accept_id: this.articleInfo.article_user.user_id } }).then(function (res) {_this3.articleInfo.user_follow = !_this3.articleInfo.user_follow;_this3.$refs.notification.open({ type: 'success', content: '操作成功', timeout: 1500, isClick: false });});}, displayMoreComments: function displayMoreComments() {this.comment_page++;}, likeComment: function likeComment(index, comment_id) {var _this4 = this;_vue.default.prototype.$http.request({ url: '/likes/comment', method: 'POST', params: { comment_id: comment_id } }).then(function (res) {_this4.articleInfo.article_comments[index].comment_like = !_this4.articleInfo.article_comments[index].comment_like;if (_this4.articleInfo.article_comments[index].comment_like) {_this4.articleInfo.article_comments[index].comment_likes++;} else {_this4.articleInfo.article_comments[index].comment_likes--;}_this4.$refs.notification.open({ type: 'success', content: '操作成功', timeout: 1500, isClick: false });});}, submitComment: function submitComment() {var _this5 = this;if (this.inputComment == '') {this.$refs.notification.open({ type: 'warn', content: '留言不能为空～',
+          timeout: 1500,
+          isClick: false });
+
+      }
       _vue.default.prototype.$http.request({
-        url: '/likes/article',
+        url: '/comments/article/create',
         method: 'POST',
         params: {
-          article_id: this.article_id } }).
+          article_id: this.article_id,
+          comment_content: this.inputComment,
+          parent_id: 0 } }).
 
       then(function (res) {
-        _this5.articleInfo.article_like = !_this5.articleInfo.article_like;
-        _this5.articleInfo.article_like ? _this5.articleInfo.article_likes++ : _this5.articleInfo.article_likes--;
+        _this5.articleInfo.article_comments.unshift(res.data.data);
+        _this5.formatCommentsTime(0);
+        _this5.cancelInput();
+        _this5.inputComment = '';
         _this5.$refs.notification.open({
           type: 'success',
           content: '操作成功',
@@ -361,7 +371,31 @@ var qqmapsdk = new _qqmapWxJssdk.default({ key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-Z
 
       });
     },
-    CollectArticle: function CollectArticle(index, article_id) {var _this6 = this;
+    beginInput: function beginInput() {
+      this.isInput = true;
+    },
+    cancelInput: function cancelInput() {
+      this.isInput = false;
+    },
+    likeArticle: function likeArticle(index, article_id) {var _this6 = this;
+      _vue.default.prototype.$http.request({
+        url: '/likes/article',
+        method: 'POST',
+        params: {
+          article_id: this.article_id } }).
+
+      then(function (res) {
+        _this6.articleInfo.article_like = !_this6.articleInfo.article_like;
+        _this6.articleInfo.article_like ? _this6.articleInfo.article_likes++ : _this6.articleInfo.article_likes--;
+        _this6.$refs.notification.open({
+          type: 'success',
+          content: '操作成功',
+          timeout: 1500,
+          isClick: false });
+
+      });
+    },
+    CollectArticle: function CollectArticle(index, article_id) {var _this7 = this;
       _vue.default.prototype.$http.request({
         url: '/collections/article',
         method: 'POST',
@@ -369,8 +403,8 @@ var qqmapsdk = new _qqmapWxJssdk.default({ key: 'QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-Z
           article_id: this.article_id } }).
 
       then(function (res) {
-        _this6.articleInfo.article_collect = !_this6.articleInfo.article_collect;
-        _this6.$refs.notification.open({
+        _this7.articleInfo.article_collect = !_this7.articleInfo.article_collect;
+        _this7.$refs.notification.open({
           type: 'success',
           content: '操作成功',
           timeout: 1500,

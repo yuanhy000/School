@@ -2,47 +2,53 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">Article</block>
+			<block slot="content">Activity</block>
 		</cu-custom>
 		<scroll-view class="animation-fade" scroll-y id="scroll" :style="{height:scroll_height +'px'}" v-show="display"
 		 @click="cancelInput()" :scroll-top="scroll_top">
 			<view class="max-width bg-white padding-bottom-sm">
 				<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white max-width">
-					<image class="cu-avatar article-avatar avatar-shadow margin-right round avatar-border" :src="articleInfo.article_user.user_avatar"
-					 v-if="!articleInfo.article_anonymity">
-					</image>
-					<image class="cu-avatar article-avatar avatar-shadow margin-right round avatar-border" src="../../static/article/anonymity.png"
-					 style="background-color: #F1F1F1;" v-else>
+					<image class="cu-avatar article-avatar avatar-shadow margin-right round avatar-border" :src="activityInfo.activity_user.user_avatar">
 					</image>
 					<view class="flex-column justify-center">
-						<text class="aricle-user-name margin-bottom-xs text-bold" v-if="!articleInfo.article_anonymity">{{articleInfo.article_user.user_name}}</text>
-						<text class="aricle-user-name margin-bottom-xs text-bold" v-else>匿名用户</text>
+						<text class="aricle-user-name margin-bottom-xs text-bold">{{activityInfo.activity_user.user_name}}</text>
 						<view>
-							<text class="article-create-time">{{articleInfo.display_time}}</text>
-							<text class="article-create-time margin-left" v-if="articleInfo.article_display_location">来自{{articleInfo.article_user.user_school}}</text>
+							<text class="article-create-time">{{activityInfo.display_time}}</text>
+							<text class="article-create-time margin-left">来自{{activityInfo.activity_school}}</text>
 						</view>
 					</view>
 					<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm animation-fade-quick" style="margin-left: auto; margin-right: 0;"
-					 v-if="!articleInfo.user_follow" @click="tooglrUserFollow">关注</button>
+					 v-if="!activityInfo.user_follow" @click="tooglrUserFollow">关注</button>
 					<button class="cu-btn bg-grey shadow-blur text-white text-sm animation-fade-quick" style="margin-left: auto; margin-right: 0; background-color: #BBBBBB;"
 					 v-else @click="tooglrUserFollow">已关注</button>
 				</view>
 				<view class="text-content padding-left padding-right padding-bottom-xs text-bold text-black padding-top-xs">
-					{{articleInfo.article_title}}
+					{{activityInfo.activity_name}}
 				</view>
 				<view class="text-content padding-left padding-right padding-bottom">
-					{{articleInfo.article_content}}
+					{{activityInfo.activity_content}}
+				</view>
+				<view class="text-content padding-left padding-right padding-bottom-xs text-bold text-black padding-top-xs" v-if="activityInfo.activity_attention">
+					注意事项
+				</view>
+				<view class="text-content padding-left padding-right padding-bottom" v-if="activityInfo.activity_attention">
+					{{activityInfo.activity_attention}}
 				</view>
 				<view class="grid flex-sub padding-lr col-3 grid-square margin-bottom-xs ">
-					<block v-for="(item,index) in articleInfo.article_images" :key="index">
+					<block v-for="(item,index) in activityInfo.activity_images" :key="index">
 						<view class="bg-img" :style="{backgroundImage: 'url('+item.image_url+')'}" @click.stop="viewImage" :data-url="item.image_url">
 						</view>
 					</block>
 				</view>
-				<view class="flex align-center max-width justify-end padding-bottom-xs padding-top-xs padding-right">
-					<text class="commodity-other-info margin-right-sm">超赞 ·<text class="margin-left-xs">{{articleInfo.article_likes}}</text></text>
-					<text class="commodity-other-info margin-right-sm">评论 ·<text class="margin-left-xs">{{articleInfo.article_comments_count}}</text></text>
-					<text class="commodity-other-info">浏览 ·<text class="margin-left-xs">{{articleInfo.article_views}}</text></text>
+				<view class="article-create-time margin-left margin-bottom-xs">{{activityInfo.activity_school}} ·
+					{{activityInfo.activity_organization}}</view>
+				<view class="flex align-center max-width justify-end padding-bottom-xs padding-right">
+
+					<text class="commodity-other-info margin-right-xs margin-left article-create-time">超赞 ·<text class="margin-left-xs">{{activityInfo.activity_likes}}</text></text>
+					<text class="commodity-other-info margin-right-xs article-create-time">评论 ·<text class="margin-left-xs">{{activityInfo.activity_comments_count}}</text></text>
+					<text class="commodity-other-info article-create-time">浏览 ·<text class="margin-left-xs">{{activityInfo.activity_views}}</text></text>
+					<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm animation-fade-quick" style="margin-right: 0; margin-left:auto; width: 220rpx!important;"
+					 @click="navigateActivityRegister">线上报名</button>
 				</view>
 			</view>
 			<view class="padding-top padding-left padding-right flex align-center bg-white margin-top flex-column">
@@ -51,7 +57,7 @@
 				</view>
 				<image src="../../static/commodity/none-default.png" class="none-default-image" mode="widthFix" v-if="!hasComment"></image>
 				<view class="flex-column max-width padding-top-xs" v-else>
-					<block v-for="(item,index) in articleInfo.article_comments" :key="index">
+					<block v-for="(item,index) in activityInfo.activity_comments" :key="index">
 						<view class="margin-top-sm" v-show="index < comment_page*4">
 							<view class="flex align-center justify-between">
 								<view class="flex align-center">
@@ -70,7 +76,7 @@
 						</view>
 					</block>
 					<view class="max-width flex align-center justify-center padding-top-sm padding-bottom-sm" @click="displayMoreComments"
-					 v-if="articleInfo.article_comments.length > comment_page*4">
+					 v-if="activityInfo.activity_comments.length > comment_page*4">
 						<text class="text-theme-color" style="font-weight: 700;">加载更多评论<text class="cuIcon-unfold margin-left-xs"></text></text>
 					</view>
 				</view>
@@ -79,12 +85,12 @@
 		<view class="cu-bar padding-right bg-white info-border-top animation-fade-quick" v-show="display">
 			<view class="flex">
 				<view class="action flex-column align-center padding-right-xl" v-if="!isInput" @click="likeArticle">
-					<text class="cuIcon-appreciatefill text-theme-color commodity-icon animation-fade-quick" v-if="articleInfo.article_like"></text>
+					<text class="cuIcon-appreciatefill text-theme-color commodity-icon animation-fade-quick" v-if="activityInfo.activity_like"></text>
 					<text class="cuIcon-appreciate text-theme-color commodity-icon animation-fade-quick" v-else></text>
 					<text class="text-xs text-theme-color">超赞</text>
 				</view>
 				<view class="action flex-column align-center padding-right-xl" v-if="!isInput" @click="CollectArticle">
-					<text class="cuIcon-favorfill text-theme-color commodity-icon animation-fade-quick" v-if="articleInfo.article_collect"></text>
+					<text class="cuIcon-favorfill text-theme-color commodity-icon animation-fade-quick" v-if="activityInfo.activity_collect"></text>
 					<text class="cuIcon-favor text-theme-color commodity-icon animation-fade-quick" v-else></text>
 					<text class="text-xs text-theme-color">收藏</text>
 				</view>
@@ -119,9 +125,9 @@
 		data() {
 			return {
 				display: false,
-				article_id: 0,
+				activity_id: 0,
 				scroll_height: 700,
-				articleInfo: [],
+				activityInfo: [],
 				imageList: [],
 				isInput: false,
 				inputComment: '',
@@ -131,28 +137,28 @@
 		},
 		computed: {
 			hasComment: function() {
-				if (this.articleInfo.length != 0) {
-					return this.articleInfo.article_comments.length != 0;
+				if (this.activityInfo.length != 0) {
+					return this.activityInfo.activity_comments.length != 0;
 				}
 				return false;
 			}
 		},
 		onLoad(option) {
-			this.article_id = option.article_id;
+			this.activity_id = option.activity_id;
 			let that = this;
 			Vue.prototype.$http.request({
-				url: '/articles/detail',
+				url: '/activities/detail',
 				method: 'POST',
 				params: {
-					article_id: this.article_id
+					activity_id: this.activity_id
 				},
 			}).then(res => {
-				this.articleInfo = res.data.data;
-				for (let item in this.articleInfo.article_images) {
-					this.imageList.push(this.articleInfo.article_images[item].image_url);
+				this.activityInfo = res.data.data;
+				for (let item in this.activityInfo.activity_images) {
+					this.imageList.push(this.activityInfo.activity_images[item].image_url);
 				}
 				this.formatTime();
-				for (let index in this.articleInfo.article_comments) {
+				for (let index in this.activityInfo.activity_comments) {
 					this.formatCommentsTime(index);
 				}
 				setTimeout(() => {
@@ -166,8 +172,6 @@
 					}
 				}, 200);
 			});
-
-
 		},
 		mounted() {
 			setTimeout(() => {
@@ -175,15 +179,20 @@
 			}, 100)
 		},
 		methods: {
+			navigateActivityRegister() {
+				uni.navigateTo({
+					url: '/pages/activity-register/activity-register?activity_id=' + this.activity_id
+				})
+			},
 			tooglrUserFollow() {
 				Vue.prototype.$http.request({
 					url: '/users/follow',
 					method: 'POST',
 					params: {
-						accept_id: this.articleInfo.article_user.user_id,
+						accept_id: this.activityInfo.activity_user.user_id,
 					},
 				}).then(res => {
-					this.articleInfo.user_follow = !this.articleInfo.user_follow;
+					this.activityInfo.user_follow = !this.activityInfo.user_follow;
 					this.$refs.notification.open({
 						type: 'success',
 						content: '操作成功',
@@ -203,11 +212,11 @@
 						comment_id: comment_id,
 					},
 				}).then(res => {
-					this.articleInfo.article_comments[index].comment_like = !this.articleInfo.article_comments[index].comment_like;
-					if (this.articleInfo.article_comments[index].comment_like) {
-						this.articleInfo.article_comments[index].comment_likes++;
+					this.activityInfo.activity_comments[index].comment_like = !this.activityInfo.activity_comments[index].comment_like;
+					if (this.activityInfo.activity_comments[index].comment_like) {
+						this.activityInfo.activity_comments[index].comment_likes++;
 					} else {
-						this.articleInfo.article_comments[index].comment_likes--;
+						this.activityInfo.activity_comments[index].comment_likes--;
 					}
 					this.$refs.notification.open({
 						type: 'success',
@@ -227,15 +236,15 @@
 					});
 				}
 				Vue.prototype.$http.request({
-					url: '/comments/article/create',
+					url: '/comments/activity/create',
 					method: 'POST',
 					params: {
-						article_id: this.article_id,
+						activity_id: this.activity_id,
 						comment_content: this.inputComment,
 						parent_id: 0
 					},
 				}).then(res => {
-					this.articleInfo.article_comments.unshift(res.data.data);
+					this.activityInfo.activity_comments.unshift(res.data.data);
 					this.formatCommentsTime(0);
 					this.cancelInput();
 					this.inputComment = '';
@@ -253,16 +262,16 @@
 			cancelInput() {
 				this.isInput = false;
 			},
-			likeArticle(index, article_id) {
+			likeArticle(index, activity_id) {
 				Vue.prototype.$http.request({
-					url: '/likes/article',
+					url: '/likes/activity',
 					method: 'POST',
 					params: {
-						article_id: this.article_id,
+						activity_id: this.activity_id,
 					},
 				}).then(res => {
-					this.articleInfo.article_like = !this.articleInfo.article_like;
-					this.articleInfo.article_like ? this.articleInfo.article_likes++ : this.articleInfo.article_likes--;
+					this.activityInfo.activity_like = !this.activityInfo.activity_like;
+					this.activityInfo.activity_like ? this.activityInfo.activity_likes++ : this.activityInfo.activity_likes--;
 					this.$refs.notification.open({
 						type: 'success',
 						content: '操作成功',
@@ -271,15 +280,15 @@
 					});
 				})
 			},
-			CollectArticle(index, article_id) {
+			CollectArticle(index, activity_id) {
 				Vue.prototype.$http.request({
-					url: '/collections/article',
+					url: '/collections/activity',
 					method: 'POST',
 					params: {
-						article_id: this.article_id,
+						activity_id: this.activity_id,
 					},
 				}).then(res => {
-					this.articleInfo.article_collect = !this.articleInfo.article_collect;
+					this.activityInfo.activity_collect = !this.activityInfo.activity_collect;
 					this.$refs.notification.open({
 						type: 'success',
 						content: '操作成功',
@@ -310,86 +319,86 @@
 				});
 			},
 			formatTime() {
-				let time = this.articleInfo.article_created.split(' ');
+				let time = this.activityInfo.activity_created.split(' ');
 				let currentTime = new Date().toLocaleDateString();
 				let differenceDay = Math.abs(Math.ceil((new Date(currentTime) - new Date(time[0])) / (1000 * 60 * 60 * 24)));
 				let differenceWeekDay = 7 - differenceDay;
 				if (differenceDay === 0) {
-					this.articleInfo.display_time = '今天 ' + time[1];
+					this.activityInfo.display_time = '今天 ' + time[1];
 				} else if (differenceDay === 1) {
-					this.articleInfo.display_time = '昨天 ' + time[1];
+					this.activityInfo.display_time = '昨天 ' + time[1];
 				} else if (differenceDay === 2) {
-					this.articleInfo.display_time = '前天 ' + time[1];
+					this.activityInfo.display_time = '前天 ' + time[1];
 				} else {
 					if (differenceWeekDay > 0) {
-						let targetWeekDay = new Date(this.articleInfo.article_created).getDay();
+						let targetWeekDay = new Date(this.activityInfo.activity_created).getDay();
 						switch (targetWeekDay) {
 							case 0:
-								this.articleInfo.display_time = '星期天 ' + time[1];
+								this.activityInfo.display_time = '星期天 ' + time[1];
 								break;
 							case 1:
-								this.articleInfo.display_time = '星期一 ' + time[1];
+								this.activityInfo.display_time = '星期一 ' + time[1];
 								break;
 							case 2:
-								this.articleInfo.display_time = '星期二 ' + time[1];
+								this.activityInfo.display_time = '星期二 ' + time[1];
 								break;
 							case 3:
-								this.articleInfo.display_time = '星期三 ' + time[1];
+								this.activityInfo.display_time = '星期三 ' + time[1];
 								break;
 							case 4:
-								this.articleInfo.display_time = '星期四 ' + time[1];
+								this.activityInfo.display_time = '星期四 ' + time[1];
 								break;
 							case 5:
-								this.articleInfo.display_time = '星期五 ' + time[1];
+								this.activityInfo.display_time = '星期五 ' + time[1];
 								break;
 							case 6:
-								this.articleInfo.display_time = '星期六 ' + time[1];
+								this.activityInfo.display_time = '星期六 ' + time[1];
 								break;
 						}
 					} else {
-						this.articleInfo.display_time = this.articleInfo.created_at;
+						this.activityInfo.display_time = this.activityInfo.created_at;
 					}
 				}
 			},
 			formatCommentsTime(index) {
-				let time = this.articleInfo.article_comments[index].comment_created.split(' ');
+				let time = this.activityInfo.activity_comments[index].comment_created.split(' ');
 				let currentTime = new Date().toLocaleDateString();
 				let differenceDay = Math.abs(Math.ceil((new Date(currentTime) - new Date(time[0])) / (1000 * 60 * 60 * 24)));
 				let differenceWeekDay = 7 - differenceDay;
 				if (differenceDay === 0) {
-					this.articleInfo.article_comments[index].display_time = '今天 ' + time[1];
+					this.activityInfo.activity_comments[index].display_time = '今天 ' + time[1];
 				} else if (differenceDay === 1) {
-					this.articleInfo.article_comments[index].display_time = '昨天 ' + time[1];
+					this.activityInfo.activity_comments[index].display_time = '昨天 ' + time[1];
 				} else if (differenceDay === 2) {
-					this.articleInfo.article_comments[index].display_time = '前天 ' + time[1];
+					this.activityInfo.activity_comments[index].display_time = '前天 ' + time[1];
 				} else {
 					if (differenceWeekDay > 0) {
-						let targetWeekDay = new Date(this.articleInfo.article_comments[index].comment_created).getDay();
+						let targetWeekDay = new Date(this.activityInfo.activity_comments[index].comment_created).getDay();
 						switch (targetWeekDay) {
 							case 0:
-								this.articleInfo.article_comments[index].display_time = '星期天 ' + time[1];
+								this.activityInfo.activity_comments[index].display_time = '星期天 ' + time[1];
 								break;
 							case 1:
-								this.articleInfo.article_comments[index].display_time = '星期一 ' + time[1];
+								this.activityInfo.activity_comments[index].display_time = '星期一 ' + time[1];
 								break;
 							case 2:
-								this.articleInfo.article_comments[index].display_time = '星期二 ' + time[1];
+								this.activityInfo.activity_comments[index].display_time = '星期二 ' + time[1];
 								break;
 							case 3:
-								this.articleInfo.article_comments[index].display_time = '星期三 ' + time[1];
+								this.activityInfo.activity_comments[index].display_time = '星期三 ' + time[1];
 								break;
 							case 4:
-								this.articleInfo.article_comments[index].display_time = '星期四 ' + time[1];
+								this.activityInfo.activity_comments[index].display_time = '星期四 ' + time[1];
 								break;
 							case 5:
-								this.articleInfo.article_comments[index].display_time = '星期五 ' + time[1];
+								this.activityInfo.activity_comments[index].display_time = '星期五 ' + time[1];
 								break;
 							case 6:
-								this.articleInfo.article_comments[index].display_time = '星期六 ' + time[1];
+								this.activityInfo.activity_comments[index].display_time = '星期六 ' + time[1];
 								break;
 						}
 					} else {
-						this.articleInfo.article_comments[index].display_time = this.articleInfo.article_comments[index].created_at;
+						this.activityInfo.activity_comments[index].display_time = this.activityInfo.activity_comments[index].created_at;
 					}
 				}
 			}
@@ -397,5 +406,5 @@
 	}
 </script>
 
-<style src="./article.css">
+<style src="./activity.css">
 </style>
