@@ -1,80 +1,34 @@
 {
-	"description": "项目配置文件。",
-	"packOptions": {
-		"ignore": []
-	},
-	"setting": {
-		"urlCheck": true,
-		"es6": false,
-		"postcss": false,
-		"minified": false,
-		"newFeature": true
-	},
-	"compileType": "miniprogram",
-	"projectname": "Chat",
-	"qqappid": "1109912295",
-	"condition": {
-		"search": {
-			"current": -1,
-			"list": []
-		},
-		"conversation": {
-			"current": -1,
-			"list": []
-		},
-		"game": {
-			"list": []
-		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
-		"miniprogram": {
-			"current": 5,
-			"list": [
-				{
-					"id": -1,
-					"name": "choose",
-					"pathName": "pages/choose-index/choose-index",
-					"query": "",
-					"scene": ""
-				},
-				{
-					"id": -1,
-					"name": "apply",
-					"pathName": "pages/apply-organization/apply-organization",
-					"query": "",
-					"scene": ""
-				},
-				{
-					"id": -1,
-					"name": "information",
-					"pathName": "pages/information/information",
-					"query": "",
-					"scene": ""
-				},
-				{
-					"id": -1,
-					"name": "article",
-					"pathName": "pages/article/article",
-					"query": "article_id=11",
-					"scene": ""
-				},
-				{
-					"id": -1,
-					"name": "activity",
-					"pathName": "pages/activity/activity",
-					"query": "activity_id=3",
-					"scene": ""
-				},
-				{
-					"id": -1,
-					"name": "register",
-					"pathName": "pages/activity-register/activity-register",
-					"query": "activity_id=3",
-					"scene": ""
-				}
-			]
-		}
-	}
+  "description": "项目配置文件。",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "postcss": false,
+    "minified": false,
+    "newFeature": true
+  },
+  "compileType": "miniprogram",
+  "projectname": "Chat",
+  "condition": {
+    "search": {
+      "current": -1,
+      "list": []
+    },
+    "conversation": {
+      "current": -1,
+      "list": []
+    },
+    "game": {
+      "current": -1,
+      "list": []
+    },
+    "miniprogram": {
+      "current": -1,
+      "list": []
+    }
+  },
+  "qqappid": "1109912295"
 }

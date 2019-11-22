@@ -4,6 +4,21 @@
 }
 
 .user-info-title {
-	font-size: 28rpx;
+	font-size: 28rpx !important;
 	font-weight: 700;
+}
+
+.icon-image {
+	width: 60rpx;
+	height: 60rpx;
+}
+
+.add-one-input {
+	background: #F1F1F1;
+	height: 80rpx;
+	border-radius: 20rpx;
+}
+
+.letter-spacing {
+	letter-spacing: 2rpx;
 }

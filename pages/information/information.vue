@@ -316,12 +316,10 @@
 			tabSelect(e) {
 				this.currentTab = e.currentTarget.dataset.id;
 				this.setScrollHeight();
-				// this.scroll_left = (e.currentTarget.dataset.id - 1) * (this.screen_width / 4);
 			},
 			tabSwiper(e) {
 				this.currentTab = e.detail.current;
 				this.setScrollHeight();
-				// this.scroll_left = (this.TabCur - 1) * (this.screen_width / 4);
 			},
 			setScrollHeight() {
 				this.loadingItem = true;
@@ -332,7 +330,7 @@
 				}
 				setTimeout(() => {
 					this.loadingItem = false
-				}, 500);
+				}, 400);
 
 			},
 			formatArticleTime(index) {

@@ -101,6 +101,11 @@
 							url: '/pages/addition-activity/addition-activity'
 						});
 						break;
+					case 2:
+						uni.navigateTo({
+							url: '/pages/addition-recruit/addition-recruit'
+						});
+						break;
 					case 3:
 						uni.navigateTo({
 							url: '/pages/addition-commodity/addition-commodity'

@@ -1,0 +1,1 @@
+<view class="addition-container"><cu-custom vue-id="1" bgColor="bg-gradual-tab" isBack="{{true}}" bind:__l="__l" vue-slots="{{['backText','content']}}"><view slot="backText">返回</view><view slot="content">Addition</view></cu-custom><view>addition-recruit</view></view>

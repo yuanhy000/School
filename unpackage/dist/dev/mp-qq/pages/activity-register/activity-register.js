@@ -29,7 +29,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _activity_register_vue_vue_type_template_id_f96123d8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./activity-register.vue?vue&type=template&id=f96123d8& */ 179);
 /* harmony import */ var _activity_register_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./activity-register.vue?vue&type=script&lang=js& */ 181);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _activity_register_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _activity_register_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _activity_register_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./activity-register.css?vue&type=style&index=0&lang=css& */ 255);
+/* harmony import */ var _activity_register_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./activity-register.css?vue&type=style&index=0&lang=css& */ 183);
 /* harmony import */ var _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 15);
 
 
@@ -122,7 +122,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -175,14 +175,71 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _vuex = __webpack_require__(/*! vuex */ 27);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 
 
 {
   data: function data() {
     return {
       activity_id: 0,
-      scroll_height: 700 };
+      scroll_height: 700,
+      teamName: '',
+      userNumber: '',
+      showInput: false,
+      inputTimeStamp: 0,
+      showSearchUser: false,
+      showSearchError: false,
+      showToast: false,
+      searchUser: {},
+      otherUser: [],
+      toastContent: '' };
 
   },
   computed: _objectSpread({},
@@ -192,9 +249,109 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {
 
   onLoad: function onLoad(option) {
     this.activity_id = option.activity_id;
-    console.log(this.activity_id);
   },
-  mounted: function mounted() {} };exports.default = _default;
+  methods: {
+    submit: function submit() {var _this = this;
+      console.log('123');
+      if (this.teamName == '') {
+        this.toastContent = '队伍名称不能为空';
+        this.showToast = true;
+        return;
+      }
+      var teamUser = [];
+      teamUser.push(this.user.user_id);
+      if (this.otherUser.length != 0) {
+        for (var item in this.otherUser) {
+          teamUser.push(this.otherUser[item].user_id);
+        }
+      }
+      _vue.default.prototype.$http.request({
+        url: '/activities/team/create',
+        method: 'POST',
+        params: {
+          activity_id: this.activity_id,
+          team_name: this.teamName,
+          team_user: teamUser } }).
+
+      then(function (res) {
+        _this.$refs.notification.open({
+          type: 'success',
+          content: '报名成功',
+          timeout: 1500,
+          isClick: false });
+
+        setTimeout(function () {
+          uni.navigateBack({
+            delta: 1 });
+
+        }, 1500);
+      });
+    },
+    pushNewUser: function pushNewUser() {var _this2 = this;
+      if (this.user.user_id == this.searchUser.user_id) {
+        this.$refs.notification.open({
+          type: 'err',
+          content: '该成员已加入队伍',
+          timeout: 1500,
+          isClick: false });
+
+        return;
+      }
+      for (var index in this.otherUser) {
+        if (this.otherUser[index].user_id == this.searchUser.user_id) {
+          this.$refs.notification.open({
+            type: 'err',
+            content: '该成员已加入队伍',
+            timeout: 1500,
+            isClick: false });
+
+          return;
+        }
+      }
+      this.otherUser.push(this.searchUser);
+      this.showInput = false;
+      this.showSearchUser = false;
+      this.userNumber = '';
+      setTimeout(function () {
+        _this2.searchUser = {};
+      }, 1000);
+    },
+    addNewUser: function addNewUser() {
+      this.showInput = true;
+    },
+    hideModal: function hideModal() {
+      this.showInput = false;
+    },
+    hideToast: function hideToast() {
+      this.showToast = false;
+    },
+    searchTips: function searchTips(event) {var _this3 = this;
+      this.showSearchError = false;
+      this.showSearchUser = false;
+      this.inputTimeStamp = event.timeStamp;
+      setTimeout(function () {
+        //1s后比较二者是否还相同（因为只要还有事件触发，inputTimeStamp就会被改写，不再是当前事件函数的时间戳）
+        if (_this3.inputTimeStamp == event.timeStamp) {
+          _this3.getUser();
+        }
+      }, 600);
+    },
+    getUser: function getUser() {var _this4 = this;
+      _vue.default.prototype.$http.request({
+        url: '/users/search/number',
+        method: 'POST',
+        params: {
+          user_number: this.userNumber } }).
+
+      then(function (res) {
+        _this4.searchUser = res.data.data;
+        _this4.showSearchUser = true;
+      }).catch(function (error) {
+        _this4.showSearchError = true;
+        console.log(error);
+      });
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-qq/dist/index.js */ 1)["default"]))
 
 /***/ })
 
