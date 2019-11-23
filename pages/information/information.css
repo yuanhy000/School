@@ -81,3 +81,7 @@
 	top: 50%;
 	z-index: 666;
 }
+
+.none-default-image {
+	width: 100%;
+}

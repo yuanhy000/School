@@ -1,3 +1,9 @@
+.addition-container {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+}
+
 .user-info-font {
 	font-size: 24rpx;
 	color: #777777;

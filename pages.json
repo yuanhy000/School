@@ -81,6 +81,11 @@
 				"navigationBarTitleText": "uni-app"
 			}
 		}, {
+			"path": "pages/recruit/recruit",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}, {
 			"path": "pages/activity-register/activity-register",
 			"style": {
 				"navigationBarTitleText": "uni-app"

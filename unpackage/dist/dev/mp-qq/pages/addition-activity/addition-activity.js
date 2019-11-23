@@ -174,18 +174,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _uploadFile = __webpack_require__(/*! ../../utils/uploadFile.js */ 98);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
@@ -238,19 +226,19 @@ var _uploadFile = __webpack_require__(/*! ../../utils/uploadFile.js */ 98);funct
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var util = __webpack_require__(/*! ../../utils/util.js */ 103);var _default = { data: function data() {return { title: '', content: '', attention: '', isInput: false, selectImageList: [], imageUrlList: [], isDisplayLocation: false, isAnonymity: false, scroll_height: 700, showToast: false, toastContent: '' };}, mounted: function mounted() {var _this = this;setTimeout(function () {_this.GetHeight();}, 100);}, methods: { hideModal: function hideModal(e) {this.showToast = false;}, Submit: function Submit() {if (this.title == '') {this.toastContent = '活动标题不能为空';this.showToast = true;return;}if (this.content == '') {this.toastContent = '活动内容不能为空';this.showToast = true;return;}if (this.imageUrlList.length == 0) {this.toastContent = '活动图片不能为空';this.showToast = true;return;}_vue.default.prototype.$http.request({ url: '/activities/create', method: 'POST', params: { activity_name: this.title, activity_content: this.content, activity_attention: this.attention, activity_image: this.imageUrlList } }).then(function (res) {console.log(res.data);});}, CheckboxOnclick: function CheckboxOnclick() {this.isDisplayLocation = !this.isDisplayLocation;},
+var util = __webpack_require__(/*! ../../utils/util.js */ 103);var _default = { data: function data() {return { title: '', content: '', attention: '', isInput: false, selectImageList: [], imageUrlList: [], isDisplayLocation: false, isAnonymity: false, scroll_height: 700, showToast: false, toastContent: '' };}, mounted: function mounted() {var _this = this;setTimeout(function () {_this.GetHeight();}, 100);}, methods: { hideModal: function hideModal(e) {this.showToast = false;}, Submit: function Submit() {if (this.title == '') {this.toastContent = '活动标题不能为空';this.showToast = true;return;}if (this.content == '') {this.toastContent = '活动内容不能为空';this.showToast = true;return;}if (this.imageUrlList.length == 0) {this.toastContent = '活动图片不能为空';this.showToast = true;return;}_vue.default.prototype.$http.request({ url: '/activities/create', method: 'POST', params: {
+          activity_name: this.title,
+          activity_content: this.content,
+          activity_attention: this.attention,
+          activity_image: this.imageUrlList } }).
+
+      then(function (res) {
+        console.log(res.data);
+      });
+    },
+    CheckboxOnclick: function CheckboxOnclick() {
+      this.isDisplayLocation = !this.isDisplayLocation;
+    },
     ChooseImage: function ChooseImage() {var _this2 = this;
       uni.chooseImage({
         count: 9, //默认9
@@ -289,19 +277,9 @@ var util = __webpack_require__(/*! ../../utils/util.js */ 103);var _default = { 
         current: e.currentTarget.dataset.url });
 
     },
-    DelImg: function DelImg(e) {var _this4 = this;
-      uni.showModal({
-        title: '确认删除',
-        content: '确定要删除这张图片吗？',
-        cancelText: '取消',
-        confirmText: '确认',
-        success: function success(res) {
-          if (res.confirm) {
-            _this4.selectImageList.splice(e.currentTarget.dataset.index, 1);
-            _this4.imageUrlList.splice(e.currentTarget.dataset.index, 1);
-          }
-        } });
-
+    DelImg: function DelImg(e) {
+      this.selectImageList.splice(e.currentTarget.dataset.index, 1);
+      this.imageUrlList.splice(e.currentTarget.dataset.index, 1);
     },
     GetHeight: function GetHeight() {
       var that = this;

@@ -7,7 +7,7 @@
 		<scroll-view scroll-y id="scroll" :style="{height:scroll_height +'px'}">
 			<view class="padding-top">
 				<view class="cu-tabbar-height bg-white margin-left margin-right border-radius bg-white shadow flex align-center ">
-					<input class="margin-left margin-right text-sm" type="text" placeholder="物品名称" v-model="title" />
+					<input class="margin-left margin-right text-sm max-width" type="text" placeholder="物品名称" v-model="title" />
 				</view>
 				<view class="cu-form-group margin-left margin-top margin-right margin-bottom border-radius bg-white shadow">
 					<textarea class="textarea-font-size" placeholder="详细描述..." v-model="content" maxlength="400"/>
@@ -44,11 +44,6 @@
 						<checkbox class='round theme' @click="CheckboxOnclick('location')">
 						</checkbox>
 					</view>
-					<!-- 				<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;">
-					<view class="title checkbox-title">是否匿名</view>
-					<checkbox class='round theme' @click="CheckboxOnclick('anonymity')">
-					</checkbox>
-				</view> -->
 				</view>
 				<view class='cu-btn bg-gradual-tab lg block shadow radius margin-xl' @tap="Submit" data-target="viewModal">
 					发布物品
@@ -233,18 +228,8 @@
 				});
 			},
 			DelImg(e) {
-				// uni.showModal({
-				// 	title: '确认删除',
-				// 	content: '确定要删除这张图片吗？',
-				// 	cancelText: '取消',
-				// 	confirmText: '确认',
-				// 	success: res => {
-				// 		if (res.confirm) {
 				this.selectImageList.splice(e.currentTarget.dataset.index, 1)
 				this.imageUrlList.splice(e.currentTarget.dataset.index, 1)
-				// 		}
-				// 	}
-				// })
 			},
 			GetHeight() {
 				let that = this;

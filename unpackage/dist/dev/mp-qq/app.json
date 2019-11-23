@@ -16,6 +16,7 @@
     "pages/apply-organization/apply-organization",
     "pages/article/article",
     "pages/activity/activity",
+    "pages/recruit/recruit",
     "pages/activity-register/activity-register",
     "pages/addition-recruit/addition-recruit"
   ],

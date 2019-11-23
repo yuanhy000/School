@@ -7,7 +7,7 @@
 		<scroll-view scroll-y id="scroll" :style="{height:scroll_height +'px'}">
 			<view class="padding-top">
 				<view class="cu-tabbar-height bg-white margin-left margin-right  border-radius bg-white shadow flex align-center ">
-					<input class="margin-left margin-right text-sm" type="text" placeholder="标题 ( 可选 )" v-model="title" />
+					<input class="margin-left margin-right text-sm max-width" type="text" placeholder="标题 ( 可选 )" v-model="title" />
 				</view>
 				<view class="cu-form-group margin-left margin-top margin-right margin-bottom border-radius bg-white shadow">
 					<textarea class="textarea-font-size" placeholder="分享新鲜事..." v-model="content" maxlength="400" />

@@ -8,7 +8,7 @@
 			<view class="padding-top">
 				<view class="margin-left user-info-title text-theme-color margin-bottom">队伍名称：</view>
 				<view class="cu-tabbar-height bg-white margin-left margin-right  border-radius bg-white shadow flex align-center margin-bottom-xl">
-					<input class="margin-left margin-right text-sm" type="text" placeholder="快填一个队伍名称吧～" v-model="teamName" />
+					<input class="margin-left margin-right text-sm max-width" type="text" placeholder="快填一个队伍名称吧～" v-model="teamName" />
 				</view>
 				<view class="margin-left user-info-title text-theme-color margin-top-xl">队伍成员：</view>
 				<view class="cu-list menu card-menu margin-top margin-bottom-xl shadow bg-white">

@@ -5233,6 +5233,9 @@ scroll-view.cu-steps .cu-item {
 	top: 50%;
 	z-index: 666;
 }
+.none-default-image.data-v-34b500aa {
+	width: 100%;
+}
 
 .store-container {
 	position: fixed;

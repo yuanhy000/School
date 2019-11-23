@@ -174,18 +174,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _uploadFile = __webpack_require__(/*! ../../utils/uploadFile.js */ 98);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
@@ -238,19 +226,19 @@ var _uploadFile = __webpack_require__(/*! ../../utils/uploadFile.js */ 98);funct
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var util = __webpack_require__(/*! ../../utils/util.js */ 103);var _default = { data: function data() {return { title: '', content: '', isInput: false, selectImageList: [], imageUrlList: [], isDisplayLocation: false, isAnonymity: false, scroll_height: 700, showToast: false, toastContent: '' };}, mounted: function mounted() {var _this = this;setTimeout(function () {_this.GetHeight();}, 100);}, methods: { hideModal: function hideModal(e) {this.showToast = false;}, Submit: function Submit() {if (this.title == '') {this.toastContent = '所认证的组织名称不能为空';this.showToast = true;return;}if (this.content == '') {this.toastContent = '所认证的组织描述不能为空';this.showToast = true;return;}if (this.imageUrlList.length == 0) {this.toastContent = '认证组织需提交相关证明材料';this.showToast = true;return;}_vue.default.prototype.$http.request({ url: '/users/organization/apply', method: 'POST', params: { organization_name: this.title, organization_description: this.content, organization_image: this.imageUrlList } }).then(function (res) {console.log(res.data);});}, CheckboxOnclick: function CheckboxOnclick() {this.isDisplayLocation = !this.isDisplayLocation;}, ChooseImage: function ChooseImage() {var _this2 = this;uni.chooseImage({ count: 9, //默认9
+var util = __webpack_require__(/*! ../../utils/util.js */ 103);var _default = { data: function data() {return { title: '', content: '', isInput: false, selectImageList: [], imageUrlList: [], isDisplayLocation: false, isAnonymity: false, scroll_height: 700, showToast: false, toastContent: '' };}, mounted: function mounted() {var _this = this;setTimeout(function () {_this.GetHeight();}, 100);}, methods: { hideModal: function hideModal(e) {this.showToast = false;}, Submit: function Submit() {if (this.title == '') {this.toastContent = '所认证的组织名称不能为空';this.showToast = true;return;}if (this.content == '') {this.toastContent = '所认证的组织描述不能为空';this.showToast = true;return;}if (this.imageUrlList.length == 0) {this.toastContent = '认证组织需提交相关证明材料';this.showToast = true;return;}_vue.default.prototype.$http.request({ url: '/users/organization/apply', method: 'POST', params: { organization_name: this.title, organization_description: this.content,
+          organization_image: this.imageUrlList } }).
+
+      then(function (res) {
+        console.log(res.data);
+      });
+    },
+    CheckboxOnclick: function CheckboxOnclick() {
+      this.isDisplayLocation = !this.isDisplayLocation;
+    },
+    ChooseImage: function ChooseImage() {var _this2 = this;
+      uni.chooseImage({
+        count: 9, //默认9
         sizeType: ['original', 'compressed'],
         sourceType: ['album'],
         success: function success(res) {

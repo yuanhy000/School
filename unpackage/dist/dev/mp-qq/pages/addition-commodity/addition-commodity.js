@@ -206,11 +206,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _uploadFile = __webpack_require__(/*! ../../utils/uploadFile.js */ 98);
 
@@ -357,18 +352,8 @@ var util = __webpack_require__(/*! ../../utils/util.js */ 103);var _default =
 
     },
     DelImg: function DelImg(e) {
-      // uni.showModal({
-      // 	title: '确认删除',
-      // 	content: '确定要删除这张图片吗？',
-      // 	cancelText: '取消',
-      // 	confirmText: '确认',
-      // 	success: res => {
-      // 		if (res.confirm) {
       this.selectImageList.splice(e.currentTarget.dataset.index, 1);
       this.imageUrlList.splice(e.currentTarget.dataset.index, 1);
-      // 		}
-      // 	}
-      // })
     },
     GetHeight: function GetHeight() {
       var that = this;
