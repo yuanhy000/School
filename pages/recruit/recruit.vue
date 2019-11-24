@@ -150,6 +150,7 @@
 					this.imageList.push(this.recruitInfo.recruit_images[item].image_url);
 				}
 				this.formatTime();
+				this.formatRecruitContent();
 				for (let index in this.recruitInfo.recruit_comments) {
 					this.formatCommentsTime(index);
 				}
@@ -173,6 +174,9 @@
 			}, 100)
 		},
 		methods: {
+			formatRecruitContent() {
+				this.recruitInfo.recruit_content = this.recruitInfo.recruit_content.replace(/<br\/\>/g, "\n");
+			},
 			tooglrUserFollow() {
 				Vue.prototype.$http.request({
 					url: '/users/follow',

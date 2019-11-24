@@ -9,20 +9,23 @@
 			</scroll-view>
 			<view class="animation-fade" v-if="currentNav == 0">
 				<block v-for="(item,index) in newsInfo" v-bind:key="index">
-					<view class="cu-card article shadow" style="border-radius: 30rpx;">
-						<view class="cu-item shadow">
+					<view class="cu-card article bg-white shadow margin-top margin-left margin-bottom-xl margin-right" style="border-radius: 20rpx;"
+					 @click=navigateNews(item.news_id)>
+						<view class="cu-item shadow" style="margin: 0;">
 							<view class="title">
 								<view class="text-cut">{{item.news_title}}</view>
 							</view>
 							<view class="content">
-								<view class="desc">
-									<view class="text-content"> 折磨生出苦难，苦难又会加剧折磨，凡间这无穷的循环，将有我来终结！真正的恩典因不完整而美丽，因情感而真诚，因脆弱而自由！</view>
+								<view class="desc margin-right-sm">
+									<view class="text-content" style="font-size: 24rpx!important; line-height: 40rpx;">{{item.news_content}}</view>
 									<view>
-										<view class="cu-tag bg-red light sm round">正义天使</view>
-										<view class="cu-tag bg-green light sm round">史诗</view>
+										<text class="article-create-time  text-bold text-theme-color margin-right">
+											#{{item.news_author}}#
+										</text>
+										<text class="article-create-time">{{item.news_created}}</text>
 									</view>
 								</view>
-								<image :src="item.news_images[0].image_url" mode="aspectFill"></image>
+								<image :src="item.news_images[0].image_url" mode="aspectFill" @click.stop="viewImage" :data-url="item.news_images[0].image_url"></image>
 							</view>
 						</view>
 					</view>
@@ -47,9 +50,9 @@
 						<view class="padding-bottom-xl padding-top animation-fade" v-if="!loadingItem&&attentionInfo.length!=0" id="attention">
 							<block v-for="(item,index) in attentionInfo" v-bind:key="index">
 								<view class="cu-item shadow bg-white margin-bottom-xl margin-left margin-right" @click="navigateArticle(item.article_id,0)"
-								 style="border-radius: 30rpx;">
+								 style="border-radius: 20rpx;">
 									<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white"
-									 style="border-radius: 30rpx;">
+									 style="border-radius: 20rpx;">
 										<image class="cu-avatar article-avatar avatar-shadow margin-right round avatar-border" :src="item.article_user.user_avatar">
 										</image>
 										<view class="flex-column justify-center">
@@ -98,9 +101,9 @@
 						<view class="padding-bottom-xl padding-top animation-fade" v-if="!loadingItem" id="activity">
 							<block v-for="(item,index) in activityInfo" v-bind:key="index">
 								<view class="cu-item shadow bg-white margin-bottom-xl margin-left margin-right" @click="navigateActivity(item.activity_id,0)"
-								 style="border-radius: 30rpx;">
+								 style="border-radius: 20rpx;">
 									<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white"
-									 style="border-radius: 30rpx;">
+									 style="border-radius: 20rpx;">
 										<image class="cu-avatar article-avatar avatar-shadow margin-right round avatar-border" :src="item.activity_user.user_avatar">
 										</image>
 										</image>
@@ -159,9 +162,9 @@
 						<view class="padding-bottom-xl padding-top animation-fade" v-if="!loadingItem" id="article">
 							<block v-for="(item,index) in articleInfo" v-bind:key="index">
 								<view class="cu-item shadow bg-white margin-bottom-xl margin-left margin-right" @click="navigateArticle(item.article_id,0)"
-								 style="border-radius: 30rpx;">
+								 style="border-radius: 20rpx;">
 									<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white"
-									 style="border-radius: 30rpx;">
+									 style="border-radius: 20rpx;">
 										<image class="cu-avatar article-avatar avatar-shadow margin-right round avatar-border" :src="item.article_user.user_avatar"
 										 v-if="!item.article_anonymity">
 										</image>
@@ -181,7 +184,7 @@
 										{{item.article_title}}
 									</view>
 									<view class="text-content padding-left padding-right margin-top-xs margin-bottom activity_content">
-										{{item.article_content}}
+										<text decode="true">{{item.article_content}}</text>
 									</view>
 									<view class="grid flex-sub padding-lr col-3 grid-square margin-bottom">
 										<block v-for="(imgItem,index) in item.article_images" :key="index">
@@ -215,9 +218,9 @@
 						<view class="padding-bottom-xl padding-top animation-fade" v-if="!loadingItem" id="recruit">
 							<block v-for="(item,index) in recruitInfo" v-bind:key="index">
 								<view class="cu-item shadow bg-white margin-bottom-xl margin-left margin-right" @click="navigateRecruit(item.recruit_id,0)"
-								 style="border-radius: 30rpx;">
+								 style="border-radius: 20rpx;">
 									<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white"
-									 style="border-radius: 30rpx;">
+									 style="border-radius: 20rpx;">
 										<image class="cu-avatar article-avatar avatar-shadow margin-right round avatar-border" :src="item.recruit_user.user_avatar">
 										</image>
 										<view class="flex-column justify-center">
@@ -311,10 +314,12 @@
 				page_scroll: 1,
 				loadingNext: false,
 				links: [],
+				newsCurrentPage: 1,
 				attentionCurrentPage: 1,
 				activityCurrentPage: 1,
 				articleCurrentPage: 1,
 				recruitCurrentPage: 1,
+				newsComplete: false,
 				attentionComplete: false,
 				activityComplete: false,
 				articleComplete: false,
@@ -355,18 +360,16 @@
 					for (let index in this.attentionInfo[item].article_images) {
 						this.imageList.push(this.attentionInfo[item].article_images[index].image_url);
 					}
-				}
-				for (let index in this.attentionInfo) {
-					this.formatAttentionTime(index);
+					this.formatAttentionContent(item);
+					this.formatAttentionTime(item);
 				}
 				this.articleInfo = res.data.data.articles.data;
 				for (let item in this.articleInfo) {
 					for (let index in this.articleInfo[item].article_images) {
 						this.imageList.push(this.articleInfo[item].article_images[index].image_url);
 					}
-				}
-				for (let index in this.articleInfo) {
-					this.formatArticleTime(index);
+					this.formatArticleContent(item);
+					this.formatArticleTime(item);
 				}
 
 				this.activityInfo = res.data.data.activities.data;
@@ -374,9 +377,8 @@
 					for (let index in this.activityInfo[item].activity_images) {
 						this.imageList.push(this.activityInfo[item].activity_images[index].image_url);
 					}
-				}
-				for (let index in this.activityInfo) {
-					this.formatActivityTime(index);
+					this.formatActivityContent(item);
+					this.formatActivityTime(item);
 				}
 
 				this.recruitInfo = res.data.data.recruits.data;
@@ -384,148 +386,191 @@
 					for (let index in this.recruitInfo[item].recruit_images) {
 						this.imageList.push(this.recruitInfo[item].recruit_images[index].image_url);
 					}
-				}
-				for (let index in this.recruitInfo) {
-					this.formatRecruitTime(index);
+					this.formatRecruitContent(item);
+					this.formatRecruitTime(item);
 				}
 				this.loading = false;
 			})
 		},
 		methods: {
+			formatArticleContent(index) {
+				this.articleInfo[index].article_content = this.articleInfo[index].article_content.replace(/<br\/\>/g, "\n");
+			},
+			formatActivityContent(index) {
+				this.activityInfo[index].activity_content = this.activityInfo[index].activity_content.replace(/<br\/\>/g, "\n");
+			},
+			formatRecruitContent(index) {
+				this.recruitInfo[index].recruit_content = this.recruitInfo[index].recruit_content.replace(/<br\/\>/g, "\n");
+			},
+			formatAttentionContent(index) {
+				this.attentionInfo[index].article_content = this.attentionInfo[index].article_content.replace(/<br\/\>/g, "\n");
+			},
 			loadNextPage() {
 				if (this.loadingNext) {
 					return;
 				}
 				let currentPage = 0;
-				if (this.currentTab == 1) {
-					if (this.activityComplete) {
-						return;
-					}
-					this.activityCurrentPage++;
-					currentPage = this.activityCurrentPage;
-				} else if (this.currentTab == 2) {
-					if (this.articleComplete) {
-						return;
-					}
-					this.articleCurrentPage++;
-					currentPage = this.articleCurrentPage;
-				} else if (this.currentTab == 3) {
-					if (this.recruitComplete) {
-						return;
-					}
-					this.recruitCurrentPage++;
-					currentPage = this.recruitCurrentPage;
-				} else {
-					if (this.attentionComplete) {
-						return;
-					}
-					this.attentionCurrentPage++;
-					currentPage = this.attentionCurrentPage;
-				}
-				this.loadingNext = true;
-				Vue.prototype.$http.request({
-					url: '/information/recommend?page=' + currentPage,
-					method: 'POST',
-				}).then(res => {
+				if (this.currentNav == 1) {
 					if (this.currentTab == 1) {
-						if (res.data.data.activities.data.length == 0) {
-							this.activityComplete = true;
-							this.loadingNext = false;
+						if (this.activityComplete) {
 							return;
 						}
-						this.activityInfo.push.apply(this.activityInfo, res.data.data.activities.data);
-						for (let item = (currentPage - 1) * 10; item < this.activityInfo.length; item++) {
-							for (let index in this.activityInfo[item].activity_images) {
-								this.imageList.push(this.activityInfo[item].activity_images[index].image_url);
-							}
-							this.formatActivityTime(item);
-						}
-						setTimeout(() => {
-							let query = uni.createSelectorQuery().in(this);
-							query.select('#activity').boundingClientRect(res => {
-								console.log(res)
-								this.activity_height = res.height;
-							}).exec();
-						}, 30)
+						this.activityCurrentPage++;
+						currentPage = this.activityCurrentPage;
 					} else if (this.currentTab == 2) {
-						if (res.data.data.articles.data.length == 0) {
-							this.articleComplete = true;
-							this.loadingNext = false;
+						if (this.articleComplete) {
 							return;
 						}
-						this.articleInfo.push.apply(this.articleInfo, res.data.data.articles.data);
-						for (let item = (currentPage - 1) * 10; item < this.articleInfo.length; item++) {
-							for (let index in this.articleInfo[item].article_images) {
-								this.imageList.push(this.articleInfo[item].article_images[index].image_url);
-							}
-							this.formatArticleTime(item);
-						}
-						setTimeout(() => {
-							let query = uni.createSelectorQuery().in(this);
-							query.select('#article').boundingClientRect(res => {
-								console.log(res)
-								this.article_height = res.height;
-							}).exec();
-						}, 30)
+						this.articleCurrentPage++;
+						currentPage = this.articleCurrentPage;
 					} else if (this.currentTab == 3) {
-						if (res.data.data.recruits.data.length == 0) {
-							this.recruitComplete = true;
-							this.loadingNext = false;
+						if (this.recruitComplete) {
 							return;
 						}
-						this.recruitInfo.push.apply(this.recruitInfo, res.data.data.recruits.data);
-						for (let item = (currentPage - 1) * 10; item < this.recruitInfo.length; item++) {
-							for (let index in this.recruitInfo[item].recruit_images) {
-								this.imageList.push(this.recruitInfo[item].recruit_images[index].image_url);
-							}
-							this.formatRecruitTime(item);
-						}
-						setTimeout(() => {
-							let query = uni.createSelectorQuery().in(this);
-							query.select('#recruit').boundingClientRect(res => {
-								console.log(res)
-								this.recruit_height = res.height;
-							}).exec();
-						}, 30)
+						this.recruitCurrentPage++;
+						currentPage = this.recruitCurrentPage;
 					} else {
-						if (res.data.data.attentions.data.length == 0) {
-							this.attentionComplete = true;
+						if (this.attentionComplete) {
+							return;
+						}
+						this.attentionCurrentPage++;
+						currentPage = this.attentionCurrentPage;
+					}
+					this.loadingNext = true;
+					Vue.prototype.$http.request({
+						url: '/information/recommend?page=' + currentPage,
+						method: 'POST',
+					}).then(res => {
+						if (this.currentTab == 1) {
+							if (res.data.data.activities.data.length == 0) {
+								this.activityComplete = true;
+								this.loadingNext = false;
+								return;
+							}
+							this.activityInfo.push.apply(this.activityInfo, res.data.data.activities.data);
+							for (let item = (currentPage - 1) * 10; item < this.activityInfo.length; item++) {
+								for (let index in this.activityInfo[item].activity_images) {
+									this.imageList.push(this.activityInfo[item].activity_images[index].image_url);
+								}
+								this.formatActivityTime(item);
+								this.formatActivityContent(item);
+							}
+							setTimeout(() => {
+								let query = uni.createSelectorQuery().in(this);
+								query.select('#activity').boundingClientRect(res => {
+									this.activity_height = res.height;
+								}).exec();
+							}, 30)
+						} else if (this.currentTab == 2) {
+							if (res.data.data.articles.data.length == 0) {
+								this.articleComplete = true;
+								this.loadingNext = false;
+								return;
+							}
+							this.articleInfo.push.apply(this.articleInfo, res.data.data.articles.data);
+							for (let item = (currentPage - 1) * 10; item < this.articleInfo.length; item++) {
+								for (let index in this.articleInfo[item].article_images) {
+									this.imageList.push(this.articleInfo[item].article_images[index].image_url);
+								}
+								this.formatArticleTime(item);
+								this.formatArticleContent(item);
+							}
+							setTimeout(() => {
+								let query = uni.createSelectorQuery().in(this);
+								query.select('#article').boundingClientRect(res => {
+									this.article_height = res.height;
+								}).exec();
+							}, 30)
+						} else if (this.currentTab == 3) {
+							if (res.data.data.recruits.data.length == 0) {
+								this.recruitComplete = true;
+								this.loadingNext = false;
+								return;
+							}
+							this.recruitInfo.push.apply(this.recruitInfo, res.data.data.recruits.data);
+							for (let item = (currentPage - 1) * 10; item < this.recruitInfo.length; item++) {
+								for (let index in this.recruitInfo[item].recruit_images) {
+									this.imageList.push(this.recruitInfo[item].recruit_images[index].image_url);
+								}
+								this.formatRecruitTime(item);
+								this.formatRecruitContent(item);
+							}
+							setTimeout(() => {
+								let query = uni.createSelectorQuery().in(this);
+								query.select('#recruit').boundingClientRect(res => {
+									this.recruit_height = res.height;
+								}).exec();
+							}, 30)
+						} else {
+							if (res.data.data.attentions.data.length == 0) {
+								this.attentionComplete = true;
+								this.loadingNext = false;
+								return;
+							}
+							this.attentionInfo.push.apply(this.attentionInfo, res.data.data.attentions.data);
+							for (let item = (currentPage - 1) * 10; item < this.attentionInfo.length; item++) {
+								for (let index in this.attentionInfo[item].article_images) {
+									this.imageList.push(this.attentionInfo[item].article_images[index].image_url);
+								}
+								this.formatAttentionTime(item);
+								this.formatAttentionContent(item);
+							}
+							setTimeout(() => {
+								let query = uni.createSelectorQuery().in(this);
+								query.select('#attention').boundingClientRect(res => {
+									this.attention_height = res.height;
+								}).exec();
+							}, 30)
+						}
+						this.loadingNext = false;
+					})
+				} else {
+					if (this.newsComplete) {
+						return;
+					}
+					this.newsCurrentPage++;
+					currentPage = this.newsCurrentPage;
+					this.loadingNext = true;
+					Vue.prototype.$http.request({
+						url: '/information/recommend?page=' + currentPage,
+						method: 'POST',
+					}).then(res => {
+						if (res.data.data.news.data.length == 0) {
+							this.newsComplete = true;
 							this.loadingNext = false;
 							return;
 						}
-						this.attentionInfo.push.apply(this.attentionInfo, res.data.data.attentions.data);
-						for (let item = (currentPage - 1) * 10; item < this.attentionInfo.length; item++) {
-							for (let index in this.attentionInfo[item].article_images) {
-								this.imageList.push(this.attentionInfo[item].article_images[index].image_url);
+						this.newsInfo.push.apply(this.newsInfo, res.data.data.news.data);
+						for (let item = (currentPage - 1) * 10; item < this.newsInfo.length; item++) {
+							for (let index in this.newsInfo[item].news_images) {
+								this.imageList.push(this.newsInfo[item].news_images[index].image_url);
 							}
-							this.formatAttentionTime(item);
 						}
-						setTimeout(() => {
-							let query = uni.createSelectorQuery().in(this);
-							query.select('#attention').boundingClientRect(res => {
-								console.log(res)
-								this.attention_height = res.height;
-							}).exec();
-						}, 30)
-					}
-					this.loadingNext = false;
-				})
+					})
+				}
 			},
 			pageScroll(e) {
-				if (e.detail.scrollTop >= 50) {
-					this.fixTabbar = true;
-				} else {
-					this.fixTabbar = false;
+				if (this.currentNav == 1) {
+					if (e.detail.scrollTop >= 50) {
+						this.fixTabbar = true;
+					} else {
+						this.fixTabbar = false;
+					}
+					if (this.currentTab == 0) {
+						this.attention_scroll = e.detail.scrollTop;
+					} else if (this.currentTab == 1) {
+						this.activity_scroll = e.detail.scrollTop;
+					} else if (this.currentTab == 2) {
+						this.article_scroll = e.detail.scrollTop;
+					} else if (this.currentTab == 3) {
+						this.recruit_scroll = e.detail.scrollTop;
+					}
 				}
-				if (this.currentTab == 0) {
-					this.attention_scroll = e.detail.scrollTop;
-				} else if (this.currentTab == 1) {
-					this.activity_scroll = e.detail.scrollTop;
-				} else if (this.currentTab == 2) {
-					this.article_scroll = e.detail.scrollTop;
-				} else if (this.currentTab == 3) {
-					this.recruit_scroll = e.detail.scrollTop;
-				}
+			},
+			navigateNews(news_id) {
+				uni.navigateTo({
+					url: '/pages/news/news?news_id=' + news_id
+				})
 			},
 			navigateArticle(article_id, comment) {
 				uni.navigateTo({
@@ -641,19 +686,15 @@
 					setTimeout(() => {
 						let query = uni.createSelectorQuery().in(this);
 						query.select('#attention').boundingClientRect(res => {
-							console.log(res)
 							this.attention_height = res.height;
 						}).exec();
 						query.select('#article').boundingClientRect(res => {
-							console.log(res)
 							this.article_height = res.height;
 						}).exec();
 						query.select('#activity').boundingClientRect(res => {
-							console.log(res)
 							this.activity_height = res.height;
 						}).exec();
 						query.select('#recruit').boundingClientRect(res => {
-							console.log(res)
 							this.recruit_height = res.height;
 						}).exec();
 					}, 300)

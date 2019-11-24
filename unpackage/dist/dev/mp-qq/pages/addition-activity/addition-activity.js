@@ -226,7 +226,9 @@ var _uploadFile = __webpack_require__(/*! ../../utils/uploadFile.js */ 98);funct
 //
 //
 //
-var util = __webpack_require__(/*! ../../utils/util.js */ 103);var _default = { data: function data() {return { title: '', content: '', attention: '', isInput: false, selectImageList: [], imageUrlList: [], isDisplayLocation: false, isAnonymity: false, scroll_height: 700, showToast: false, toastContent: '' };}, mounted: function mounted() {var _this = this;setTimeout(function () {_this.GetHeight();}, 100);}, methods: { hideModal: function hideModal(e) {this.showToast = false;}, Submit: function Submit() {if (this.title == '') {this.toastContent = '活动标题不能为空';this.showToast = true;return;}if (this.content == '') {this.toastContent = '活动内容不能为空';this.showToast = true;return;}if (this.imageUrlList.length == 0) {this.toastContent = '活动图片不能为空';this.showToast = true;return;}_vue.default.prototype.$http.request({ url: '/activities/create', method: 'POST', params: {
+var util = __webpack_require__(/*! ../../utils/util.js */ 103);var _default = { data: function data() {return { title: '', content: '', attention: '', isInput: false, selectImageList: [], imageUrlList: [], isDisplayLocation: false, isAnonymity: false, scroll_height: 700, showToast: false, toastContent: '' };}, mounted: function mounted() {var _this = this;setTimeout(function () {_this.GetHeight();}, 100);}, methods: { hideModal: function hideModal(e) {this.showToast = false;}, Submit: function Submit() {if (this.title == '') {this.toastContent = '活动标题不能为空';this.showToast = true;return;}if (this.content == '') {this.toastContent = '活动内容不能为空';this.showToast = true;return;}if (this.imageUrlList.length == 0) {this.toastContent = '活动图片不能为空';this.showToast = true;return;}this.content = this.content.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, ' ');this.attention = this.attention.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, ' ');_vue.default.prototype.$http.request({ url: '/activities/create',
+        method: 'POST',
+        params: {
           activity_name: this.title,
           activity_content: this.content,
           activity_attention: this.attention,

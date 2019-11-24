@@ -24,7 +24,7 @@
 				<view class="flex-column ">
 					<text class="price-text margin-bottom-sm">¥<text style="font-size: 42rpx;margin-left: 6rpx;">{{commodityInfo.commodity_price}}</text></text>
 					<text class="commodity-name margin-bottom-sm">{{commodityInfo.commodity_name}}</text>
-					<text class="commodity-description">{{commodityInfo.commodity_description}}</text>
+					<text class="commodity-description" decode="true">{{commodityInfo.commodity_description}}</text>
 				</view>
 			</view>
 			<view class="commodity-image-container flex-column align-center bg-white info-border-bottom padding-left padding-right padding-bottom-sm">
@@ -175,6 +175,9 @@
 			}, 200);
 		},
 		methods: {
+			formatCommodityContent() {
+				this.commodityInfo.commodity_description = this.commodityInfo.commodity_description.replace(/<br\/\>/g, "\n");
+			},
 			navigateCommodity(commodity_id) {
 				uni.navigateTo({
 					url: '/pages/commodity/commodity?commodity_id=' + commodity_id

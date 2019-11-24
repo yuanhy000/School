@@ -26,13 +26,13 @@
 					{{activityInfo.activity_name}}
 				</view>
 				<view class="text-content padding-left padding-right padding-bottom">
-					{{activityInfo.activity_content}}
+					<text decode="true">{{activityInfo.activity_content}}</text>
 				</view>
 				<view class="text-content padding-left padding-right padding-bottom-xs text-bold text-black padding-top-xs" v-if="activityInfo.activity_attention">
 					注意事项
 				</view>
 				<view class="text-content padding-left padding-right padding-bottom" v-if="activityInfo.activity_attention">
-					{{activityInfo.activity_attention}}
+					<text decode="true">{{activityInfo.activity_attention}}</text>
 				</view>
 				<view class="grid flex-sub padding-lr col-3 grid-square margin-bottom-xs ">
 					<block v-for="(item,index) in activityInfo.activity_images" :key="index">
@@ -158,6 +158,7 @@
 					this.imageList.push(this.activityInfo.activity_images[item].image_url);
 				}
 				this.formatTime();
+				this.formatActivityContent();
 				for (let index in this.activityInfo.activity_comments) {
 					this.formatCommentsTime(index);
 				}
@@ -179,6 +180,10 @@
 			}, 100)
 		},
 		methods: {
+			formatActivityContent() {
+				this.activityInfo.activity_content = this.activityInfo.activity_content.replace(/<br\/\>/g, "\n");
+				this.activityInfo.activity_attention = this.activityInfo.activity_attention.replace(/<br\/\>/g, "\n");
+			},
 			navigateActivityRegister() {
 				uni.navigateTo({
 					url: '/pages/activity-register/activity-register?activity_id=' + this.activity_id

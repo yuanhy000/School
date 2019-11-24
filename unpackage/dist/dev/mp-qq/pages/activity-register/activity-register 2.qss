@@ -1,0 +1,26 @@
+.addition-container {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+}
+.user-info-font {
+	font-size: 24rpx;
+	color: #777777;
+}
+.user-info-title {
+	font-size: 28rpx !important;
+	font-weight: 700;
+}
+.icon-image {
+	width: 60rpx;
+	height: 60rpx;
+}
+.add-one-input {
+	background: #F1F1F1;
+	height: 80rpx;
+	border-radius: 20rpx;
+}
+.letter-spacing {
+	letter-spacing: 2rpx;
+}
+

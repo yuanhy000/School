@@ -10,7 +10,7 @@
 					<input class="margin-left margin-right text-sm max-width" type="text" placeholder="标题 ( 可选 )" v-model="title" />
 				</view>
 				<view class="cu-form-group margin-left margin-top margin-right margin-bottom border-radius bg-white shadow">
-					<textarea class="textarea-font-size" placeholder="分享新鲜事..." v-model="content" maxlength="400" />
+					<textarea class="textarea-font-size" placeholder="分享新鲜事..." v-model="content" maxlength="400" warp="" />
 					</view>
 				<view class="cu-form-group margin-left margin-right margin-top margin-bottom border-rad ius bg-white border-radius shadow">
 					<view class="grid col-4 grid-square flex-sub  margin-top">
@@ -104,6 +104,8 @@
 					this.showToast = true;
 					return ;
 				}
+				this.content = this.content.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, ' ');
+				
 				Vue.prototype.$http.request({
 					url: '/articles/create',
 					method: 'POST',

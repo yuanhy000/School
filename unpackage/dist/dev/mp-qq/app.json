@@ -18,7 +18,8 @@
     "pages/activity/activity",
     "pages/recruit/recruit",
     "pages/activity-register/activity-register",
-    "pages/addition-recruit/addition-recruit"
+    "pages/addition-recruit/addition-recruit",
+    "pages/news/news"
   ],
   "window": {
     "navigationBarTextStyle": "white",

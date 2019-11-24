@@ -97,6 +97,7 @@
 					this.showToast = true;
 					return ;
 				}
+				this.content = this.content.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, ' ');
 				Vue.prototype.$http.request({
 					url: '/users/organization/apply',
 					method: 'POST',

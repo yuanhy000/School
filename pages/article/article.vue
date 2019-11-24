@@ -31,7 +31,7 @@
 					{{articleInfo.article_title}}
 				</view>
 				<view class="text-content padding-left padding-right padding-bottom">
-					{{articleInfo.article_content}}
+					<text decode="true">{{articleInfo.article_content}}</text>
 				</view>
 				<view class="grid flex-sub padding-lr col-3 grid-square margin-bottom-xs ">
 					<block v-for="(item,index) in articleInfo.article_images" :key="index">
@@ -151,6 +151,7 @@
 				for (let item in this.articleInfo.article_images) {
 					this.imageList.push(this.articleInfo.article_images[item].image_url);
 				}
+				this.formatArticleContent();
 				this.formatTime();
 				for (let index in this.articleInfo.article_comments) {
 					this.formatCommentsTime(index);
@@ -160,7 +161,6 @@
 					if (option.comment == 1) {
 						let query = uni.createSelectorQuery().in(this);
 						query.select('#comment').boundingClientRect(res => {
-							console.log(res)
 							this.scroll_top = res.top;
 						}).exec();
 					}
@@ -175,6 +175,9 @@
 			}, 100)
 		},
 		methods: {
+			formatArticleContent() {
+				this.articleInfo.article_content = this.articleInfo.article_content.replace(/<br\/\>/g, "\n");
+			},
 			tooglrUserFollow() {
 				Vue.prototype.$http.request({
 					url: '/users/follow',
