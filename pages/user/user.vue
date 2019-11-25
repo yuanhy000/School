@@ -1,45 +1,73 @@
 <template>
 	<view>
 		<scroll-view scroll-y class="DrawerPage" :class="modalName=='viewModal'?'show':''">
-			<view class="user-avatar-container">
-				<view class="user-avatar-container flex justify-center align-center">
-					<image class="cu-avatar xl round avatar-shadow" v-if="user.authentication" :src="user.user_avatar"> </image>
-					<button @getuserinfo="bindGetUserInfo" class="avatar-button cu-avatar xl avatar-shadow" open-type="getUserInfo"
+			<view class="user-avatar-container" style="background: url(../../static/user/user.jpg);">
+				<view class="user-avatar-container flex align-center">
+					<image class="cu-avatar xl avatar-shadow margin-left-lg margin-right" :src="user.user_avatar" style="border-radius: 20rpx;">
+					</image>
+					<view class="flex-column justify-around">
+						<view class="text-white text-bold text-lg margin-bottom-xs" style="letter-spacing: 2rpx;">{{user.user_name}}</view>
+						<view class="text-white text-school margin-bottom-xs"><span class="margin-right-xs">用户ID:</span>{{user.user_number}}</view>
+						<view class="flex align-center">
+							<text class="text-school cuIcon-locationfill margin-right-xs"></text>
+							<view class="text-white text-school">{{user.user_school}}</view>
+						</view>
+					</view>
+					<!-- 					<button @getuserinfo="bindGetUserInfo" class="avatar-button cu-avatar xl avatar-shadow" open-type="getUserInfo"
 					 v-else style="background-image:url(./../../static/user/click-me.png);" plain=true>
-					</button>
+					</button> -->
 				</view>
 			</view>
-			<view class='padding margin text-center'>
-				<view class='cu-btn bg-gradual-tab lg block shadow radius margin-xl text-sm' @tap="navigateSchool" data-target="viewModal">
-					Set School
+			<view class="user-info-container flex align-center justify-around">
+				<view class="flex-column align-center">
+					<view class="user-info-title-ftext margin-bottom-sm">关注</view>
+					<view class="text-bold text-theme-color">{{user.user_attentions}}</view>
+				</view>
+				<view class="flex-column align-center">
+					<view class="user-info-title-ftext margin-bottom-sm">粉丝</view>
+
+					<view class="text-bold text-theme-color">{{user.user_followers}}</view>
+				</view>
+				<view class="flex-column align-center">
+					<view class="user-info-title-ftext margin-bottom-sm">动态</view>
+					<view class="text-bold text-theme-color">{{user.user_article_count}}</view>
 				</view>
 			</view>
-			<view class='padding margin text-center'>
-				<view class='cu-btn bg-gradual-tab lg block shadow radius margin-xl text-sm' @tap="navigateOrganization"
-				 data-target="viewModal">
-					Apply Organization
-				</view>
-			</view>
-			<!-- 	<view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg">
-				<view class="cu-item arrow" v-for="(item,index) in 20" :key="index">
-					<view class="content">
-						<text class="cuIcon-github text-grey"></text>
-						<text class="text-grey">{{index +1}}</text>
+			<view class="cu-list menu sm-border card-menu margin-bottom-xl shadow-lg" style="position: relative; top: -50rpx;">
+				<view class="cu-item arrow" @tap="navigateSchool">
+					<view>
+						<text class="cuIcon-like text-theme-color margin-right"></text>
+						<text class="category-title">我喜欢的</text>
 					</view>
 				</view>
-			</view>
-			<view class="cu-tabbar-height tabbar-height"></view> -->
-		</scroll-view>
-
-		<view class="DrawerClose" :class="modalName=='viewModal'?'show':''" @tap="hideModal">
-			<text class="cuIcon-pullright"></text>
-		</view>
-		<scroll-view scroll-y class="DrawerWindow DrawerBackground" :class="modalName=='viewModal'?'show':''">
-			<view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg">
-				<view class="cu-item arrow" v-for="(item,index) in 20" :key="index">
-					<view class="content">
-						<text class="cuIcon-github text-grey"></text>
-						<text class="text-grey">{{index +1}}</text>
+				<view class="cu-item arrow" @tap="navigateSchool">
+					<view>
+						<text class="cuIcon-favor text-theme-color margin-right"></text>
+						<text class="category-title">我收藏的</text>
+					</view>
+				</view>
+				<view class="cu-item arrow" @tap="navigateSchool">
+					<view>
+						<text class="cuIcon-read text-theme-color margin-right"></text>
+						<text class="category-title">切换学校</text>
+					</view>
+				</view>
+				<view class="cu-item arrow" @tap="navigateOrganization">
+					<view>
+						<text class="cuIcon-friend text-theme-color margin-right"></text>
+						<text class="category-title">组织认证</text>
+					</view>
+				</view>
+				<view class="cu-item arrow">
+					<view>
+						<text class="cuIcon-notice text-theme-color margin-right"></text>
+						<text class="category-title">消息通知</text>
+					</view>
+				</view>
+				<view class="cu-item arrow">
+					<view>
+						<text class="cuIcon-settings text-theme-color margin-right"></text>
+						<text class="category-title">反馈问题</text>
 					</view>
 				</view>
 			</view>
@@ -85,7 +113,11 @@
 		components: {
 			imageButton: imageButton
 		},
-		mounted() {},
+		mounted() {
+			setTimeout(() => {
+				console.log(this.user)
+			}, 200)
+		},
 		methods: {
 			bindGetUserInfo(event) {
 				const userInfo = event.detail.userInfo

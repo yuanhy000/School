@@ -127,7 +127,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _school = _interopRequireDefault(__webpack_require__(/*! ./school.json */ 145));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var indexes = function indexes() {return Promise.all(/*! import() | components/indexes/indexes */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/indexes/indexes")]).then(__webpack_require__.bind(null, /*! ../../components/indexes/indexes.vue */ 247));};var _default =
+var _school = _interopRequireDefault(__webpack_require__(/*! ./school.json */ 145));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var indexes = function indexes() {return Promise.all(/*! import() | components/indexes/indexes */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/indexes/indexes")]).then(__webpack_require__.bind(null, /*! ../../components/indexes/indexes.vue */ 253));};var _default =
 {
   name: "contury",
   components: {

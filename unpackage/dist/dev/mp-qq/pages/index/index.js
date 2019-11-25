@@ -142,7 +142,7 @@ var _default =
 {
   data: function data() {
     return {
-      CurrentPage: 'information' };
+      CurrentPage: 'user' };
 
   },
   onLoad: function onLoad() {

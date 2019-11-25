@@ -11,6 +11,9 @@ export default {
 		user_created: null,
 		user_avatar: null,
 		user_school: null,
+		user_attentions: null,
+		user_followers: null,
+		user_article_count: null,
 		user_organization: null,
 	},
 
@@ -31,6 +34,9 @@ export default {
 			state.user_sex = null;
 			state.user_created = null;
 			state.user_shcool = null;
+			state.user_attentions = null;
+			state.user_followers = null;
+			state.user_article_count = null;
 		},
 
 		AUTHORIZED(state) {

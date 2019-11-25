@@ -1,0 +1,4 @@
+.active-text-border {
+	border-bottom: 4rpx solid #3E576B;
+}
+

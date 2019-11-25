@@ -1,0 +1,1 @@
+<view class="flex align-center justify-center"><view class="spinner"><view class="double-bounce1"></view><view class="double-bounce2"></view></view></view>

@@ -3,7 +3,7 @@
 		<view class="cu-bar search bg-white flex justify-center align-center">
 			<button class="cu-btn bg-f5-white round  shadow  margin-left" @click="navigateLocation" v-if="display_location">
 				<text class="location-icon-size text-theme-color cuIcon-locationfill"></text>
-				<text class=" margin-left-xs location-text-color text-sm"> {{userLocation}}</text>
+				<text class=" margin-left-xs location-text-color text-sm">{{userLocation}}</text>
 			</button>
 			<button class="cu-btn search-form round shadow bg-white flex justify-start" @click="navigateSearch">
 				<text class="cuIcon-search"></text>
@@ -11,16 +11,13 @@
 				<text class="text-sm location-text-color">请输入关键词搜索</text>
 			</button>
 		</view>
-		<!-- <search :showWant="true"></search> -->
 		<scroll-view class="bg-white nav shadow" style="border-bottom: 1px solid #c8c8c8;" scroll-x scroll-with-animation=true :scroll-left="scroll_left">
-			<!-- <view class="flex text-center"> -->
 			<view class="cu-item tab-item-width flex text-center" :class="index==TabCur?'text-theme-color active-text-border':''"
 			 v-for="(item,index) in menu_list" :key="index" @tap="tabSelect" :data-id="index">
 				{{item}}
 			</view>
 			<view class="cu-item tab-item-width flex text-center" :class="4==TabCur?'text-theme-color active-text-border':''"
 			 @tap="tabSelect" :data-id="4" v-if="map_poi.is_search">搜索</view>
-			<!-- </view> -->
 		</scroll-view>
 		<swiper :duration="400" class="discovery-swiper" id="swiper" :current="TabCur" @change="tabSwiper">
 			<swiper-item>
@@ -377,7 +374,6 @@
 				this.getHeight()
 			},
 			tabSelect(e) {
-				console.log(this.map_poi)
 				this.TabCur = e.currentTarget.dataset.id;
 				this.scroll_left = (e.currentTarget.dataset.id - 1) * (this.screen_width / 4);
 			},

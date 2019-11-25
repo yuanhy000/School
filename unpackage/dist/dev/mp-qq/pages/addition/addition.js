@@ -139,14 +139,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _vuex = __webpack_require__(/*! vuex */ 27);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 
 
 {
   data: function data() {
     return {
       selectIndex: 0,
+      swiper_height: 700,
       buttonList: ['发布动态', '发布活动', '发布招募', '发布交易'],
       swiperList: [{
         id: 0,
@@ -186,7 +187,27 @@ var _vuex = __webpack_require__(/*! vuex */ 27);function _objectSpread(target) {
     user: function user(state) {return state.AuthUser;} })),
 
 
+  mounted: function mounted() {
+    // setTimeout(() => {
+    this.getHeight();
+    // }, 100)
+  },
   methods: {
+    getHeight: function getHeight() {
+      var that = this;
+      var height = 0;
+      uni.getSystemInfo({
+        success: function success(res) {
+          that.screen_height = res.windowHeight;
+          that.screen_width = res.windowWidth;
+          var otherHeight = 0;
+          var query = uni.createSelectorQuery().in(that);
+          query.select('#swiper').boundingClientRect(function (res) {
+            that.swiper_height = that.screen_height - res.top - 80;
+          }).exec();
+        } });
+
+    },
     hideModal: function hideModal(e) {
       this.showToast = false;
     },

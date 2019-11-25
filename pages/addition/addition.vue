@@ -1,21 +1,20 @@
 <template>
-	<view class="flex justify-around flex-direction addition-container ">
-		<swiper class="card-swiper square-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
-		 duration="500" indicator-color="#8799a3" indicator-active-color="#416276">
-			<swiper-item v-for="(item,index) in swiperList" :key="index" :class="cardCur==index?'cur':''">
-				<view class="swiper-item">
-					<image :src="item.url" mode="aspectFill" v-if="item.type=='image'"></image>
-					<video :src="item.url" autoplay loop muted :show-play-btn="false" :controls="false" objectFit="cover" v-if="item.type=='video'"></video>
-				</view>
+	<view class="addition-container ">
+		<swiper id="swiper" class="card-swiper square-dot animation-fade" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
+		 duration="400" indicator-color="#8799a3" indicator-active-color="#416276" :style="{height:swiper_height +'px!important'}">
+			<swiper-item :class="cardCur==index?'cur':''">
+				<image src="../../static/add/addition-article.jpg" class="swiper-image bg-white shadow" mode="aspectFill" @tap="buttonSelect" :data-id="0"></image>
+			</swiper-item>
+			<swiper-item :class="cardCur==index?'cur':''">
+				<image src="../../static/add/addition-activity.jpg" class="swiper-image bg-white shadow" mode="aspectFill"  @tap="buttonSelect" :data-id="1"></image>
+			</swiper-item>
+			<swiper-item :class="cardCur==index?'cur':''">
+				<image src="../../static/add/addition-commodity.jpg" class="swiper-image bg-white shadow" mode="aspectFill"  @tap="buttonSelect" :data-id="2"></image>
+			</swiper-item>
+			<swiper-item :class="cardCur==index?'cur':''">
+				<image src="../../static/add/addition-recruit.jpg" class="swiper-image bg-white shadow" mode="aspectFill"  @tap="buttonSelect" :data-id="3"></image>
 			</swiper-item>
 		</swiper>
-		<!-- 可以插入轮播丰富界面 -->
-		<block v-for="(item,index) in buttonList" :key="index">
-			<button class="cu-btn bg-theme-green-black round  shadow lg text-white margin-left-lg margin-right-lg" @tap="buttonSelect"
-			 :data-id="index">
-				<text class="text-df">{{item}}</text>
-			</button>
-		</block>
 		<view class="cu-modal" :class="showToast?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white justify-end">
@@ -33,6 +32,7 @@
 </template>
 
 <script>
+	import Vue from 'vue'
 	import {
 		mapState
 	} from 'vuex';
@@ -40,6 +40,7 @@
 		data() {
 			return {
 				selectIndex: 0,
+				swiper_height: 700,
 				buttonList: ['发布动态', '发布活动', '发布招募', '发布交易'],
 				swiperList: [{
 					id: 0,
@@ -79,7 +80,27 @@
 				user: state => state.AuthUser,
 			}),
 		},
+		mounted() {
+			// setTimeout(() => {
+				this.getHeight();
+			// }, 100)
+		},
 		methods: {
+			getHeight() {
+				let that = this;
+				let height = 0;
+				uni.getSystemInfo({
+					success(res) {
+						that.screen_height = res.windowHeight;
+						that.screen_width = res.windowWidth;
+						let otherHeight = 0;
+						let query = uni.createSelectorQuery().in(that);
+						query.select('#swiper').boundingClientRect(res => {
+							that.swiper_height = that.screen_height - res.top - 80;
+						}).exec();
+					}
+				});
+			},
 			hideModal(e) {
 				this.showToast = false;
 			},
