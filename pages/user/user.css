@@ -38,3 +38,10 @@
 	color: #888888;
 	letter-spacing: 1rpx;
 }
+
+.user-notice-info {
+	position: relative;
+	right: -10px;
+	width: 36rpx;
+	height: 36rpx;
+}

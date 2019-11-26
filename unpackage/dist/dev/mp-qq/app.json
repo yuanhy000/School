@@ -20,7 +20,10 @@
     "pages/activity-register/activity-register",
     "pages/addition-recruit/addition-recruit",
     "pages/news/news",
-    "pages/user-like/user-like"
+    "pages/user-collect/user-collect",
+    "pages/user-activity/user-activity",
+    "pages/user-notice/user-notice",
+    "pages/addition-bug/addition-bug"
   ],
   "window": {
     "navigationBarTextStyle": "white",

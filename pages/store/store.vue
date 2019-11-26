@@ -16,7 +16,7 @@
 			</view>
 
 			<scroll-view scroll-y :style="{height:scroll_height +'px'}" id="commodities" class="padding-bottom-xl flow-box max-width"
-			 @scrolltolower="loadNextPage(currentCategoryId)">
+			 @scrolltolower="loadNextPage(currentCategoryId)"> 
 				<image src="../../static/commodity/search-none.png" class="max-width margin-top-xl animation-fade" mode="widthFix"
 				 v-if="noResult"></image>
 				<waterfall-flow :list="commodityList" @click="navigateCommodity" :init="initList" v-else></waterfall-flow>

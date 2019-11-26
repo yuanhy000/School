@@ -15,15 +15,15 @@ export default {
 		user_followers: null,
 		user_article_count: null,
 		user_organization: null,
+		user_notice_count: null,
 	},
 
 	mutations: {
 		SET_AUTH_USER(state, payload) {
-			let authenticationTemp = state.authentication;
+			// let authenticationTemp = state.authentication;
 			for (let item in state) {
 				state[item] = payload.user.data[item];
 			}
-			state.authentication = authenticationTemp;
 		},
 
 		INIT_AUTH_USER(state) {
@@ -37,6 +37,7 @@ export default {
 			state.user_attentions = null;
 			state.user_followers = null;
 			state.user_article_count = null;
+			state.user_notice_count = null;
 		},
 
 		AUTHORIZED(state) {
@@ -47,6 +48,10 @@ export default {
 			state.user_shcool = payload.user_shcool;
 			state.user_tip = true;
 		},
+
+		CLEAR_NOTICE_COUNT(state) {
+			state.user_notice_count = 0;
+		},
 	},
 
 	actions: {
@@ -54,11 +59,16 @@ export default {
 			commit,
 			dispatch
 		}) {
-			return Vue.prototype.$http.get('/user').then(res => {
+			Vue.prototype.$http.get('/user').then(res => {
 				commit({
 					type: 'SET_AUTH_USER',
 					user: res.data
 				})
+				if (res.data.user_name != '') {
+					commit({
+						type: 'AUTHORIZED'
+					})
+				}
 			}).catch(error => {
 				dispatch('refreshToken');
 			})
@@ -116,6 +126,13 @@ export default {
 		}) {
 			commit({
 				type: 'INIT_AUTH_USER',
+			})
+		},
+		clearNoticeCount({
+			commit
+		}) {
+			commit({
+				type: 'CLEAR_NOTICE_COUNT',
 			})
 		},
 

@@ -1,0 +1,27 @@
+.article-create-time {
+	font-size: 24rpx;
+	color: #888888;
+	letter-spacing: 1rpx;
+}
+.team-title {
+	font-size: 26rpx;
+	color: #222222;
+	letter-spacing: 1rpx;
+	font-weight: 700;
+}
+.user-info-font {
+	font-size: 24rpx;
+	color: #777777;
+}
+.user-info-title {
+	font-size: 28rpx !important;
+	font-weight: 700;
+}
+.activity_content {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+	font-size: 26rpx
+}
+

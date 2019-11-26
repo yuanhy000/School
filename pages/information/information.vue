@@ -10,7 +10,7 @@
 			<view class="animation-fade" v-if="currentNav == 0">
 				<block v-for="(item,index) in newsInfo" v-bind:key="index">
 					<view class="cu-card article bg-white shadow margin-top margin-left margin-bottom-xl margin-right" style="border-radius: 20rpx;"
-					 @click=navigateNews(item.news_id)>
+					 @click="navigateNews(item.news_id)">
 						<view class="cu-item shadow" style="margin: 0;">
 							<view class="title">
 								<view class="text-cut">{{item.news_title}}</view>
@@ -67,7 +67,7 @@
 										{{item.article_title}}
 									</view>
 									<view class="text-content padding-left padding-right margin-top-xs margin-bottom activity_content">
-										{{item.article_content}}
+										<text decode="true">{{item.article_content}}</text>
 									</view>
 									<view class="grid flex-sub padding-lr col-3 grid-square margin-bottom">
 										<block v-for="(imgItem,index) in item.article_images" :key="index">
@@ -787,7 +787,7 @@
 								break;
 						}
 					} else {
-						this.attentionInfo[index].display_time = this.attentionInfo[index].created_at;
+						this.attentionInfo[index].display_time = this.attentionInfo[index].article_created;
 					}
 				}
 			},
@@ -829,7 +829,7 @@
 								break;
 						}
 					} else {
-						this.articleInfo[index].display_time = this.articleInfo[index].created_at;
+						this.articleInfo[index].display_time = this.articleInfo[index].article_created;
 					}
 				}
 			},
@@ -871,7 +871,7 @@
 								break;
 						}
 					} else {
-						this.activityInfo[index].display_time = this.activityInfo[index].created_at;
+						this.activityInfo[index].display_time = this.activityInfo[index].activity_created;
 					}
 				}
 			},
@@ -913,7 +913,7 @@
 								break;
 						}
 					} else {
-						this.recruitInfo[index].display_time = this.recruitInfo[index].created_at;
+						this.recruitInfo[index].display_time = this.recruitInfo[index].recruit_created;
 					}
 				}
 			}

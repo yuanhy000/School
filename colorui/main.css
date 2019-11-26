@@ -1193,19 +1193,19 @@ button.cuIcon.lg {
 }
 
 .cu-list>.cu-item {
-	transition: all .6s ease-in-out 0s;
+	transition: all .2s ease-in-out 0s;
 	transform: translateX(0upx)
 }
 
 .cu-list>.cu-item.move-cur {
-	transform: translateX(-260upx)
+	transform: translateX(-200upx)
 }
 
 .cu-list>.cu-item .move {
 	position: absolute;
 	right: 0;
 	display: flex;
-	width: 260upx;
+	width: 200upx;
 	height: 100%;
 	transform: translateX(100%)
 }

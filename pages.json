@@ -101,7 +101,22 @@
 				"navigationBarTitleText": "uni-app"
 			}
 		}, {
-			"path": "pages/user-like/user-like",
+			"path": "pages/user-collect/user-collect",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}, {
+			"path": "pages/user-activity/user-activity",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}, {
+			"path": "pages/user-notice/user-notice",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}, {
+			"path": "pages/addition-bug/addition-bug",
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
@@ -119,31 +134,7 @@
 		"backgroundColor": "#F8F8F8",
 		"navigationStyle": "custom",
 		"usingComponents": {
-			// "van-transition": "/vantui/components/vant/transition/index"
 		}
 	}
-	// "tabBar": {
-	// 	"selectedColor": "#8EA7C7",
-	// 	"backgroundColor": "#ffffff",
-	// 	"color": "#c7c7c7",
-	// 	"list": [{
-	// 			"pagePath": "pages/index/index",
-	// 			"text": "聊天",
-	// 			"iconPath": "/static/tabbar/chat.png",
-	// 			"selectedIconPath": "/static/tabbar/chat-on.png"
-	// 		},
-	// 		{
-	// 			"pagePath": "pages/contacts/contacts",
-	// 			"text": "联系人",
-	// 			"iconPath": "/static/tabbar/contacts.png",
-	// 			"selectedIconPath": "/static/tabbar/contacts-on.png"
-	// 		},
-	// 		{
-	// 			"pagePath": "pages/discovery/discovery",
-	// 			"text": "动态",
-	// 			"iconPath": "/static/tabbar/discovery.png",
-	// 			"selectedIconPath": "/static/tabbar/discovery-on.png"
-	// 		}
-	// 	]
-	// }
+
 }

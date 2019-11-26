@@ -33,7 +33,7 @@ export default {
 		cleanToken({
 			dispatch
 		}) {
-			return Vue.prototype.$http.request({
+			Vue.prototype.$http.request({
 				url: '/token/clean',
 				method: 'POST',
 				params: {
@@ -44,18 +44,19 @@ export default {
 				dispatch('initAuthUser');
 			})
 		},
-		
+
 		refreshToken({
 			commit,
 			dispatch
 		}) {
-			return Vue.prototype.$http.request({
+			Vue.prototype.$http.request({
 				method: 'POST',
 				url: '/token/refresh',
 				params: {
 					refresh_token: jwtToken.getRefreshToken()
 				},
 			}).then(res => {
+				console.log('9999999')
 				dispatch('getTokenSuccess', res.data);
 			}).catch(error => {
 				dispatch('cleanToken');
