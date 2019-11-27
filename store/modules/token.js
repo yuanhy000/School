@@ -56,6 +56,7 @@ export default {
 					refresh_token: jwtToken.getRefreshToken()
 				},
 			}).then(res => {
+				console.log(res);
 				console.log('9999999')
 				dispatch('getTokenSuccess', res.data);
 			}).catch(error => {

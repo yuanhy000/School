@@ -64,7 +64,7 @@ export default {
 					type: 'SET_AUTH_USER',
 					user: res.data
 				})
-				if (res.data.user_name != '') {
+				if (res.data.data.user_name != undefined && res.data.data.user_name != null) {
 					commit({
 						type: 'AUTHORIZED'
 					})
@@ -89,6 +89,11 @@ export default {
 					type: 'SET_AUTH_USER',
 					user: res.data
 				})
+				if (res.data.data.user_name != undefined && res.data.data.user_name != null) {
+					commit({
+						type: 'AUTHORIZED'
+					})
+				}
 			}).catch(error => {
 				dispatch('refreshToken');
 			})

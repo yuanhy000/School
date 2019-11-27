@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-tab" :isBack="false" v-if="CurrentPage!='user'">
 			<block slot="backText">返回</block>
-			<block slot="content">Chat</block>
+			<block slot="content">微校</block>
 		</cu-custom>
 		<!-- <search v-if="CurrentPage=='chat'"></search> -->
 		<information v-if="CurrentPage=='information'"></information>
@@ -34,7 +34,6 @@
 			},
 			NavChange(e) {
 				this.CurrentPage = e.page;
-				console.log(this.CurrentPage)
 			}
 		}
 	}

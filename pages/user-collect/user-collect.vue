@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">Collect</block>
+			<block slot="content" style="font-size: 28rpx!important; letter-spacing: 1rpx;">我的收藏</block>
 		</cu-custom>
 		<scroll-view class="bg-white nav shadow" style="border-bottom: 1px solid #c8c8c8;" scroll-x scroll-with-animation=true
 		 :scroll-left="scroll_left">
@@ -163,6 +163,7 @@
 			<swiper-item>
 				<scroll-view scroll-y :style="{height:scroll_height +'px'}" id="commodities" class="flow-box max-width">
 					<view class="padding-top-sm">
+						<image src="../../static/article/no-collection.png" class="none-default-image" mode="widthFix" v-if="commodityInfo.length==0"></image>
 						<waterfall-flow :list="commodityInfo" @click="navigateCommodity" :init="initList"></waterfall-flow>
 					</view>
 				</scroll-view>

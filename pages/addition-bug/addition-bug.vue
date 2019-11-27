@@ -2,7 +2,7 @@
 	<view class="addition-container">
 		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">反馈错误</block>
+			<block slot="content"  style="font-size: 28rpx!important; letter-spacing: 1rpx;">反馈错误</block>
 		</cu-custom>
 		<scroll-view scroll-y id="scroll" :style="{height:scroll_height +'px'}">
 			<view class="padding-top">
@@ -109,6 +109,7 @@
 				// 	console.log(res.data)
 				// })
 				setTimeout(()=>{
+					this.content = '';
 					this.$refs.notification.open({
 						type: 'success',
 						content: '提交成功',

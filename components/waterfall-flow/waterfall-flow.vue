@@ -70,7 +70,7 @@
 					this.$nextTick(function() {
 						setTimeout(() => {
 							this.display = true;
-						}, 270)
+						}, 280)
 						setTimeout(() => {
 							this.waterFall();
 						}, 300)

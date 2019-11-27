@@ -2,80 +2,82 @@
 	<view class="commodity-container">
 		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">Commodity</block>
+			<block slot="content" style="font-size: 28rpx!important; letter-spacing: 1rpx;">商品详情</block>
 		</cu-custom>
 		<scroll-view class="animation-fade" scroll-y id="scroll" :style="{height:scroll_height +'px'}" v-show="display"
-		 @click=cancelInput>
-			<swiper class="screen-swiper square-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
-			 duration="500">
-				<swiper-item v-for="(item,index) in commodityInfo.commodity_images" :key="index" @click="viewImage" :data-url="commodityInfo.commodity_images[index].image_url">
-					<image :src="item.image_url" mode="aspectFill"></image>
-				</swiper-item>
-			</swiper>
-			<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white">
-				<image class="cu-avatar lg avatar-shadow margin-right" style="border-radius: 20rpx;" :src="commodityInfo.commodity_user.user_avatar">
-				</image>
-				<view class="flex-column ">
-					<text class="view-user-name">{{commodityInfo.commodity_user.user_name}}</text>
-					<text class="view-user-location">发布于{{displayLocation}}</text>
-				</view>
-			</view>
-			<view class="padding-top padding-bottom-sm padding-left padding-right flex align-center bg-white">
-				<view class="flex-column ">
-					<text class="price-text margin-bottom-sm">¥<text style="font-size: 42rpx;margin-left: 6rpx;">{{commodityInfo.commodity_price}}</text></text>
-					<text class="commodity-name margin-bottom-sm">{{commodityInfo.commodity_name}}</text>
-					<text class="commodity-description" decode="true">{{commodityInfo.commodity_description}}</text>
-				</view>
-			</view>
-			<view class="commodity-image-container flex-column align-center bg-white info-border-bottom padding-left padding-right padding-bottom-sm">
-				<view v-for="(item,index) in commodityInfo.commodity_images" :key="index" @click="viewImage" :data-url="commodityInfo.commodity_images[index].image_url"
-				 class="max-width">
-					<image :src="item.image_url" class="commodity-image margin-bottom-sm" mode="widthFix"></image>
-				</view>
-				<view class="flex align-center max-width justify-end padding-bottom-xs padding-top-xs">
-					<text class="commodity-other-info margin-right-sm">超赞 ·<text class="margin-left-xs">{{commodityInfo.commodity_likes}}</text></text>
-					<text class="commodity-other-info">浏览 ·<text class="margin-left-xs">{{commodityInfo.commodity_views}}</text></text>
-				</view>
-			</view>
-			<view class="padding-top padding-left padding-right flex align-center bg-white margin-top flex-column">
-				<view class="comment-container-title info-border-bottom">
-					<text>全部留言</text>
-				</view>
-				<image src="../../static/commodity/none-default.png" class="none-default-image" mode="widthFix" v-if="!hasComment"></image>
-				<view class="flex-column max-width padding-top-xs" v-else>
-					<block v-for="(item,index) in commodityInfo.commodity_comments" :key="index">
-						<view class="margin-top-sm" v-show="index < comment_page*4">
-							<view class="flex align-center justify-between">
-								<view class="flex align-center">
-									<image class="cu-avatar avatar-shadow margin-right-sm" style="border-radius: 10rpx;" :src="item.comment_user.user_avatar">
-									</image>
-									<text class="view-user-name">{{item.comment_user.user_name}}</text>
-								</view>
-								<view @click="likeComment(index,item.comment_id)">
-									<text class="cuIcon-appreciate text-theme-color" v-if="!item.comment_like"></text>
-									<text class="cuIcon-appreciatefill text-theme-color" v-else></text>
-									<text class="text-theme-color margin-left-xs" v-show="item.comment_likes>0">{{item.comment_likes}}</text>
-								</view>
-							</view>
-							<text class="text-content text-df flex margin-top-xs " style="margin-left: 85rpx; color: #222;">{{item.comment_content}}</text>
-							<text class="info-border-bottom max-width padding-bottom-sm flex margin-right padding-top-xs time-text">{{item.display_time}}</text>
-						</view>
-					</block>
-					<view class="max-width flex align-center justify-center padding-top-sm padding-bottom-sm" @click="displayMoreComments"
-					 v-if="commodityInfo.commodity_comments.length > comment_page*4">
-						<text class="text-theme-color" style="font-weight: 700;">加载更多留言<text class="cuIcon-unfold margin-left-xs"></text></text>
+		 @click="cancelInput">
+			<view>
+				<swiper class="screen-swiper square-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
+				 duration="500">
+					<swiper-item v-for="(item,index) in commodityInfo.commodity_images" :key="index" @click="viewImage" :data-url="commodityInfo.commodity_images[index].image_url">
+						<image :src="item.image_url" mode="aspectFill"></image>
+					</swiper-item>
+				</swiper>
+				<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white">
+					<image class="cu-avatar lg avatar-shadow margin-right" style="border-radius: 20rpx;" :src="commodityInfo.commodity_user.user_avatar">
+					</image>
+					<view class="flex-column ">
+						<text class="view-user-name">{{commodityInfo.commodity_user.user_name}}</text>
+						<text class="view-user-location">发布于{{displayLocation}}</text>
 					</view>
 				</view>
-			</view>
-			<view class="padding-top-xs padding-bottom-sm padding-left padding-right margin-top flex align-center justify-center">
-				<view class="left"></view>
-				<view class="margin-left margin-right">
-					<text class="cuIcon-like margin-right-xs text-theme-color commodity-recommend-title"></text>
-					<text class="text-theme-color commodity-recommend-title">猜你喜欢</text>
+				<view class="padding-top padding-bottom-sm padding-left padding-right flex align-center bg-white">
+					<view class="flex-column ">
+						<text class="price-text margin-bottom-sm">¥<text style="font-size: 42rpx;margin-left: 6rpx;">{{commodityInfo.commodity_price}}</text></text>
+						<text class="commodity-name margin-bottom-sm">{{commodityInfo.commodity_name}}</text>
+						<text class="commodity-description" decode="true">{{commodityInfo.commodity_description}}</text>
+					</view>
 				</view>
-				<view class="right"></view>
+				<view class="commodity-image-container flex-column align-center bg-white info-border-bottom padding-left padding-right padding-bottom-sm">
+					<view v-for="(item,index) in commodityInfo.commodity_images" :key="index" @click="viewImage" :data-url="commodityInfo.commodity_images[index].image_url"
+					 class="max-width">
+						<image :src="item.image_url" class="commodity-image margin-bottom-sm" mode="widthFix"></image>
+					</view>
+					<view class="flex align-center max-width justify-end padding-bottom-xs padding-top-xs">
+						<text class="commodity-other-info margin-right-sm">超赞 ·<text class="margin-left-xs">{{commodityInfo.commodity_likes}}</text></text>
+						<text class="commodity-other-info">浏览 ·<text class="margin-left-xs">{{commodityInfo.commodity_views}}</text></text>
+					</view>
+				</view>
+				<view class="padding-top padding-left padding-right flex align-center bg-white margin-top flex-column">
+					<view class="comment-container-title info-border-bottom">
+						<text>全部留言</text>
+					</view>
+					<image src="../../static/commodity/none-default.png" class="none-default-image" mode="widthFix" v-if="!hasComment"></image>
+					<view class="flex-column max-width padding-top-xs" v-else>
+						<block v-for="(item,index) in commodityInfo.commodity_comments" :key="index">
+							<view class="margin-top-sm" v-show="index < comment_page*4">
+								<view class="flex align-center justify-between">
+									<view class="flex align-center">
+										<image class="cu-avatar avatar-shadow margin-right-sm" style="border-radius: 10rpx;" :src="item.comment_user.user_avatar">
+										</image>
+										<text class="view-user-name">{{item.comment_user.user_name}}</text>
+									</view>
+									<view @click="likeComment(index,item.comment_id)">
+										<text class="cuIcon-appreciate text-theme-color" v-if="!item.comment_like"></text>
+										<text class="cuIcon-appreciatefill text-theme-color" v-else></text>
+										<text class="text-theme-color margin-left-xs" v-show="item.comment_likes>0">{{item.comment_likes}}</text>
+									</view>
+								</view>
+								<text class="text-content text-df flex margin-top-xs " style="margin-left: 85rpx; color: #222;">{{item.comment_content}}</text>
+								<text class="info-border-bottom max-width padding-bottom-sm flex margin-right padding-top-xs time-text">{{item.display_time}}</text>
+							</view>
+						</block>
+						<view class="max-width flex align-center justify-center padding-top-sm padding-bottom-sm" @click="displayMoreComments"
+						 v-if="commodityInfo.commodity_comments.length > comment_page*4">
+							<text class="text-theme-color" style="font-weight: 700;">加载更多留言<text class="cuIcon-unfold margin-left-xs"></text></text>
+						</view>
+					</view>
+				</view>
+				<view class="padding-top-xs padding-bottom-sm padding-left padding-right margin-top flex align-center justify-center">
+					<view class="left"></view>
+					<view class="margin-left margin-right">
+						<text class="cuIcon-like margin-right-xs text-theme-color commodity-recommend-title"></text>
+						<text class="text-theme-color commodity-recommend-title">猜你喜欢</text>
+					</view>
+					<view class="right"></view>
+				</view>
+				<waterfall-flow :list="commodityInfo.commodity_recommend" @click="navigateCommodity" :align="true" :init="initList"></waterfall-flow>
 			</view>
-			<waterfall-flow :list="commodityInfo.commodity_recommend" @click="navigateCommodity" :align="true" :init="initList"></waterfall-flow>
 		</scroll-view>
 		<view class="cu-bar padding-right bg-white info-border-top animation-fade-quick" v-show="display">
 			<view class="flex">
@@ -101,12 +103,28 @@
 			<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm animation-fade-quick" v-if="!isInput">我想要</button>
 			<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm animation-fade-quick" v-else @click="submitComment">留言</button>
 		</view>
+		<view class="cu-modal" :class="showToast?'show':''" @tap="hideModal">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">消息提示</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-theme-color"></text>
+					</view>
+				</view>
+				<view class="padding-xl" style="letter-spacing: 2rpx;font-size: 26rpx;">
+					{{toastContent}}
+				</view>
+			</view>
+		</view>
 		<notification ref="notification" :isdistance="true"></notification>
 	</view>
 </template>
 
 <script>
 	import Vue from 'vue';
+	import {
+		mapState
+	} from 'vuex';
 	import QQMapWX from '../../js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js';
 	import WaterfallFlow from '../../components/waterfall-flow/waterfall-flow.vue';
 	let qqmapsdk = new QQMapWX({
@@ -124,6 +142,8 @@
 				isInput: false,
 				inputComment: '',
 				comment_page: 1,
+				showToast: false,
+				toastContent: ''
 			}
 		},
 		components: {
@@ -135,7 +155,10 @@
 					return this.commodityInfo.commodity_comments.length != 0;
 				}
 				return false;
-			}
+			},
+			...mapState({
+				user: state => state.AuthUser,
+			}),
 		},
 		onLoad(option) {
 			this.commodity_id = option.commodity_id;
@@ -175,6 +198,9 @@
 			}, 200);
 		},
 		methods: {
+			hideModal(e) {
+				this.showToast = false;
+			},
 			formatCommodityContent() {
 				this.commodityInfo.commodity_description = this.commodityInfo.commodity_description.replace(/<br\/\>/g, "\n");
 			},
@@ -278,6 +304,11 @@
 				})
 			},
 			beginInput() {
+				if (this.user.authentication == '' || this.user.authentication == null) {
+					this.toastContent = '先去认证身份，再进行留言操作～～'
+					this.showToast = true;
+					return;
+				}
 				this.isInput = true;
 			},
 			cancelInput() {

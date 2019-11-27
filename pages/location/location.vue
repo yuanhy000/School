@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">Location</block>
+			<block slot="content" style="font-size: 28rpx!important; letter-spacing: 1rpx;">选择位置</block>
 		</cu-custom>
 		<!-- 		<map id="myMap" class="map-size" :latitude="location.user_location.latitude" :longitude="location.user_location.longitude"
 		 scale="17" subkey="QL7BZ-ZCJKK-72IJS-A6NA6-HRJ3F-ZYB6J">

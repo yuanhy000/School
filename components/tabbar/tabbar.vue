@@ -3,9 +3,9 @@
 		<view class="cu-bar tabbar bg-white">
 			<view class="action" @click="NavChange" data-cur="information" @tap="Toggle" :data-class="'scale-up'" :class="[PageCur=='information'?'animation-fade':'']">
 				<view>
-					<image :src="'/static/tabbar/chat' + [PageCur=='information'?'-on':''] + '.png'" class="tab-img"></image>
+					<image :src="'/static/tabbar/information' + [PageCur=='information'?'-on':''] + '.png'" class="tab-img"></image>
 				</view>
-				<view :class="PageCur=='information'?'text-tabbar-on':'text-tabbar'">聊天</view>
+				<view :class="PageCur=='information'?'text-tabbar-on':'text-tabbar'">动态</view>
 			</view>
 			<view class="action " @click="NavChange" data-cur="store" @tap="Toggle" :data-class="'scale-up'" :class="[PageCur=='store'?'animation-fade':'']">
 				<view>
@@ -15,7 +15,7 @@
 				<view :class="PageCur=='store'?'text-tabbar-on':'text-tabbar'">商城</view>
 			</view>
 			<view class="action add-action" @click="NavChange" data-cur="addition">
-				<button class="cu-btn cuIcon-add addition-button shadow" @tap="Toggle" :class="[PageCur=='addition'?'animation-fade':'']">
+				<button class="cu-btn cuIcon-add addition-button shadow" @tap="Toggle" :class="[PageCur=='addition'?'animation-fade':'']"> 
 				</button>
 				<view :class="PageCur=='addition'?'text-addition-on':'text-addition'">发布</view>
 			</view>
@@ -40,7 +40,7 @@
 	export default {
 		data() {
 			return {
-				PageCur: 'information',
+				PageCur: 'user',
 				animation: 'scale-up',
 			};
 		},

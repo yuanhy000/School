@@ -4,11 +4,10 @@
     "ignore": []
   },
   "setting": {
-    "urlCheck": true,
-    "es6": false,
-    "postcss": false,
+    "urlCheck": false,
     "minified": false,
-    "newFeature": true
+    "es6": false,
+    "postcss": false
   },
   "compileType": "miniprogram",
   "projectname": "Chat",

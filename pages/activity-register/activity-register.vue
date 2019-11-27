@@ -2,7 +2,7 @@
 	<view class="addition-container">
 		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">Register</block>
+			<block slot="content" style="font-size: 28rpx!important; letter-spacing: 1rpx;">活动报名</block>
 		</cu-custom>
 		<scroll-view scroll-y id="scroll" :style="{height:scroll_height +'px'}">
 			<view class="padding-top">
@@ -128,7 +128,6 @@
 		},
 		methods: {
 			submit() {
-				console.log('123')
 				if (this.teamName == '') {
 					this.toastContent = '队伍名称不能为空'
 					this.showToast = true;

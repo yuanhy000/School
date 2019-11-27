@@ -7,7 +7,7 @@
 					<block slot="backText">返回</block>
 				</view>
 				<view class="content" :style="[{top:StatusBar + 'px'}]">
-					<block slot="content">Search</block>
+					<block slot="content" style="font-size: 28rpx!important; letter-spacing: 1rpx;">搜索商品</block>
 				</view>
 				<slot name="right"></slot>
 			</view>

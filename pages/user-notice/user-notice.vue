@@ -2,10 +2,11 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">Notice</block>
+			<block slot="content" style="font-size: 28rpx!important; letter-spacing: 1rpx;">消息提示</block>
 		</cu-custom>
 		<scroll-view scroll-y :style="{height:scroll_height +'px'}" @scrolltolower="loadNextPage">
 			<view class="cu-list menu-avatar" id="scroll">
+				<image src="../../static/commodity/search-none.png" class="max-width" mode="widthFix" v-if="noticeInfo.length==0"></image>
 				<view class="cu-item animation-fade" :class="modalName=='move-box-'+ index?'move-cur':''" v-for="(item,index) in noticeInfo"
 				 :key="index" @touchstart="ListTouchStart" @touchmove="ListTouchMove" @touchend="ListTouchEnd" :data-target="'move-box-' + index"
 				 @click="navigateTarget(index)">

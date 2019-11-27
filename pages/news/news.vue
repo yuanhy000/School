@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">News</block>
+			<block slot="content" style="font-size: 28rpx!important; letter-spacing: 1rpx;">头条详情</block>
 		</cu-custom>
 		<scroll-view class="animation-fade" scroll-y id="scroll" :style="{height:scroll_height +'px'}" v-show="display"
 		 @click="cancelInput()" :scroll-top="scroll_top">
@@ -15,7 +15,8 @@
 				</view>
 				<view class="grid flex-sub padding-lr col-3 grid-square margin-bottom-xs ">
 					<block v-for="(item,index) in newsInfo.news_images" :key="index">
-						<image :src="item.image_url" class="max-width margin-bottom-sm" mode="widthFix" style="border-radius: 10rpx;" @click.stop="viewImage" :data-url="item.image_url"></image>
+						<image :src="item.image_url" class="max-width margin-bottom-sm" mode="widthFix" style="border-radius: 10rpx;"
+						 @click.stop="viewImage" :data-url="item.image_url"></image>
 					</block>
 				</view>
 
@@ -81,8 +82,21 @@
 				<text class="cuIcon-comment"></text>
 				<input :adjust-position="false" type="text" placeholder="发表你的想法～" v-model="inputComment" confirm-type="search"></input>
 			</view>
-			<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm animation-fade-quick" v-if="!isInput">私聊</button>
-			<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm animation-fade-quick" v-else @click="submitComment">评论</button>
+<!-- 			<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm animation-fade-quick" v-if="!isInput">私聊</button> -->
+			<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm animation-fade-quick" v-if="isInput" @click="submitComment">评论</button>
+		</view>
+		<view class="cu-modal" :class="showToast?'show':''" @tap="hideModal">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">消息提示</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-theme-color"></text>
+					</view>
+				</view>
+				<view class="padding-xl" style="letter-spacing: 2rpx;font-size: 26rpx;">
+					{{toastContent}}
+				</view>
+			</view>
 		</view>
 		<notification ref="notification" :isdistance="true"></notification>
 	</view>
@@ -90,6 +104,9 @@
 
 <script>
 	import Vue from 'vue';
+	import {
+		mapState
+	} from 'vuex';
 	import QQMapWX from '../../js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js';
 	import WaterfallFlow from '../../components/waterfall-flow/waterfall-flow.vue';
 	let qqmapsdk = new QQMapWX({
@@ -107,6 +124,8 @@
 				inputComment: '',
 				comment_page: 1,
 				scroll_top: 0,
+				showToast: false,
+				toastContent: ''
 			}
 		},
 		computed: {
@@ -115,7 +134,10 @@
 					return this.newsInfo.news_comments.length != 0;
 				}
 				return false;
-			}
+			},
+			...mapState({
+				user: state => state.AuthUser,
+			}),
 		},
 		onLoad(option) {
 			this.news_id = option.news_id;
@@ -139,7 +161,6 @@
 					if (option.comment == 1) {
 						let query = uni.createSelectorQuery().in(this);
 						query.select('#comment').boundingClientRect(res => {
-							console.log(res)
 							this.scroll_top = res.top;
 						}).exec();
 					}
@@ -152,6 +173,9 @@
 			}, 100)
 		},
 		methods: {
+			hideModal(e) {
+				this.showToast = false;
+			},
 			displayMoreComments() {
 				this.comment_page++;
 			},
@@ -208,6 +232,11 @@
 				})
 			},
 			beginInput() {
+				if (this.user.authentication == '' || this.user.authentication == null) {
+					this.toastContent = '先去认证身份，再进行留言操作～～'
+					this.showToast = true;
+					return;
+				}
 				this.isInput = true;
 			},
 			cancelInput() {

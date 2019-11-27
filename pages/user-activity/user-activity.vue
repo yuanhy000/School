@@ -2,12 +2,13 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">User-Activity</block>
+			<block slot="content" style="font-size: 28rpx!important; letter-spacing: 1rpx;">报名活动</block>
 		</cu-custom>
 		<scroll-view scroll-y :style="{height:scroll_height +'px'}">
 			<view id="scroll">
 				<loading v-if="loading" class="animation-fade"></loading>
-				<block v-for="(item,index) in teamInfo" v-bind:key="index" v-else>
+				<image src="../../static/commodity/search-none.png" class="max-width" mode="widthFix" v-if="teamInfo.length==0"></image>
+				<block v-for="(item,index) in teamInfo" v-bind:key="index" v-if="!loading">
 					<view class="cu-item shadow bg-white margin-top margin-left margin-right animation-fade" style="border-radius: 20rpx;">
 						<view class="text-content padding-left padding-right padding-top text-bold text-theme-color">
 							#{{item.team_activity.activity_name}}#

@@ -8,6 +8,7 @@
 				<view class="cu-item tab-item-container" :class="currentNav==1?'text-theme-color active-text-border':''" @click="navSelect(1)">动态</view>
 			</scroll-view>
 			<view class="animation-fade" v-if="currentNav == 0">
+				<loading v-if="loading" class="animation-fade"></loading>
 				<block v-for="(item,index) in newsInfo" v-bind:key="index">
 					<view class="cu-card article bg-white shadow margin-top margin-left margin-bottom-xl margin-right" style="border-radius: 20rpx;"
 					 @click="navigateNews(item.news_id)">
@@ -30,6 +31,7 @@
 						</view>
 					</view>
 				</block>
+				<view class="max-width" style="height: 50rpx;"></view>
 			</view>
 			<view class="animation-fade" v-else>
 				<view class="bg-white nav shadow max-width " style="border-bottom: 1px solid #c8c8c8;" id="tabbar" :class="fixTabbar?'fixTabbar':''"
@@ -46,7 +48,8 @@
 				<swiper :duration="400" class="discovery-swiper animation-fade" id="swiper" :current="currentTab" @change="tabSwiper"
 				 v-else circular=true :style="{height: currentScrollHeight +'px'}">
 					<swiper-item>
-						<image src="../../static/article/no-attention.png" class="none-default-image" mode="widthFix" v-if="!loadingItem&&attentionInfo.length==0"></image>
+						<image src="../../static/article/no-attention.png" class="none-default-image" mode="widthFix" v-if="!loadingItem&&attentionInfo.length==0"
+						 style="margin-bottom: 200px;"></image>
 						<view class="padding-bottom-xl padding-top animation-fade" v-if="!loadingItem&&attentionInfo.length!=0" id="attention">
 							<block v-for="(item,index) in attentionInfo" v-bind:key="index">
 								<view class="cu-item shadow bg-white margin-bottom-xl margin-left margin-right" @click="navigateArticle(item.article_id,0)"
@@ -299,7 +302,7 @@
 				scroll_height: 700,
 				displayLocation: '',
 				imageList: [],
-				attention_height: 700,
+				attention_height: 500,
 				article_height: 700,
 				activity_height: 700,
 				recruit_height: 700,
@@ -546,6 +549,7 @@
 								this.imageList.push(this.newsInfo[item].news_images[index].image_url);
 							}
 						}
+						this.loadingNext = false;
 					})
 				}
 			},
@@ -685,9 +689,7 @@
 				if (this.currentNav == 1) {
 					setTimeout(() => {
 						let query = uni.createSelectorQuery().in(this);
-						query.select('#attention').boundingClientRect(res => {
-							this.attention_height = res.height;
-						}).exec();
+
 						query.select('#article').boundingClientRect(res => {
 							this.article_height = res.height;
 						}).exec();
@@ -696,6 +698,11 @@
 						}).exec();
 						query.select('#recruit').boundingClientRect(res => {
 							this.recruit_height = res.height;
+						}).exec();
+						query.select('#attention').boundingClientRect(res => {
+							if (res) {
+								this.attention_height = res.height;
+							}
 						}).exec();
 					}, 300)
 				}

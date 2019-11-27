@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">Activity</block>
+			<block slot="content" style="font-size: 28rpx!important; letter-spacing: 1rpx;">活动详情</block>
 		</cu-custom>
 		<scroll-view class="animation-fade" scroll-y id="scroll" :style="{height:scroll_height +'px'}" v-show="display"
 		 @click="cancelInput()" :scroll-top="scroll_top">
@@ -110,12 +110,28 @@
 			<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm animation-fade-quick" v-if="!isInput">私聊</button>
 			<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm animation-fade-quick" v-else @click="submitComment">评论</button>
 		</view>
+		<view class="cu-modal" :class="showToast?'show':''" @tap="hideModal">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">消息提示</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-theme-color"></text>
+					</view>
+				</view>
+				<view class="padding-xl" style="letter-spacing: 2rpx;font-size: 26rpx;">
+					{{toastContent}}
+				</view>
+			</view>
+		</view>
 		<notification ref="notification" :isdistance="true"></notification>
 	</view>
 </template>
 
 <script>
 	import Vue from 'vue';
+	import {
+		mapState
+	} from 'vuex';
 	import QQMapWX from '../../js_sdk/qqmap-wx-jssdk1.2/qqmap-wx-jssdk.js';
 	import WaterfallFlow from '../../components/waterfall-flow/waterfall-flow.vue';
 	let qqmapsdk = new QQMapWX({
@@ -133,6 +149,8 @@
 				inputComment: '',
 				comment_page: 1,
 				scroll_top: 0,
+				showToast: false,
+				toastContent: ''
 			}
 		},
 		computed: {
@@ -141,7 +159,10 @@
 					return this.activityInfo.activity_comments.length != 0;
 				}
 				return false;
-			}
+			},
+			...mapState({
+				user: state => state.AuthUser,
+			}),
 		},
 		onLoad(option) {
 			this.activity_id = option.activity_id;
@@ -180,6 +201,9 @@
 			}, 100)
 		},
 		methods: {
+			hideModal(e) {
+				this.showToast = false;
+			},
 			formatActivityContent() {
 				this.activityInfo.activity_content = this.activityInfo.activity_content.replace(/<br\/\>/g, "\n");
 				this.activityInfo.activity_attention = this.activityInfo.activity_attention.replace(/<br\/\>/g, "\n");
@@ -262,6 +286,11 @@
 				})
 			},
 			beginInput() {
+				if (this.user.authentication == '' || this.user.authentication == null) {
+					this.toastContent = '先去认证身份，再进行留言操作～～'
+					this.showToast = true;
+					return;
+				}
 				this.isInput = true;
 			},
 			cancelInput() {

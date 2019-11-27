@@ -10,8 +10,8 @@
 						<view class="text-white text-school margin-bottom-xs"><span class="margin-right-xs">用户ID:</span>{{user.user_number}}</view>
 						<view class="flex align-center">
 							<text class="text-school cuIcon-locationfill margin-right-xs"></text>
-							<view class="text-white text-school" v-if="user.user_school != ''">{{user.user_school}}</view>
-							<view class="text-white text-school" v-else>您还没有选择学校</view>
+							<view class="text-white text-school" v-if="user.user_school == '' || user.user_school==null">您还没有选择学校</view>
+							<view class="text-white text-school" v-else>{{user.user_school}}</view>
 						</view>
 					</view>
 				</view>
@@ -49,7 +49,7 @@
 				</view>
 				<view class="cu-item arrow" @tap="navigateUserActivity">
 					<view>
-						<text class="cuIcon-favor text-theme-color margin-right"></text>
+						<text class="cuIcon-activity text-theme-color margin-right"></text>
 						<text class="category-title">报名活动</text>
 					</view>
 				</view>
@@ -70,16 +70,16 @@
 						<text class="cuIcon-notice text-theme-color margin-right"></text>
 						<text class="category-title">消息通知</text>
 					</view>
-					<view class="bg-red round flex align-center justify-center text-xs user-notice-info" v-if="user.user_notice_count!=0">
+					<view class="bg-red round flex align-center justify-center text-xs user-notice-info" v-if="user.user_notice_count!=0 &&user.user_notice_count!=undefined">
 						{{user.user_notice_count}}
 					</view>
 				</view>
-				<view class="cu-item arrow" @tap="navigateAdditionBug">
+				<!-- 	<view class="cu-item arrow" @tap="navigateAdditionBug">
 					<view>
 						<text class="cuIcon-settings text-theme-color margin-right"></text>
 						<text class="category-title">反馈错误</text>
 					</view>
-				</view>
+				</view> -->
 			</view>
 		</scroll-view>
 		<notification ref="notification" :isdistance="true" style="z-index: 999;"></notification>
@@ -124,9 +124,7 @@
 			imageButton: imageButton
 		},
 		mounted() {
-			setTimeout(() => {
-				console.log(this.user)
-			}, 200)
+			setTimeout(() => {}, 200)
 		},
 		methods: {
 			bindGetUserInfo(event) {

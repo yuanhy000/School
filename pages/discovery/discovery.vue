@@ -1,7 +1,7 @@
 <template>
 	<view class="discovery-container">
 		<view class="cu-bar search bg-white flex justify-center align-center">
-			<button class="cu-btn bg-f5-white round  shadow  margin-left" @click="navigateLocation" v-if="display_location">
+			<button class="cu-btn bg-f5-white round  shadow  margin-left" v-if="display_location">
 				<text class="location-icon-size text-theme-color cuIcon-locationfill"></text>
 				<text class=" margin-left-xs location-text-color text-sm">{{userLocation}}</text>
 			</button>
@@ -11,7 +11,8 @@
 				<text class="text-sm location-text-color">请输入关键词搜索</text>
 			</button>
 		</view>
-		<scroll-view class="bg-white nav shadow" style="border-bottom: 1px solid #c8c8c8;" scroll-x scroll-with-animation=true :scroll-left="scroll_left">
+		<scroll-view class="bg-white nav shadow" style="border-bottom: 1px solid #c8c8c8;" scroll-x scroll-with-animation=true
+		 :scroll-left="scroll_left">
 			<view class="cu-item tab-item-width flex text-center" :class="index==TabCur?'text-theme-color active-text-border':''"
 			 v-for="(item,index) in menu_list" :key="index" @tap="tabSelect" :data-id="index">
 				{{item}}
@@ -24,7 +25,8 @@
 				<scroll-view scroll-y :style="{height:scroll_height +'px'}" class="padding-bottom-xl" @scrolltolower="loadNextPage('food')">
 					<block class="swiper-item swiper-item-container margin-bottom" v-for="(item, index) in food_list" v-bind:key="index">
 						<view class=" bg-white margin-left margin-right margin-top  border-radius bg-white shadow flex align-center padding-top padding-left padding-bottom animation-fade">
-							<image class="cu-avatar xl border-radius bg-white shadow margin-right" :src="item.photos.length != 0 ? item.photos[0].url:'./../../static/discovery/food_default.png'" lazy-load=true>
+							<image class="cu-avatar xl border-radius bg-white shadow margin-right" :src="item.photos.length != 0 ? item.photos[0].url:'./../../static/discovery/food_default.png'"
+							 lazy-load=true>
 							</image>
 							<view class="flex-direction justify-start poi-info">
 								<view class="text-sm poi-text poi-text-bold">{{item.name}}</view>

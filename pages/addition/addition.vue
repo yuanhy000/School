@@ -1,21 +1,25 @@
 <template>
 	<view class="addition-container ">
-		<swiper id="swiper" class="card-swiper square-dot animation-fade" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
-		 duration="400" indicator-color="#8799a3" indicator-active-color="#416276" :style="{height:swiper_height +'px!important'}">
+		<swiper id="swiper" class="card-swiper square-dot animation-fade" :indicator-dots="true" :circular="true" :autoplay="true"
+		 interval="5000" duration="400" indicator-color="#8799a3" indicator-active-color="#416276" :style="{height:swiper_height +'px!important'}">
 			<swiper-item :class="cardCur==index?'cur':''">
-				<image src="../../static/add/addition-article.jpg" class="swiper-image bg-white shadow" mode="aspectFill" @tap="buttonSelect" :data-id="0"></image>
+				<image src="../../static/add/addition-article.jpg" class="swiper-image bg-white shadow" mode="aspectFill" @tap="buttonSelect"
+				 :data-id="0"></image>
 			</swiper-item>
 			<swiper-item :class="cardCur==index?'cur':''">
-				<image src="../../static/add/addition-activity.jpg" class="swiper-image bg-white shadow" mode="aspectFill"  @tap="buttonSelect" :data-id="1"></image>
+				<image src="../../static/add/addition-activity.jpg" class="swiper-image bg-white shadow" mode="aspectFill" @tap="buttonSelect"
+				 :data-id="1"></image>
 			</swiper-item>
 			<swiper-item :class="cardCur==index?'cur':''">
-				<image src="../../static/add/addition-commodity.jpg" class="swiper-image bg-white shadow" mode="aspectFill"  @tap="buttonSelect" :data-id="2"></image>
+				<image src="../../static/add/addition-commodity.jpg" class="swiper-image bg-white shadow" mode="aspectFill" @tap="buttonSelect"
+				 :data-id="2"></image>
 			</swiper-item>
 			<swiper-item :class="cardCur==index?'cur':''">
-				<image src="../../static/add/addition-recruit.jpg" class="swiper-image bg-white shadow" mode="aspectFill"  @tap="buttonSelect" :data-id="3"></image>
+				<image src="../../static/add/addition-recruit.jpg" class="swiper-image bg-white shadow" mode="aspectFill" @tap="buttonSelect"
+				 :data-id="3"></image>
 			</swiper-item>
 		</swiper>
-		<view class="cu-modal" :class="showToast?'show':''">
+		<view class="cu-modal" :class="showToast?'show':''" @tap="hideModal">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white justify-end">
 					<view class="content">发布提示</view>
@@ -41,36 +45,6 @@
 			return {
 				selectIndex: 0,
 				swiper_height: 700,
-				buttonList: ['发布动态', '发布活动', '发布招募', '发布交易'],
-				swiperList: [{
-					id: 0,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg'
-				}, {
-					id: 1,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big37006.jpg',
-				}, {
-					id: 2,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg'
-				}, {
-					id: 3,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'
-				}, {
-					id: 4,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'
-				}, {
-					id: 5,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big21016.jpg'
-				}, {
-					id: 6,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg'
-				}],
 				showToast: false,
 				toastContent: ''
 			}
@@ -81,9 +55,7 @@
 			}),
 		},
 		mounted() {
-			// setTimeout(() => {
-				this.getHeight();
-			// }, 100)
+			this.getHeight();
 		},
 		methods: {
 			getHeight() {
@@ -108,13 +80,18 @@
 				this.selectIndex = e.currentTarget.dataset.id;
 				switch (this.selectIndex) {
 					case 0:
+						if (this.user.authentication == '' || this.user.authentication == null) {
+							this.toastContent = '先去认证身份，再进行发布操作～～'
+							this.showToast = true;
+							return;
+						}
 						uni.navigateTo({
 							url: '/pages/addition-article/addition-article'
 						});
 						break;
 					case 1:
-						if (this.user.user_organization == '') {
-							this.toastContent = '只有学生组织才可发布活动，快去认证吧'
+						if (this.user.user_organization == '' || this.user.user_organization == null) {
+							this.toastContent = '只有学生组织才可发布活动，快去认证吧～～'
 							this.showToast = true;
 							return;
 						}
@@ -123,11 +100,21 @@
 						});
 						break;
 					case 2:
+						if (this.user.authentication == '' || this.user.authentication == null) {
+							this.toastContent = '先去认证身份，再进行发布操作～～'
+							this.showToast = true;
+							return;
+						}
 						uni.navigateTo({
 							url: '/pages/addition-recruit/addition-recruit'
 						});
 						break;
 					case 3:
+						if (this.user.authentication == '' || this.user.authentication == null) {
+							this.toastContent = '先去认证身份，再进行发布操作～～'
+							this.showToast = true;
+							return;
+						}
 						uni.navigateTo({
 							url: '/pages/addition-commodity/addition-commodity'
 						});

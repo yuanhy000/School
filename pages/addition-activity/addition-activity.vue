@@ -2,7 +2,7 @@
 	<view class="addition-container">
 		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">Addition</block>
+			<block slot="content" style="font-size: 28rpx!important; letter-spacing: 1rpx;">发布活动</block>
 		</cu-custom>
 		<scroll-view scroll-y id="scroll" :style="{height:scroll_height +'px'}">
 			<view class="padding-top">
@@ -46,6 +46,7 @@
 				</view>
 			</view>
 		</view>
+		<notification ref="notification" :isdistance="true" style="z-index: 999;"></notification>
 	</view>
 </template>
 
@@ -111,7 +112,19 @@
 						activity_image: this.imageUrlList
 					}
 				}).then(res => {
-					console.log(res.data)
+					this.content = '';
+					this.attention = '';
+					this.$refs.notification.open({
+						type: 'success',
+						content: '发布成功',
+						timeout: 1500,
+						isClick: false
+					});
+					setTimeout(()=>{
+						uni.navigateBack({
+							delta: 1
+						});
+					},1500)
 				})
 			},
 			CheckboxOnclick() {
