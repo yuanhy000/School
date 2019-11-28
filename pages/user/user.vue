@@ -1,6 +1,6 @@
 <template>
-	<view>
-		<scroll-view scroll-y class="DrawerPage" :class="modalName=='viewModal'?'show':''">
+	<view id="scroll">
+		<scroll-view scroll-y :style="{height:scroll_height +'px'}">
 			<view class="user-avatar-container" style="background: url(../../static/user/user.jpg);">
 				<view class="user-avatar-container flex align-center" v-if="user.authentication">
 					<image class="cu-avatar xl avatar-shadow margin-left-lg margin-right" :src="user.user_avatar" style="border-radius: 20rpx;">
@@ -74,14 +74,27 @@
 						{{user.user_notice_count}}
 					</view>
 				</view>
-				<!-- 	<view class="cu-item arrow" @tap="navigateAdditionBug">
+				<view class="cu-item arrow" @tap="navigateAdditionBug">
 					<view>
 						<text class="cuIcon-settings text-theme-color margin-right"></text>
 						<text class="category-title">反馈错误</text>
 					</view>
-				</view> -->
+				</view>
 			</view>
 		</scroll-view>
+		<view class="cu-modal" :class="showToast?'show':''" @tap="hideModal">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">操作提示</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-theme-color"></text>
+					</view>
+				</view>
+				<view class="padding-xl" style="letter-spacing: 2rpx;font-size: 26rpx;">
+					{{toastContent}}
+				</view>
+			</view>
+		</view>
 		<notification ref="notification" :isdistance="true" style="z-index: 999;"></notification>
 	</view>
 </template>
@@ -98,7 +111,9 @@
 			return {
 				authorized: false,
 				userInfo: {},
-				modalName: null,
+				showToast: false,
+				toastContent: '',
+				scroll_height: 700,
 			};
 		},
 		computed: {
@@ -124,9 +139,29 @@
 			imageButton: imageButton
 		},
 		mounted() {
-			setTimeout(() => {}, 200)
+			setTimeout(() => {
+				this.getHeight();
+			}, 200)
 		},
 		methods: {
+			getHeight() {
+				let that = this;
+				let height = 0;
+				uni.getSystemInfo({
+					success(res) {
+						that.screen_height = res.windowHeight;
+						that.screen_width = res.windowWidth;
+						let otherHeight = 0;
+						let query = uni.createSelectorQuery().in(that);
+						query.select('#scroll').boundingClientRect(res => {
+							that.scroll_height = that.screen_height - res.top - 55;
+						}).exec();
+					}
+				});
+			},
+			hideModal(e) {
+				this.showToast = false;
+			},
 			bindGetUserInfo(event) {
 				const userInfo = event.detail.userInfo
 				if (userInfo) {
@@ -138,9 +173,6 @@
 			},
 			showModal(e) {
 				this.modalName = e.currentTarget.dataset.target
-			},
-			hideModal(e) {
-				this.modalName = null
 			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
@@ -162,6 +194,11 @@
 				})
 			},
 			navigateSchool() {
+				if (this.user.authentication == '' || this.user.authentication == null) {
+					this.toastContent = '先去认证身份，再来切换学校～～'
+					this.showToast = true;
+					return;
+				}
 				uni.navigateTo({
 					url: '/pages/choose-index/choose-index'
 				})

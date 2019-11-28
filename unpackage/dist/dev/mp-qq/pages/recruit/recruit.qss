@@ -110,4 +110,15 @@
 	font-size: 24rpx;
 	color: #bbb;
 }
-	
+.icon-button {
+	background-color: #fff;
+	border: none;
+	padding-left: 0;
+	margin: 0;
+	line-height: 1;
+	line-height: 1;
+	outline: none;
+	list-style: none;
+	height: 110rpx !important;
+}
+

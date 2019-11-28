@@ -57,33 +57,36 @@
 				</view>
 			</view>
 		</scroll-view>
-		<view class="cu-bar padding-right bg-white info-border-top animation-fade-quick" v-show="display">
+		<view class="cu-bar padding-right bg-white info-border-top animation-fade-quick max-width" v-show="display" style="position: fixed;"
+		 :style="{bottom: fixedHeight+'px'}">
 			<view class="flex">
-				<view class="action flex-column align-center padding-right-xl" v-if="!isInput" @click="likeNews">
+				<view class="action flex-column align-center padding-right-xl icon-button" v-if="!isInput" @click="likeNews">
 					<text class="cuIcon-appreciatefill text-theme-color commodity-icon animation-fade-quick" v-if="newsInfo.news_like"></text>
 					<text class="cuIcon-appreciate text-theme-color commodity-icon animation-fade-quick" v-else></text>
-					<text class="text-xs text-theme-color">超赞</text>
+					<text class="text-xs text-theme-color padding-top-xs">超赞</text>
 				</view>
-				<view class="action flex-column align-center padding-right-xl" v-if="!isInput" @click="CollectNews">
+				<view class="action flex-column align-center padding-right-xl icon-button" v-if="!isInput" @click="CollectNews">
 					<text class="cuIcon-favorfill text-theme-color commodity-icon animation-fade-quick" v-if="newsInfo.news_collect"></text>
 					<text class="cuIcon-favor text-theme-color commodity-icon animation-fade-quick" v-else></text>
-					<text class="text-xs text-theme-color">收藏</text>
+					<text class="text-xs text-theme-color padding-top-xs">收藏</text>
 				</view>
-				<view class="action flex-column align-center padding-right-xl" v-if="!isInput" @click="beginInput">
+				<button class="action flex-column align-center padding-right-xl icon-button " v-if="!isInput" open-type="share">
 					<text class="cuIcon-share text-theme-color commodity-icon animation-fade-quick"></text>
-					<text class="text-xs text-theme-color">分享</text>
-				</view>
-				<view class="action flex-column align-center padding-right-xl" v-if="!isInput" @click="beginInput">
+					<text class="text-xs text-theme-color padding-top-xs">分享</text>
+				</button>
+				<view class="action flex-column align-center padding-right-xl icon-button" v-if="!isInput" @click="beginInput">
 					<text class="cuIcon-message text-theme-color commodity-icon animation-fade-quick"></text>
-					<text class="text-xs text-theme-color">评论</text>
+					<text class="text-xs text-theme-color padding-top-xs">评论</text>
 				</view>
 			</view>
 			<view class="search-form round animation-fade-quick" v-if="isInput">
 				<text class="cuIcon-comment"></text>
-				<input :adjust-position="false" type="text" placeholder="发表你的想法～" v-model="inputComment" confirm-type="search"></input>
+				<input :adjust-position="false" type="text" placeholder="发表你的想法～" v-model="inputComment" confirm-type="search"
+				 auto-focus="true" @focus="changeFixedHeight" @blur="cancelInput" @confirm="submitComment"></input>
 			</view>
-<!-- 			<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm animation-fade-quick" v-if="!isInput">私聊</button> -->
-			<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm animation-fade-quick" v-if="isInput" @click="submitComment">评论</button>
+			<!-- 			<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm animation-fade-quick" v-if="!isInput">私聊</button> -->
+			<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm animation-fade-quick" v-if="isInput"
+			 @click="submitComment">评论</button>
 		</view>
 		<view class="cu-modal" :class="showToast?'show':''" @tap="hideModal">
 			<view class="cu-dialog">
@@ -125,7 +128,8 @@
 				comment_page: 1,
 				scroll_top: 0,
 				showToast: false,
-				toastContent: ''
+				toastContent: '',
+				fixedHeight: 0,
 			}
 		},
 		computed: {
@@ -138,6 +142,12 @@
 			...mapState({
 				user: state => state.AuthUser,
 			}),
+		},
+		onShareAppMessage(res) {
+			return {
+				title: '快来围观这条新闻',
+				path: '/pages/news/news?news_id=' + this.news_id
+			}
 		},
 		onLoad(option) {
 			this.news_id = option.news_id;
@@ -221,7 +231,6 @@
 				}).then(res => {
 					this.newsInfo.news_comments.unshift(res.data.data);
 					this.formatCommentsTime(0);
-					this.cancelInput();
 					this.inputComment = '';
 					this.$refs.notification.open({
 						type: 'success',
@@ -230,6 +239,7 @@
 						isClick: false
 					});
 				})
+				this.cancelInput();
 			},
 			beginInput() {
 				if (this.user.authentication == '' || this.user.authentication == null) {
@@ -241,6 +251,7 @@
 			},
 			cancelInput() {
 				this.isInput = false;
+				this.fixedHeight = 0;
 			},
 			likeNews(index, news_id) {
 				Vue.prototype.$http.request({
@@ -293,7 +304,7 @@
 						let otherHeight = 0;
 						let query = uni.createSelectorQuery().in(that);
 						query.select('#scroll').boundingClientRect(res => {
-							that.scroll_height = that.screen_height - res.top - 55;
+							that.scroll_height = that.screen_height - res.top - 50;
 						}).exec();
 					}
 				});
@@ -336,7 +347,7 @@
 								break;
 						}
 					} else {
-						this.newsInfo.display_time = this.newsInfo.created_at;
+						this.newsInfo.display_time = this.newsInfo.news_created;
 					}
 				}
 			},
@@ -378,7 +389,7 @@
 								break;
 						}
 					} else {
-						this.newsInfo.news_comments[index].display_time = this.newsInfo.news_comments[index].created_at;
+						this.newsInfo.news_comments[index].display_time = this.newsInfo.news_comments[index].comment_created;
 					}
 				}
 			}

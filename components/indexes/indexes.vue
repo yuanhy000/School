@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">Choose</block>
+			<block slot="content">选择学校</block>
 		</cu-custom>
 		<view class="cu-bar search choose-search-bar">
 			<view class="search-form round flex align-center" style="background-color: #fff!important;">
@@ -32,7 +32,7 @@
 						没有在您的附近找到学校
 					</text>
 					<block v-for="(child,inde) in aroundSchool" :key="inde" v-else>
-						<view class="cu-item text-df" :data-text="child.name" @tap="wxaSortPickerItemTap">
+						<view class="cu-item text-df" :data-text="child" @tap="wxaSortPickerItemTap">
 							{{child}}
 						</view>
 					</block>
@@ -499,6 +499,7 @@
 						this.aroundSchool.push(res.data.pois[index].name.match(reg)[0]);
 					}
 					this.aroundSchool = Array.from(new Set(this.aroundSchool))
+					console.log(this.aroundSchool)
 				})
 				this.getHeight();
 			}, 100);

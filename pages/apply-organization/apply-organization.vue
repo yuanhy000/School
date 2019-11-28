@@ -1,5 +1,5 @@
 <template>
-	<view class="addition-container">
+	<view class="addition-container" @tap="cancleTextareaInput">
 		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
 			<block slot="backText">返回</block>
 			<block slot="content" style="font-size: 28rpx!important; letter-spacing: 1rpx;">认证组织</block>
@@ -10,7 +10,9 @@
 					<input class="margin-left margin-right text-sm max-width" type="text" placeholder="认证组织名称" v-model="title" />
 				</view>
 				<view class="cu-form-group margin-left margin-top margin-right margin-bottom border-radius bg-white shadow">
-					<textarea class="textarea-font-size" placeholder="认证组织概况信息..." v-model="content" />
+					<textarea class="textarea-font-size" placeholder="认证组织概况信息..." v-model="content" maxlength="400" v-if="displayTextarea"
+					 @tap.stop="beginTextareaInput" auto-focus="true" />
+					<text class="text-font-size" v-else @tap.stop="beginTextareaInput">{{displayContent}}</text>
 					</view>
 				<view class="cu-form-group margin-left margin-right border-top-radius bg-white shadow apply-title">
 					相关证明材料
@@ -70,7 +72,9 @@
 				isAnonymity: false,
 				scroll_height: 700,
 				showToast:false,
-				toastContent: ''
+				toastContent: '',
+				displayTextarea: false,
+				displayContent: '认证组织概况信息...'
 			}
 		},
 		mounted() {
@@ -79,6 +83,17 @@
 			}, 100)
 		},
 		methods: {
+			cancleTextareaInput(){
+				this.displayTextarea = false;
+				if(this.content == ''){
+					this.displayContent ='认证组织概况信息...';
+				} else{
+				this.displayContent = this.content;
+				}
+			},
+			beginTextareaInput(){
+				this.displayTextarea = true;
+			},
 			hideModal(e) {
 				this.showToast = false;
 			},

@@ -52,6 +52,10 @@ export default {
 		CLEAR_NOTICE_COUNT(state) {
 			state.user_notice_count = 0;
 		},
+
+		ARTICLE_COUNT_INCREMENT(state) {
+			state.user_article_count += 1;
+		},
 	},
 
 	actions: {
@@ -64,7 +68,7 @@ export default {
 					type: 'SET_AUTH_USER',
 					user: res.data
 				})
-				if (res.data.data.user_name != undefined && res.data.data.user_name != null) {
+				if (res.data.data.user_name != undefined && res.data.data.user_name != null && res.data.data.user_name != "") {
 					commit({
 						type: 'AUTHORIZED'
 					})
@@ -140,6 +144,12 @@ export default {
 				type: 'CLEAR_NOTICE_COUNT',
 			})
 		},
-
+		articleCountIncrement({
+			commit
+		}) {
+			commit({
+				type: 'ARTICLE_COUNT_INCREMENT',
+			})
+		},
 	}
 }

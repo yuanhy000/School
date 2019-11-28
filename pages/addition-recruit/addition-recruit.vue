@@ -1,5 +1,5 @@
 <template>
-	<view class="addition-container">
+	<view class="addition-container" @tap="cancleTextareaInput">
 		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
 			<block slot="backText">返回</block>
 			<block slot="content" style="font-size: 28rpx!important; letter-spacing: 1rpx;">发布招募</block>
@@ -10,7 +10,9 @@
 					<input class="margin-left margin-right text-sm max-width" type="text" placeholder="招募标题" v-model="title" />
 				</view>
 				<view class="cu-form-group margin-left margin-top margin-right margin-bottom border-radius bg-white shadow">
-					<textarea class="textarea-font-size" placeholder="招募内容..." v-model="content" maxlength="400" />
+					<textarea class="textarea-font-size" placeholder="招募内容..." v-model="content" maxlength="400" v-if="displayTextarea" auto-focus="true"
+					 warp="" @tap.stop="beginTextareaInput" />
+					<text class="text-font-size" v-else @tap.stop="beginTextareaInput">{{displayContent}}</text>
 					</view>
 				<view class="cu-form-group margin-left margin-right border-top-radius bg-white shadow apply-title">
 					相关资料信息 ( 可选 )
@@ -84,7 +86,9 @@
 				isDisplayLocation:true,
 				scroll_height: 700,
 				showToast:false,
-				toastContent: ''
+				toastContent: '',
+				displayTextarea: false,
+				displayContent: '招募内容...'
 			}
 		},
 		computed: {
@@ -92,7 +96,23 @@
 				location: state => state.UserLocation,
 			}),
 		},
+		mounted() {
+			setTimeout(() => {
+				this.GetHeight();
+			}, 100)
+		},
 		methods:{
+			cancleTextareaInput(){
+				this.displayTextarea = false;
+				if(this.content == ''){
+					this.displayContent ='招募内容...';
+				} else{
+				this.displayContent = this.content;
+				}
+			},
+			beginTextareaInput(){
+				this.displayTextarea = true;
+			},
 			hideModal(e) {
 				this.showToast = false;
 			},
@@ -125,6 +145,7 @@
 					}
 				}).then(res => {
 					this.content = '';
+					this.displayContent = '';
 					this.$refs.notification.open({
 						type: 'success',
 						content: '发布成功',
@@ -136,6 +157,7 @@
 							delta: 1
 						});
 					},1500)
+					this.$store.dispatch('articleCountIncrement');
 				})
 			},
 			CheckboxOnclick() {
@@ -159,7 +181,6 @@
 			GetImageUrl() {
 				let nowTime = util.formatTime(new Date());
 				for (let i = this.imageUrlList.length; i < this.selectImageList.length; i++) {
-					console.log(this.selectImageList.length)
 					uni.showLoading({
 						title: '上传中 ' + (i + 1) + '/' + this.selectImageList.length,
 						mask: true

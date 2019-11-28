@@ -64,5 +64,3 @@
 	@import "colorui/animation.css";
 	
 </style>
-
-var_dump($_POST)

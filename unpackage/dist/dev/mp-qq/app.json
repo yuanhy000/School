@@ -23,7 +23,8 @@
     "pages/user-collect/user-collect",
     "pages/user-activity/user-activity",
     "pages/user-notice/user-notice",
-    "pages/addition-bug/addition-bug"
+    "pages/addition-bug/addition-bug",
+    "pages/user-show/user-show"
   ],
   "window": {
     "navigationBarTextStyle": "white",

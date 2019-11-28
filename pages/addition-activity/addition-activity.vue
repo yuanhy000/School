@@ -5,15 +5,19 @@
 			<block slot="content" style="font-size: 28rpx!important; letter-spacing: 1rpx;">发布活动</block>
 		</cu-custom>
 		<scroll-view scroll-y id="scroll" :style="{height:scroll_height +'px'}">
-			<view class="padding-top">
+			<view class="padding-top" @tap="cancleTextareaInput">
 				<view class="cu-tabbar-height bg-white margin-left margin-right  border-radius bg-white shadow flex align-center ">
 					<input class="margin-left margin-right text-sm max-width" type="text" placeholder="活动名称" v-model="title" />
 				</view>
 				<view class="cu-form-group margin-left margin-top margin-right margin-bottom border-radius bg-white shadow">
-					<textarea class="textarea-font-size" placeholder="填写活动内容..." v-model="content" maxlength="-1" />
+					<textarea class="textarea-font-size" placeholder="详细描述..." v-model="content" maxlength="400" v-if="displayTextarea"
+					 @tap.stop="beginTextareaInput" auto-focus="true" />
+					<text class="text-font-size" v-else @tap.stop="beginTextareaInput">{{displayContent}}</text>
 					</view>
 				<view class="cu-form-group margin-left margin-top margin-right margin-bottom border-radius bg-white shadow">
-					<textarea class="textarea-font-size-other" placeholder="活动注意事项(可选)" v-model="attention" maxlength="-1" />
+					<textarea class="textarea-font-size-other" placeholder="活动注意事项(可选)" v-model="attention" maxlength="-1" v-if="displayTextareaAttention"
+					 @tap.stop="beginAttentionInput" auto-focus="true" />
+					<text class="text-font-size-other" v-else @tap.stop="beginAttentionInput">{{displayAttention}}</text>
 					</view>
 				<view class="cu-form-group margin-left margin-right margin-top margin-bottom border-rad ius bg-white border-radius shadow">
 					<view class="grid col-4 grid-square flex-sub  margin-top">
@@ -71,7 +75,11 @@
 				isAnonymity: false,
 				scroll_height: 700,
 				showToast:false,
-				toastContent: ''
+				toastContent: '',
+				displayTextarea: false,
+				displayContent: '详细描述...',
+				displayTextareaAttention: false,
+				displayAttention: '活动注意事项(可选)',
 			}
 		},
 		mounted() {
@@ -81,6 +89,26 @@
 			
 		},
 		methods: {
+			cancleTextareaInput(){
+				this.displayTextarea = false;
+				this.displayTextareaAttention = false;
+				if(this.content == ''){
+					this.displayContent ='详细描述...';
+				} else{
+				this.displayContent = this.content;
+				}
+				if(this.attention == ''){
+					this.displayAttention ='活动注意事项(可选)';
+				} else{
+				this.displayAttention = this.attention;
+				}
+			},
+			beginTextareaInput(){
+				this.displayTextarea = true;
+			},
+			beginAttentionInput(){
+				this.displayTextareaAttention = true;
+			},
 			hideModal(e) {
 				this.showToast = false;
 			},
@@ -114,6 +142,8 @@
 				}).then(res => {
 					this.content = '';
 					this.attention = '';
+					this.displayContent = '';
+					this.displayAttention = '';
 					this.$refs.notification.open({
 						type: 'success',
 						content: '发布成功',
@@ -125,6 +155,7 @@
 							delta: 1
 						});
 					},1500)
+					this.$store.dispatch('articleCountIncrement');
 				})
 			},
 			CheckboxOnclick() {

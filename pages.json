@@ -120,11 +120,16 @@
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
+		}, {
+			"path": "pages/user-show/user-show",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
 		}
 	],
 	"permission": {
 		"scope.userLocation": {
-			"desc": "你的位置信息将用于小程序位置接口的效果展示"
+			"desc": "你的位置信息将用于小程序搜索校园周边"
 		}
 	},
 	"globalStyle": {
@@ -133,8 +138,7 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8",
 		"navigationStyle": "custom",
-		"usingComponents": {
-		}
+		"usingComponents": {}
 	}
 
 }

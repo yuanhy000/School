@@ -85,3 +85,15 @@
 .none-default-image {
 	width: 100%;
 }
+
+.icon-button {
+	background-color: #fff;
+	border: none;
+	padding-left: 0;
+	margin: 0;
+	line-height: 1;
+	line-height: 1;
+	outline: none;
+	list-style: none;
+	font-size: 26rpx !important;
+}

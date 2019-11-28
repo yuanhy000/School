@@ -17,6 +17,24 @@
 	letter-spacing: 1rpx;
 }
 
+.text-font-size {
+	font-size: 26rpx !important;
+	height: 6rem !important;
+	width: 100%;
+	margin: 29rpx 0 33rpx;
+	color: #808080;
+	letter-spacing: 1rpx;
+}
+
+.text-font-size {
+	font-size: 26rpx !important;
+	height: 6rem !important;
+	width: 100%;
+	margin: 29rpx 0 33rpx;
+	color: #808080;
+	letter-spacing: 1rpx;
+}
+
 .theme-border {
 	border: 1rpx solid #3F596D;
 }

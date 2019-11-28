@@ -89,10 +89,10 @@
 											<text class="cuIcon-comment text-theme-color operation-icon"></text>
 											<text class="text-theme-color">{{item.article_comments_count}}</text>
 										</view>
-										<view class="operation-item flex align-center justify-center">
+										<button class="operation-item flex align-center justify-center icon-button" open-type="share">
 											<text class="cuIcon-share text-theme-color operation-icon"></text>
 											<text class="text-theme-color">分享</text>
-										</view>
+										</button>
 									</view>
 								</view>
 							</block>
@@ -149,10 +149,10 @@
 											<text class="cuIcon-comment text-theme-color operation-icon"></text>
 											<text class="text-theme-color">{{item.activity_comments_count}}</text>
 										</view>
-										<view class="operation-item flex align-center justify-center">
+										<button class="operation-item flex align-center justify-center icon-button" open-type="share">
 											<text class="cuIcon-share text-theme-color operation-icon"></text>
 											<text class="text-theme-color">分享</text>
-										</view>
+										</button>
 									</view>
 								</view>
 							</block>
@@ -206,10 +206,10 @@
 											<text class="cuIcon-comment text-theme-color operation-icon"></text>
 											<text class="text-theme-color">{{item.article_comments_count}}</text>
 										</view>
-										<view class="operation-item flex align-center justify-center">
+										<button class="operation-item flex align-center justify-center icon-button" open-type="share">
 											<text class="cuIcon-share text-theme-color operation-icon"></text>
 											<text class="text-theme-color">分享</text>
-										</view>
+										</button>
 									</view>
 								</view>
 							</block>
@@ -260,10 +260,10 @@
 											<text class="cuIcon-comment text-theme-color operation-icon"></text>
 											<text class="text-theme-color">{{item.recruit_comments_count}}</text>
 										</view>
-										<view class="operation-item flex align-center justify-center">
+										<button class="operation-item flex align-center justify-center icon-button" open-type="share">
 											<text class="cuIcon-share text-theme-color operation-icon"></text>
 											<text class="text-theme-color">分享</text>
-										</view>
+										</button>
 									</view>
 								</view>
 							</block>
@@ -340,6 +340,13 @@
 				} else {
 					return this.attention_height;
 				}
+			}
+		},
+		onShareAppMessage(res) {
+			console.log(res);
+			return {
+				title: '有人在招募队友，快来围观',
+				path: '/pages/recruit/recruit?recruit_id='
 			}
 		},
 		mounted() {

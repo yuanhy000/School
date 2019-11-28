@@ -1,7 +1,8 @@
 <template>
 	<view class="addition-container ">
-		<swiper id="swiper" class="card-swiper square-dot animation-fade" :indicator-dots="true" :circular="true" :autoplay="true"
-		 interval="5000" duration="400" indicator-color="#8799a3" indicator-active-color="#416276" :style="{height:swiper_height +'px!important'}">
+		<loading v-if="loading" style="position: relative; top: 400rpx;"></loading>
+		<swiper id="swiper" class="card-swiper square-dot animation-fade" :indicator-dots="true" :circular="true" interval="5000"
+		 v-else duration="400" indicator-color="#8799a3" indicator-active-color="#416276" :style="{height:swiper_height +'px!important'}">
 			<swiper-item :class="cardCur==index?'cur':''">
 				<image src="../../static/add/addition-article.jpg" class="swiper-image bg-white shadow" mode="aspectFill" @tap="buttonSelect"
 				 :data-id="0"></image>
@@ -46,7 +47,8 @@
 				selectIndex: 0,
 				swiper_height: 700,
 				showToast: false,
-				toastContent: ''
+				toastContent: '',
+				loading: false,
 			}
 		},
 		computed: {
@@ -56,6 +58,10 @@
 		},
 		mounted() {
 			this.getHeight();
+			this.loading = true;
+			setTimeout(() => {
+				this.loading = false;
+			}, 300)
 		},
 		methods: {
 			getHeight() {
@@ -106,7 +112,7 @@
 							return;
 						}
 						uni.navigateTo({
-							url: '/pages/addition-recruit/addition-recruit'
+							url: '/pages/addition-commodity/addition-commodity'
 						});
 						break;
 					case 3:
@@ -116,7 +122,7 @@
 							return;
 						}
 						uni.navigateTo({
-							url: '/pages/addition-commodity/addition-commodity'
+							url: '/pages/addition-recruit/addition-recruit'
 						});
 						break;
 				}

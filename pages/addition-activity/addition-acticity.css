@@ -14,6 +14,15 @@
 	width: 100%;
 	margin: 32rpx 0 30rpx;
 	color: #808080;
+	letter-spacing: 2rpx;
+}
+
+.text-font-size {
+	font-size: 24rpx !important;
+	height: 7rem !important;
+	width: 100%;
+	margin: 29rpx 0 33rpx;
+	color: #808080;
 	letter-spacing: 1rpx;
 }
 
@@ -22,6 +31,15 @@
 	height: 5rem !important;
 	width: 100%;
 	margin: 32rpx 0 30rpx;
+	color: #808080;
+	letter-spacing: 2rpx;
+}
+
+.text-font-size-other {
+	font-size: 24rpx !important;
+	height: 5rem !important;
+	width: 100%;
+	margin: 29rpx 0 33rpx;
 	color: #808080;
 	letter-spacing: 1rpx;
 }

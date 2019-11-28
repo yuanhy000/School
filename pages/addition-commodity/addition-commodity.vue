@@ -1,5 +1,5 @@
 <template>
-	<view class="addition-container">
+	<view class="addition-container" @tap="cancleTextareaInput">
 		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
 			<block slot="backText">返回</block>
 			<block slot="content" style="font-size: 28rpx!important; letter-spacing: 1rpx;">发布物品</block>
@@ -10,8 +10,10 @@
 					<input class="margin-left margin-right text-sm max-width" type="text" placeholder="物品名称" v-model="title" />
 				</view>
 				<view class="cu-form-group margin-left margin-top margin-right margin-bottom border-radius bg-white shadow">
-					<textarea class="textarea-font-size" placeholder="详细描述..." v-model="content" maxlength="400" />
-					</view>
+					<textarea class="textarea-font-size" placeholder="详细描述..." v-model="content" maxlength="400" v-if="displayTextarea"
+					 @tap.stop="beginTextareaInput" auto-focus="true"/>
+					<text class="text-font-size" v-else @tap.stop="beginTextareaInput">{{displayContent}}</text>
+				</view>
 				<view class="cu-form-group margin-left margin-right margin-top margin-bottom border-rad ius bg-white border-radius shadow">
 					<view class="grid col-4 grid-square flex-sub  margin-top">
 						<view class="bg-img" v-for="(item,index) in selectImageList" :key="index" @tap="ViewImage" :data-url="selectImageList[index]">
@@ -110,7 +112,9 @@
 				selectCategoryID: 0,
 				selectCategoryName: '',
 				showToast: false,
-				toastContent: ''
+				toastContent: '',
+				displayTextarea: false,
+				displayContent: '详细描述...'
 			}
 		},
 		computed: {
@@ -128,6 +132,17 @@
 			}, 100)
 		},
 		methods: {
+			cancleTextareaInput(){
+				this.displayTextarea = false;
+				if(this.content == ''){
+					this.displayContent ='详细描述...';
+				} else{
+				this.displayContent = this.content;
+				}
+			},
+			beginTextareaInput(){
+				this.displayTextarea = true;
+			},
 			hideToast(e) {
 				this.showToast = false;
 			},
@@ -186,17 +201,18 @@
 					}
 				}).then(res => {
 					this.content = '';
+					this.displayContent = '';
 					this.$refs.notification.open({
 						type: 'success',
 						content: '发布成功',
 						timeout: 1500,
 						isClick: false
 					});
-					setTimeout(()=>{
+					setTimeout(() => {
 						uni.navigateBack({
 							delta: 1
 						});
-					},1500)
+					}, 1500)
 				})
 			},
 			CheckboxOnclick() {

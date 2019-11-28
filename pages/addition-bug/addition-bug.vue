@@ -1,8 +1,8 @@
 <template>
-	<view class="addition-container">
+	<view class="addition-container" @tap="cancleTextareaInput">
 		<cu-custom bgColor="bg-gradual-tab" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content"  style="font-size: 28rpx!important; letter-spacing: 1rpx;">反馈错误</block>
+			<block slot="content" style="font-size: 28rpx!important; letter-spacing: 1rpx;">反馈错误</block>
 		</cu-custom>
 		<scroll-view scroll-y id="scroll" :style="{height:scroll_height +'px'}">
 			<view class="padding-top">
@@ -10,7 +10,9 @@
 					<input class="margin-left margin-right text-sm max-width" type="text" placeholder="哪里有问题 ( 可选 )" v-model="title" />
 				</view>
 				<view class="cu-form-group margin-left margin-top margin-right margin-bottom border-radius bg-white shadow">
-					<textarea class="textarea-font-size" placeholder="详细错误..." v-model="content" maxlength="400" warp="" />
+					<textarea class="textarea-font-size" placeholder="详细错误..." v-model="content" maxlength="400" v-if="displayTextarea"
+					 @tap.stop="beginTextareaInput" auto-focus="true" />
+					<text class="text-font-size" v-else @tap.stop="beginTextareaInput">{{displayContent}}</text>	
 					</view>
 				<view class="cu-form-group margin-left margin-right margin-top margin-bottom border-radius bg-white border-radius shadow">
 					<view class="grid col-4 grid-square flex-sub  margin-top">
@@ -70,7 +72,9 @@
 				isAnonymity: false,
 				scroll_height: 700,
 				showToast:false,
-				toastContent: ''
+				toastContent: '',
+				displayTextarea: false,
+				displayContent: '详细错误...'
 			}
 		},
 		computed: {
@@ -84,6 +88,17 @@
 			}, 100)
 		},
 		methods: {
+			cancleTextareaInput(){
+				this.displayTextarea = false;
+				if(this.content == ''){
+					this.displayContent ='详细错误...';
+				} else{
+				this.displayContent = this.content;
+				}
+			},
+			beginTextareaInput(){
+				this.displayTextarea = true;
+			},
 			hideModal(e) {
 				this.showToast = false;
 			},

@@ -5241,6 +5241,17 @@ scroll-view.cu-steps .cu-item {
 .none-default-image.data-v-34b500aa {
 	width: 100%;
 }
+.icon-button.data-v-34b500aa {
+	background-color: #fff;
+	border: none;
+	padding-left: 0;
+	margin: 0;
+	line-height: 1;
+	line-height: 1;
+	outline: none;
+	list-style: none;
+	font-size: 26rpx !important;
+}
 
 .store-container {
 	position: fixed;

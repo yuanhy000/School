@@ -1,0 +1,47 @@
+.tabbar-height {
+	height: 120px;
+}
+
+.user-avatar-container {
+	height: 480rpx;
+}
+
+.avatar-button {
+	width: 128upx;
+	height: 128upx;
+	border-radius: 50%;
+}
+
+.avatar-shadow {
+	padding: 1rpx;
+	box-shadow: 4upx 4upx 2upx rgba(26, 26, 26, 0.2);
+}
+
+.text-school {
+	font-size: 24rpx;
+	color: #FFFFFF;
+	letter-spacing: 2rpx;
+}
+
+.user-info-container {
+	width: 90%;
+	height: 150rpx;
+	border-radius: 10rpx;
+	background: #FFFFFF;
+	margin: 0 5%;
+	position: relative;
+	top: -100rpx;
+}
+
+.user-info-title-ftext {
+	font-size: 24rpx;
+	color: #888888;
+	letter-spacing: 1rpx;
+}
+
+.user-notice-info {
+	position: relative;
+	right: -10px;
+	width: 36rpx;
+	height: 36rpx;
+}
