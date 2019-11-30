@@ -14,10 +14,11 @@
 				</view>
 				<view :class="PageCur=='store'?'text-tabbar-on':'text-tabbar'">商城</view>
 			</view>
-			<view class="action add-action" @click="NavChange" data-cur="addition">
-				<button class="cu-btn cuIcon-add addition-button shadow" @tap="Toggle" :class="[PageCur=='addition'?'animation-fade':'']"> 
-				</button>
-				<view :class="PageCur=='addition'?'text-addition-on':'text-addition'">发布</view>
+			<view class="action add-container" @click="NavChange" data-cur="addition">
+				<!-- <button class="cu-btn cuIcon-add addition-button shadow" @tap="Toggle" :class="[PageCur=='addition'?'animation-fade':'']">
+				</button> -->
+				<image src="../../static/add/add-one.png" class="addition-button"  @tap="Toggle" :class="[PageCur=='addition'?'animation-fade':'']"></image>
+				<view class="add-text" :class="PageCur=='addition'?'text-addition-on':'text-addition'">发布</view>
 			</view>
 			<view class="action " @click="NavChange" data-cur="discovery" @tap="Toggle" :class="[PageCur=='discovery'?'animation-fade':'']">
 				<view>

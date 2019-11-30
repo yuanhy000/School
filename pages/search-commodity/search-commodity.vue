@@ -73,6 +73,13 @@
 				inputTips: []
 			}
 		},
+		onShareAppMessage(res) {
+			return {
+				title: '快来围观微校～～',
+				path: '/pages/index/index',
+				imageUrl: '/static/user/shareImage.jpg'
+			}
+		},
 		watch: {},
 		computed: {
 			...mapState({

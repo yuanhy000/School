@@ -25,8 +25,8 @@
 								<text class='cuIcon-close'></text>
 							</view>
 						</view>
-						<view class="solids" @tap="ChooseImage" v-if="selectImageList.length<9">
-							<text class='cuIcon-cameraaddfill text-theme-color'></text>
+						<view class="solids flex align-center justify-center" @tap="ChooseImage" v-if="selectImageList.length<9">
+							<view class='cuIcon-cameraaddfill text-theme-color' style="margin: auto; height: 150rpx; font-size: 60rpx; line-height: 150rpx;"></view>
 						</view>
 					</view>
 				</view>
@@ -35,7 +35,7 @@
 				</view>
 			</view>
 		</scroll-view>
-		<view class="cu-modal" :class="showToast?'show':''">
+		<view class="cu-modal" :class="showToast?'show':''" @tap="hideModal">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white justify-end">
 					<view class="content">申请提示</view>
@@ -75,6 +75,13 @@
 				toastContent: '',
 				displayTextarea: false,
 				displayContent: '认证组织概况信息...'
+			}
+		},
+		onShareAppMessage(res) {
+			return {
+				title: '微校期待你的围观～～',
+				path: '/pages/index/index',
+				imageUrl: '/static/user/shareImage.jpg'
 			}
 		},
 		mounted() {

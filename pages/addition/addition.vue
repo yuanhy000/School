@@ -12,12 +12,16 @@
 				 :data-id="1"></image>
 			</swiper-item>
 			<swiper-item :class="cardCur==index?'cur':''">
-				<image src="../../static/add/addition-commodity.jpg" class="swiper-image bg-white shadow" mode="aspectFill" @tap="buttonSelect"
+				<image src="../../static/add/addition-topic.jpg" class="swiper-image bg-white shadow" mode="aspectFill" @tap="buttonSelect"
 				 :data-id="2"></image>
 			</swiper-item>
 			<swiper-item :class="cardCur==index?'cur':''">
 				<image src="../../static/add/addition-recruit.jpg" class="swiper-image bg-white shadow" mode="aspectFill" @tap="buttonSelect"
 				 :data-id="3"></image>
+			</swiper-item>
+			<swiper-item :class="cardCur==index?'cur':''">
+				<image src="../../static/add/addition-commodity.jpg" class="swiper-image bg-white shadow" mode="aspectFill" @tap="buttonSelect"
+				 :data-id="4"></image>
 			</swiper-item>
 		</swiper>
 		<view class="cu-modal" :class="showToast?'show':''" @tap="hideModal">
@@ -45,7 +49,7 @@
 		data() {
 			return {
 				selectIndex: 0,
-				swiper_height: 700,
+				swiper_height: 650,
 				showToast: false,
 				toastContent: '',
 				loading: false,
@@ -84,20 +88,20 @@
 			},
 			buttonSelect(e) {
 				this.selectIndex = e.currentTarget.dataset.id;
+				if (this.user.authentication == '' || this.user.authentication == null) {
+					this.toastContent = '先去认证身份，再进行发布操作～～'
+					this.showToast = true;
+					return;
+				}
 				switch (this.selectIndex) {
 					case 0:
-						if (this.user.authentication == '' || this.user.authentication == null) {
-							this.toastContent = '先去认证身份，再进行发布操作～～'
-							this.showToast = true;
-							return;
-						}
 						uni.navigateTo({
 							url: '/pages/addition-article/addition-article'
 						});
 						break;
 					case 1:
-						if (this.user.user_organization == '' || this.user.user_organization == null) {
-							this.toastContent = '只有学生组织才可发布活动，快去认证吧～～'
+						if (this.user.user_organization == '' || this.user.user_organization == null || this.user.user_organization == undefined) {
+							this.toastContent = '只有学生组织才能发布活动，快去认证吧～～'
 							this.showToast = true;
 							return;
 						}
@@ -106,23 +110,18 @@
 						});
 						break;
 					case 2:
-						if (this.user.authentication == '' || this.user.authentication == null) {
-							this.toastContent = '先去认证身份，再进行发布操作～～'
-							this.showToast = true;
-							return;
-						}
 						uni.navigateTo({
-							url: '/pages/addition-commodity/addition-commodity'
+							url: '/pages/addition-topic/addition-topic'
 						});
 						break;
 					case 3:
-						if (this.user.authentication == '' || this.user.authentication == null) {
-							this.toastContent = '先去认证身份，再进行发布操作～～'
-							this.showToast = true;
-							return;
-						}
 						uni.navigateTo({
 							url: '/pages/addition-recruit/addition-recruit'
+						});
+						break;
+					case 4:
+						uni.navigateTo({
+							url: '/pages/addition-commodity/addition-commodity'
 						});
 						break;
 				}

@@ -6,8 +6,10 @@
 		</cu-custom>
 		<scroll-view class="animation-fade" scroll-y id="scroll" :style="{height:scroll_height +'px'}" v-show="display"
 		 @click="cancelInput()" :scroll-top="scroll_top">
-			<view class="max-width bg-white padding-bottom-sm">
-				<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white max-width">
+			<loading v-if="loading" style="position: relative; top: 450rpx;"></loading>
+			<view class="max-width bg-white padding-bottom-sm" v-if="!loading">
+				<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white max-width"
+				 @click="navigateUserShow(activityInfo.activity_user.user_id)">
 					<image class="cu-avatar article-avatar avatar-shadow margin-right round avatar-border" :src="activityInfo.activity_user.user_avatar">
 					</image>
 					<view class="flex-column justify-center">
@@ -51,7 +53,7 @@
 					 @click="navigateActivityRegister">线上报名</button>
 				</view>
 			</view>
-			<view class="padding-top padding-left padding-right flex align-center bg-white margin-top flex-column">
+			<view class="padding-top padding-left padding-right flex align-center bg-white margin-top flex-column" v-if="!loading">
 				<view class="comment-container-title info-border-bottom" id="comment">
 					<text>全部留言</text>
 				</view>
@@ -155,6 +157,7 @@
 				showToast: false,
 				toastContent: '',
 				fixedHeight: 0,
+				loading: false,
 			}
 		},
 		computed: {
@@ -170,13 +173,15 @@
 		},
 		onShareAppMessage(res) {
 			return {
-				title: '快来围观这个活动',
-				path: '/pages/activity/activity?activity_id=' + this.activity_id
+				title: '快来围观这个活动～～',
+				path: '/pages/activity/activity?activity_id=' + this.activity_id,
+				imageUrl: '/static/user/shareImage.jpg'
 			}
 		},
 		onLoad(option) {
 			this.activity_id = option.activity_id;
 			let that = this;
+			this.loading = true;
 			Vue.prototype.$http.request({
 				url: '/activities/detail',
 				method: 'POST',
@@ -198,10 +203,10 @@
 					if (option.comment == 1) {
 						let query = uni.createSelectorQuery().in(this);
 						query.select('#comment').boundingClientRect(res => {
-							console.log(res)
 							this.scroll_top = res.top;
 						}).exec();
 					}
+					this.loading = false;
 				}, 200);
 			});
 		},
@@ -211,6 +216,11 @@
 			}, 100);
 		},
 		methods: {
+			navigateUserShow(user_id) {
+				uni.navigateTo({
+					url: '/pages/user-show/user-show?user_id=' + user_id
+				})
+			},
 			changeFixedHeight(e) {
 				this.fixedHeight = e.detail.height;
 			},
@@ -219,7 +229,10 @@
 			},
 			formatActivityContent() {
 				this.activityInfo.activity_content = this.activityInfo.activity_content.replace(/<br\/\>/g, "\n");
-				this.activityInfo.activity_attention = this.activityInfo.activity_attention.replace(/<br\/\>/g, "\n");
+				if (this.activityInfo.activity_attention) {
+					this.activityInfo.activity_attention = this.activityInfo.activity_attention.replace(/<br\/\>/g, "\n");
+				}
+
 			},
 			navigateActivityRegister() {
 				uni.navigateTo({

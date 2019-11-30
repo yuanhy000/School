@@ -3,7 +3,12 @@
 }
 
 .user-avatar-container {
-	height: 480rpx;
+	height: 380rpx;
+}
+
+.user-item-container {
+
+	height: 300rpx;
 }
 
 .avatar-button {
@@ -44,4 +49,15 @@
 	right: -10px;
 	width: 36rpx;
 	height: 36rpx;
+}
+
+.show-radius {
+	border-radius: 10rpx;
+}
+
+.activity_content {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	overflow: hidden;
 }

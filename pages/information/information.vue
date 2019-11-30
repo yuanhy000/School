@@ -6,6 +6,7 @@
 			 :scroll-left="scroll_left">
 				<view class="cu-item tab-item-container" :class="currentNav==0?'text-theme-color active-text-border':''" @click="navSelect(0)">头条</view>
 				<view class="cu-item tab-item-container" :class="currentNav==1?'text-theme-color active-text-border':''" @click="navSelect(1)">动态</view>
+				<view class="cu-item tab-item-container" :class="currentNav==2?'text-theme-color active-text-border':''" @click="navSelect(2)">话题</view>
 			</scroll-view>
 			<view class="animation-fade" v-if="currentNav == 0">
 				<loading v-if="loading" class="animation-fade"></loading>
@@ -33,9 +34,9 @@
 				</block>
 				<view class="max-width" style="height: 50rpx;"></view>
 			</view>
-			<view class="animation-fade" v-else>
+			<view class="animation-fade" v-if="currentNav == 1">
 				<view class="bg-white nav shadow max-width " style="border-bottom: 1px solid #c8c8c8;" id="tabbar" :class="fixTabbar?'fixTabbar':''"
-				 :style="fixTabbar?'margin-top:-92rpx':''">
+				 :style="fixTabbar?'margin-top:-91rpx':''">
 					<view class="max-width flex align-center" style="height: 89rpx;">
 						<view class="tab-item-width text-center select-container" v-for="(item,index) in menu_list" :key="index" @tap="tabSelect"
 						 :data-id="index" style="width: 25%;">
@@ -55,14 +56,14 @@
 								<view class="cu-item shadow bg-white margin-bottom-xl margin-left margin-right" @click="navigateArticle(item.article_id,0)"
 								 style="border-radius: 20rpx;">
 									<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white"
-									 style="border-radius: 20rpx;">
+									 @click.stop="navigateUserShow(item.article_user.user_id)" style="border-radius: 20rpx;">
 										<image class="cu-avatar article-avatar avatar-shadow margin-right round avatar-border" :src="item.article_user.user_avatar">
 										</image>
 										<view class="flex-column justify-center">
 											<text class="aricle-user-name margin-bottom-xs">{{item.article_user.user_name}}</text>
 											<view>
 												<text class="article-create-time">{{item.display_time}}</text>
-												<text class="article-create-time margin-left" v-if="item.article_display_location">来自{{item.article_user.user_school}}</text>
+												<text class="article-create-time margin-left" v-if="item.article_display_location&&item.article_user.user_school">来自{{item.article_user.user_school}}</text>
 											</view>
 										</view>
 									</view>
@@ -106,7 +107,7 @@
 								<view class="cu-item shadow bg-white margin-bottom-xl margin-left margin-right" @click="navigateActivity(item.activity_id,0)"
 								 style="border-radius: 20rpx;">
 									<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white"
-									 style="border-radius: 20rpx;">
+									 style="border-radius: 20rpx;" @click.stop="navigateUserShow(item.activity_user.user_id)">
 										<image class="cu-avatar article-avatar avatar-shadow margin-right round avatar-border" :src="item.activity_user.user_avatar">
 										</image>
 										</image>
@@ -114,7 +115,7 @@
 											<text class="aricle-user-name margin-bottom-xs">{{item.activity_user.user_name}}</text>
 											<view>
 												<text class="article-create-time">{{item.display_time}}</text>
-												<text class="article-create-time margin-left">来自{{item.activity_user.user_school}}</text>
+												<text class="article-create-time margin-left" v-if="item.activity_user.user_school">来自{{item.activity_user.user_school}}</text>
 											</view>
 										</view>
 									</view>
@@ -122,13 +123,13 @@
 										{{item.activity_name}}
 									</view>
 									<view class="text-content padding-left padding-right margin-bottom activity_content">
-										{{item.activity_content}}
+										<text decode="true">{{item.activity_content}}</text>
 									</view>
-									<view class="text-content padding-left padding-right margin-bottom-xs text-bold text-black margin-top-xs">
+									<view class="text-content padding-left padding-right margin-bottom-xs text-bold text-black margin-top-xs" v-if="item.activity_attention">
 										注意事项
 									</view>
-									<view class="text-content padding-left padding-right margin-bottom activity_attention">
-										{{item.activity_attention}}
+									<view class="text-content padding-left padding-right margin-bottom activity_attention" v-if="item.activity_attention">
+										<text decode="true">{{item.activity_attention}}</text>
 									</view>
 									<view class="grid flex-sub padding-lr col-3 grid-square margin-bottom-xs">
 										<block v-for="(imgItem,index) in item.activity_images" :key="index">
@@ -167,7 +168,7 @@
 								<view class="cu-item shadow bg-white margin-bottom-xl margin-left margin-right" @click="navigateArticle(item.article_id,0)"
 								 style="border-radius: 20rpx;">
 									<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white"
-									 style="border-radius: 20rpx;">
+									 style="border-radius: 20rpx;" @click.stop="navigateUserShow(item.article_user.user_id,item.article_anonymity)">
 										<image class="cu-avatar article-avatar avatar-shadow margin-right round avatar-border" :src="item.article_user.user_avatar"
 										 v-if="!item.article_anonymity">
 										</image>
@@ -179,11 +180,12 @@
 											<text class="aricle-user-name margin-bottom-xs" v-else>匿名用户</text>
 											<view>
 												<text class="article-create-time">{{item.display_time}}</text>
-												<text class="article-create-time margin-left" v-if="item.article_display_location">来自{{item.article_user.user_school}}</text>
+
+												<text class="article-create-time margin-left" v-if="item.article_display_location&&item.article_user.user_school">来自{{item.article_user.user_school}}</text>
 											</view>
 										</view>
 									</view>
-									<view class="text-content padding-left padding-right text-bold text-black margin-top-xs" v-if="tem.article_title">
+									<view class="text-content padding-left padding-right text-bold text-black margin-top-xs" v-if="item.article_title">
 										{{item.article_title}}
 									</view>
 									<view class="text-content padding-left padding-right margin-top-xs margin-bottom activity_content">
@@ -223,14 +225,14 @@
 								<view class="cu-item shadow bg-white margin-bottom-xl margin-left margin-right" @click="navigateRecruit(item.recruit_id,0)"
 								 style="border-radius: 20rpx;">
 									<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white"
-									 style="border-radius: 20rpx;">
+									 style="border-radius: 20rpx;" @click.stop="navigateUserShow(item.recruit_user.user_id)">
 										<image class="cu-avatar article-avatar avatar-shadow margin-right round avatar-border" :src="item.recruit_user.user_avatar">
 										</image>
 										<view class="flex-column justify-center">
 											<text class="aricle-user-name margin-bottom-xs">{{item.recruit_user.user_name}}</text>
 											<view>
 												<text class="article-create-time">{{item.display_time}}</text>
-												<text class="article-create-time margin-left" v-if="item.recruit_display_location">来自{{item.recruit_user.user_school}}</text>
+												<text class="article-create-time margin-left" v-if="item.recruit_display_location&&item.recruit_user.user_school">来自{{item.recruit_user.user_school}}</text>
 											</view>
 										</view>
 									</view>
@@ -241,7 +243,7 @@
 										{{item.recruit_title}}
 									</view>
 									<view class="text-content padding-left padding-right margin-bottom activity_content">
-										{{item.recruit_content}}
+										<text decode="true">{{item.recruit_content}}</text>
 									</view>
 									<view class="grid flex-sub padding-lr col-3 grid-square margin-bottom">
 										<block v-for="(imgItem,index) in item.recruit_images" :key="index">
@@ -272,6 +274,105 @@
 					</swiper-item>
 				</swiper>
 			</view>
+			<view class="animation-fade" v-if="currentNav == 2">
+				<view class="bg-white nav shadow max-width " style="border-bottom: 1px solid #c8c8c8;">
+					<view class="max-width flex align-center justify-center" style="height: 90rpx;">
+						<view class="tab-item-width text-center select-container" v-for="(item,index) in topic_list" :key="index" @tap="topicTabSelect"
+						 :data-id="index" style="width: 30%; margin: auto;">
+							<text class="tab-item-text" :class="index==currentTopicTab?'item-select-container':''" :data-id="index">{{item}}</text>
+						</view>
+					</view>
+				</view>
+				<swiper :duration="400" class="discovery-swiper" id="topicSwiper" :current="currentTopicTab" @change="topicTabSwiper"
+				 :style="{height:topic_scroll_height +'px'}">
+					<swiper-item>
+						<scroll-view scroll-y :style="{height:topic_scroll_height +'px'}" class="padding-bottom-xl" @scrolltolower="loadNextTopic('topic')">
+							<block v-for="(item,index) in topicInfo" v-bind:key="index">
+								<view class="cu-item shadow bg-white padding-top margin-top-xl margin-left margin-right" @click="navigateTopic(item.topic_id)"
+								 style="border-radius: 20rpx; min-height: 200rpx;">
+									<view class="text-content padding-left padding-right text-bold text-black margin-top-xs text-cut" style="font-size: 30rpx;"
+									 v-if="item.topic_title">
+										{{item.topic_title}}
+									</view>
+									<view class="text-content padding-left padding-right margin-top margin-bottom activity_content" style="font-size: 24rpx!important; line-height: 40rpx;">
+										<text decode="true">{{item.topic_content}}</text>
+									</view>
+									<view class="grid flex-sub padding-lr col-3 grid-square margin-bottom padding-bottom-sm">
+										<block v-for="(imgItem,index) in item.topic_images" :key="index">
+											<view class="bg-img" :style="{backgroundImage: 'url('+imgItem.image_url+')'}" @click.stop="viewImage"
+											 :data-url="imgItem.image_url">
+											</view>
+										</block>
+									</view>
+									<view class="max-width flex align-center justify-between">
+										<view class="article-create-time padding-left" style="position: relative; bottom: 30rpx;">{{item.topic_created}}</view>
+										<view class="article-create-time" style="position: relative; right: 30rpx; bottom: 30rpx;">
+											<text class="commodity-other-info margin-right-sm">回答 ·<text class="margin-left-xs">{{item.topic_answer_count}}</text></text>
+											<text class="commodity-other-info">浏览 ·<text class="margin-left-xs">{{item.topic_views}}</text></text>
+										</view>
+									</view>
+								</view>
+							</block>
+							<loading v-if="loading"></loading>
+							<view class="cu-tabbar-height tabbar-height"></view>
+						</scroll-view>
+					</swiper-item>
+					<swiper-item>
+						<scroll-view scroll-y :style="{height:topic_scroll_height +'px'}" class="padding-bottom-xl" @scrolltolower="loadNextAnswer">
+							<block v-for="(item,index) in answerInfo" v-bind:key="index">
+								<view class="cu-item shadow bg-white margin-top-xl margin-left margin-right" @click="navigateAnswer(item.answer_id)"
+								 style="border-radius: 20rpx; min-height: 200rpx;">
+									<view class="max-width margin-bottom padding-left text-bold text-black flex justify-between" style="height: 100rpx; line-height: 100rpx; border-bottom: 1rpx solid #EEEEEE; font-size: 30rpx;"
+									 @click.stop="navigateTopic(item.answer_topic.topic_id)">
+										<view>{{item.answer_topic.topic_title}}</view>
+										<view class="cuIcon-right padding-right" style="text-align: right;"></view>
+									</view>
+									<view class=" padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white max-width"
+									 @click.stop="navigateUserShow(item.answer_user.user_id,item.answer_anonymity)">
+										<image class="cu-avatar article-avatar avatar-shadow margin-right round avatar-border" :src="item.answer_user.user_avatar"
+										 v-if="!item.answer_anonymity">
+										</image>
+										<image class="cu-avatar article-avatar avatar-shadow margin-right round avatar-border" src="../../static/article/anonymity.png"
+										 style="background-color: #F1F1F1;" v-else>
+										</image>
+										<view class="flex-column justify-center">
+											<text class="aricle-user-name margin-bottom-xs text-bold" v-if="!item.answer_anonymity">{{item.answer_user.user_name}}</text>
+											<text class="aricle-user-name margin-bottom-xs text-bold" v-else>匿名用户</text>
+											<view>
+												<text class="article-create-time">{{item.answer_created}}</text>
+												<text class="article-create-time margin-left" v-if="item.answer_display_location">来自{{item.answer_user.user_school}}</text>
+											</view>
+										</view>
+									</view>
+									<view class="text-content padding-left padding-right text-bold text-black margin-top-xs text-cut" style="font-size: 30rpx;"
+									 v-if="item.answer_title">
+										{{item.answer_title}}
+									</view>
+									<view class="text-content padding-left padding-right margin-top margin-bottom activity_content" style="font-size: 24rpx!important; line-height: 40rpx;">
+										<text decode="true">{{item.answer_content}}</text>
+									</view>
+									<view class="grid flex-sub padding-lr col-3 grid-square margin-bottom padding-bottom-sm">
+										<block v-for="(imgItem,index) in item.answer_images" :key="index">
+											<view class="bg-img" :style="{backgroundImage: 'url('+imgItem.image_url+')'}" @click.stop="viewImage"
+											 :data-url="imgItem.image_url">
+											</view>
+										</block>
+									</view>
+									<view class="max-width flex align-center justify-between">
+										<view class="article-create-time padding-left" style="position: relative; bottom: 30rpx;">{{item.answer_created}}</view>
+										<view class="article-create-time" style="position: relative; right: 30rpx; bottom: 30rpx;">
+											<text class="commodity-other-info margin-right-sm">超赞 ·<text class="margin-left-xs">{{item.answer_likes}}</text></text>
+											<text class="commodity-other-info">浏览 ·<text class="margin-left-xs">{{item.answer_views}}</text></text>
+										</view>
+									</view>
+								</view>
+							</block>
+							<loading v-if="loading"></loading>
+							<view class="cu-tabbar-height tabbar-height"></view>
+						</scroll-view>
+					</swiper-item>
+				</swiper>
+			</view>
 			<loading v-if="loadingNext" class="animation-fade"></loading>
 			<notification ref="notification" :isdistance="true"></notification>
 		</scroll-view>
@@ -293,13 +394,20 @@
 			return {
 				currentNav: 0,
 				currentTab: 1,
+				currentTopicTab: 0,
 				newsInfo: [],
 				attentionInfo: [],
 				articleInfo: [],
 				activityInfo: [],
 				recruitInfo: [],
+				topicInfo: [],
+				answerInfo: [],
+				topicLinks: {},
+				answerLinks: {},
 				menu_list: ['关注', '活动', '动态', '招募'],
+				topic_list: ['热门话题', '热门回答'],
 				scroll_height: 700,
+				topic_scroll_height: 600,
 				displayLocation: '',
 				imageList: [],
 				attention_height: 500,
@@ -327,6 +435,8 @@
 				activityComplete: false,
 				articleComplete: false,
 				recruitComplete: false,
+				topicLoadOver: false,
+				answerLoadOver: false,
 			};
 		},
 		computed: {
@@ -343,10 +453,10 @@
 			}
 		},
 		onShareAppMessage(res) {
-			console.log(res);
 			return {
-				title: '有人在招募队友，快来围观',
-				path: '/pages/recruit/recruit?recruit_id='
+				title: '快来围观微校～～',
+				path: '/pages/index/index',
+				imageUrl: '/static/user/shareImage.jpg'
 			}
 		},
 		mounted() {
@@ -403,11 +513,115 @@
 			})
 		},
 		methods: {
+			loadNextAnswer() {
+				if (this.answerLoadOver || this.loading) {
+					return;
+				}
+				this.loading = true;
+				Vue.prototype.$http.request({
+					url: this.answerLinks.next,
+					method: 'POST',
+				}).then(res => {
+					this.answerLinks = res.data.links;
+					this.answerInfo.push.apply(this.answerInfo, res.data.data);
+					for (let item = (res.data.meta.current_page - 1) * 10; item < this.answerInfo.length; item++) {
+						for (let index in this.answerInfo[item].answer_images) {
+							this.imageList.push(this.answerInfo[item].answer_images[index].image_url);
+						}
+						this.formatAnswerContent(item);
+					}
+					if (res.data.meta.current_page == res.data.meta.last_page) {
+						this.answerLoadOver = true;
+					}
+					this.loading = false;
+				})
+			},
+			loadNextTopic() {
+				if (this.topicLoadOver || this.loading) {
+					return;
+				}
+				this.loading = true;
+				Vue.prototype.$http.request({
+					url: this.topicLinks.next,
+					method: 'POST',
+				}).then(res => {
+					this.topicLinks = res.data.links;
+					this.topicInfo.push.apply(this.topicInfo, res.data.data);
+					for (let item = (res.data.meta.current_page - 1) * 10; item < this.topicInfo.length; item++) {
+						for (let index in this.topicInfo[item].topic_images) {
+							this.imageList.push(this.topicInfo[item].topic_images[index].image_url);
+						}
+						this.formatTopicContent(item);
+					}
+					if (res.data.meta.current_page == res.data.meta.last_page) {
+						this.topicLoadOver = true;
+					}
+					this.loading = false;
+				})
+			},
+			requestRecomendTopic() {
+				if (this.topicInfo.length != 0) {
+					return;
+				}
+				this.loading = true;
+				Vue.prototype.$http.request({
+					url: '/topics/recommend',
+					method: 'POST',
+				}).then(res => {
+					this.topicInfo = res.data.data;
+					this.topicLinks = res.data.links;
+					for (let item in this.topicInfo) {
+						for (let index in this.topicInfo[item].topic_images) {
+							this.imageList.push(this.topicInfo[item].topic_images[index].image_url);
+						}
+						this.formatTopicContent(item);
+					}
+					this.loading = false;
+				})
+			},
+			requestRecomendAnswer() {
+				if (this.answerInfo.length != 0) {
+					return;
+				}
+				this.loading = true;
+				Vue.prototype.$http.request({
+					url: '/answers/recommend',
+					method: 'POST',
+				}).then(res => {
+					this.answerInfo = res.data.data;
+					this.answerLinks = res.data.links;
+					for (let item in this.answerInfo) {
+						for (let index in this.answerInfo[item].answer_images) {
+							this.imageList.push(this.answerInfo[item].answer_images[index].image_url);
+						}
+						this.formatAnswerContent(item);
+					}
+					this.loading = false;
+				})
+			},
+			navigateUserShow(user_id, is_anonymity) {
+				if (is_anonymity) {
+					return;
+				} else {
+					uni.navigateTo({
+						url: '/pages/user-show/user-show?user_id=' + user_id
+					})
+				}
+			},
+			formatTopicContent(index) {
+				this.topicInfo[index].topic_content = this.topicInfo[index].topic_content.replace(/<br\/\>/g, "\n");
+			},
+			formatAnswerContent(index) {
+				this.answerInfo[index].answer_content = this.answerInfo[index].answer_content.replace(/<br\/\>/g, "\n");
+			},
 			formatArticleContent(index) {
 				this.articleInfo[index].article_content = this.articleInfo[index].article_content.replace(/<br\/\>/g, "\n");
 			},
 			formatActivityContent(index) {
 				this.activityInfo[index].activity_content = this.activityInfo[index].activity_content.replace(/<br\/\>/g, "\n");
+				if (this.activityInfo[index].activity_attention) {
+					this.activityInfo[index].activity_attention = this.activityInfo[index].activity_attention.replace(/<br\/\>/g, "\n");
+				}
 			},
 			formatRecruitContent(index) {
 				this.recruitInfo[index].recruit_content = this.recruitInfo[index].recruit_content.replace(/<br\/\>/g, "\n");
@@ -598,6 +812,16 @@
 					url: '/pages/recruit/recruit?recruit_id=' + recruit_id + '&comment=' + comment
 				})
 			},
+			navigateTopic(topic_id) {
+				uni.navigateTo({
+					url: '/pages/topic/topic?topic_id=' + topic_id
+				})
+			},
+			navigateAnswer(answer_id) {
+				uni.navigateTo({
+					url: '/pages/answer/answer?answer_id=' + answer_id
+				})
+			},
 			viewImage(e) {
 				uni.previewImage({
 					urls: this.imageList,
@@ -691,6 +915,21 @@
 					}
 				});
 			},
+			getTopicHeight() {
+				let that = this;
+				let height = 0;
+				uni.getSystemInfo({
+					success(res) {
+						that.screen_height = res.windowHeight;
+						that.screen_width = res.windowWidth;
+						let otherHeight = 0;
+						let query = uni.createSelectorQuery().in(that);
+						query.select('#topicSwiper').boundingClientRect(res => {
+							that.topic_scroll_height = that.screen_height - res.top - 25;
+						}).exec();
+					}
+				});
+			},
 			navSelect(index) {
 				this.currentNav = index;
 				if (this.currentNav == 1) {
@@ -712,7 +951,25 @@
 							}
 						}).exec();
 					}, 300)
+				} else if (this.currentNav == 2) {
+					this.requestRecomendTopic();
+					setTimeout(() => {
+						this.getTopicHeight();
+					}, 200);
+					this.requestRecomendAnswer();
 				}
+			},
+			topicTabSelect(e) {
+				this.currentTopicTab = e.currentTarget.dataset.id;
+				// this.randomScrollHeight();
+				// this.setScrollHeight();
+				this.getTopicHeight();
+			},
+			topicTabSwiper(e) {
+				this.currentTopicTab = e.detail.current;
+				// this.randomScrollHeight();
+				// this.setScrollHeight();
+				this.getTopicHeight();
 			},
 			tabSelect(e) {
 				this.currentTab = e.currentTarget.dataset.id;

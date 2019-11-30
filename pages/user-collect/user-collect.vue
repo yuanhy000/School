@@ -10,15 +10,13 @@
 			 v-for="(item,index) in menu_list" :key="index" @tap="tabSelect" :data-id="index">
 				{{item}}
 			</view>
-			<view class="cu-item tab-item-width flex text-center" :class="4==TabCur?'text-theme-color active-text-border':''"
-			 @tap="tabSelect" :data-id="4" v-if="map_poi.is_search">搜索</view>
 		</scroll-view>
-		<loading v-if="loading" class="animation-fade"></loading>
+		<loading v-if="loading" class="animation-fade" style="position: relative; top: 450rpx;"></loading>
 		<swiper :duration="400" class="discovery-swiper animation-fade" id="swiper" :style="{height:scroll_height +'px'}"
 		 :current="TabCur" @change="tabSwiper">
-			<swiper-item class="animation-fade">
+			<swiper-item class="animation-fade" v-if="!loading">
 				<scroll-view scroll-y :style="{height:scroll_height +'px'}">
-					<image src="../../static/article/no-collection.png" class="none-default-image" mode="widthFix" v-if="!loadingItem&&articleInfo.length==0"></image>
+					<image src="../../static/article/no-collection.png" class="none-default-image" mode="widthFix" v-if="!loading&&articleInfo.length==0"></image>
 					<block class="swiper-item swiper-item-container" v-for="(item, index) in articleInfo" v-bind:key="index" v-else>
 						<view class="cu-item shadow bg-white margin-left margin-right margin-top" @click="navigateArticle(item.article_id,0)"
 						 style="border-radius: 20rpx;">
@@ -72,9 +70,9 @@
 					<view class="max-width" style="height: 50rpx;"></view>
 				</scroll-view>
 			</swiper-item>
-			<swiper-item class="animation-fade">
+			<swiper-item class="animation-fade" v-if="!loading">
 				<scroll-view scroll-y :style="{height:scroll_height +'px'}">
-					<image src="../../static/article/no-collection.png" class="none-default-image" mode="widthFix" v-if="!loadingItem&&activityInfo.length==0"></image>
+					<image src="../../static/article/no-collection.png" class="none-default-image" mode="widthFix" v-if="!loading&&activityInfo.length==0"></image>
 					<block v-for="(item,index) in activityInfo" v-bind:key="index" v-else>
 						<view class="cu-item shadow bg-white margin-left margin-right margin-top" @click="navigateActivity(item.activity_id,0)"
 						 style="border-radius: 20rpx;">
@@ -95,13 +93,13 @@
 								{{item.activity_name}}
 							</view>
 							<view class="text-content padding-left padding-right margin-bottom activity_content">
-								{{item.activity_content}}
+								<text decode="true">{{item.activity_content}}</text>
 							</view>
 							<view class="text-content padding-left padding-right margin-bottom-xs text-bold text-black margin-top-xs">
 								注意事项
 							</view>
-							<view class="text-content padding-left padding-right margin-bottom activity_attention">
-								{{item.activity_attention}}
+							<view class="text-content padding-left padding-right margin-bottom activity_attention" v-if="item.activity_attention">
+								<text decode="true">{{item.activity_attention}}</text>
 							</view>
 							<view class="grid flex-sub padding-lr col-3 grid-square margin-bottom-xs">
 								<block v-for="(imgItem,index) in item.activity_images" :key="index">
@@ -132,9 +130,9 @@
 					<view class="max-width" style="height: 50rpx;"></view>
 				</scroll-view>
 			</swiper-item>
-			<swiper-item class="animation-fade">
+			<swiper-item class="animation-fade" v-if="!loading">
 				<scroll-view scroll-y :style="{height:scroll_height +'px'}">
-					<image src="../../static/article/no-collection.png" class="none-default-image" mode="widthFix" v-if="!loadingItem&&newsInfo.length==0"></image>
+					<image src="../../static/article/no-collection.png" class="none-default-image" mode="widthFix" v-if="!loading&&newsInfo.length==0"></image>
 					<block v-for="(item,index) in newsInfo" v-bind:key="index" v-else>
 						<view class="cu-card article bg-white shadow margin-top margin-left margin-right" style="border-radius: 20rpx;"
 						 @click=navigateNews(item.news_id)>
@@ -160,10 +158,96 @@
 					<view class="max-width" style="height: 50rpx;"></view>
 				</scroll-view>
 			</swiper-item>
+			<swiper-item class="animation-fade" v-if="!loading">
+				<scroll-view scroll-y :style="{height:scroll_height +'px'}">
+					<image src="../../static/article/no-history.png" class="none-default-image" mode="widthFix" v-if="!loading&&recruitInfo.length==0"></image>
+					<block v-for="(item,index) in topicInfo" v-bind:key="index">
+						<view class="cu-item shadow bg-white padding-top margin-top-xl margin-left margin-right" @click="navigateTopic(item.topic_id)"
+						 style="border-radius: 20rpx; min-height: 200rpx;">
+							<view class="text-content padding-left padding-right text-bold text-black margin-top-xs text-cut" style="font-size: 30rpx;"
+							 v-if="item.topic_title">
+								{{item.topic_title}}
+							</view>
+							<view class="text-content padding-left padding-right margin-top margin-bottom activity_content" style="font-size: 24rpx!important; line-height: 40rpx;">
+								<text decode="true">{{item.topic_content}}</text>
+							</view>
+							<view class="grid flex-sub padding-lr col-3 grid-square margin-bottom padding-bottom-sm">
+								<block v-for="(imgItem,index) in item.topic_images" :key="index">
+									<view class="bg-img" :style="{backgroundImage: 'url('+imgItem.image_url+')'}" @click.stop="viewImage"
+									 :data-url="imgItem.image_url">
+									</view>
+								</block>
+							</view>
+							<view class="max-width flex align-center justify-between">
+								<view class="article-create-time padding-left" style="position: relative; bottom: 30rpx;">{{item.topic_created}}</view>
+								<view class="article-create-time" style="position: relative; right: 30rpx; bottom: 30rpx;">
+									<text class="commodity-other-info margin-right-sm">回答 ·<text class="margin-left-xs">{{item.topic_answer_count}}</text></text>
+									<text class="commodity-other-info">浏览 ·<text class="margin-left-xs">{{item.topic_views}}</text></text>
+								</view>
+							</view>
+						</view>
+					</block>
+					<view class="max-width" style="height: 50rpx;"></view>
+				</scroll-view>
+			</swiper-item>
+			
+			<swiper-item class="animation-fade" v-if="!loading">
+				<scroll-view scroll-y :style="{height:scroll_height +'px'}">
+					<image src="../../static/article/no-history.png" class="none-default-image" mode="widthFix" v-if="!loading&&recruitInfo.length==0"></image>
+					<block v-for="(item,index) in answerInfo" v-bind:key="index">
+						<view class="cu-item shadow bg-white margin-top-xl margin-left margin-right" @click="navigateAnswer(item.answer_id)"
+						 style="border-radius: 20rpx; min-height: 200rpx;">
+							<view class="max-width margin-bottom padding-left text-bold text-black flex justify-between" style="height: 100rpx; line-height: 100rpx; border-bottom: 1rpx solid #EEEEEE; font-size: 30rpx;"
+							 @click.stop="navigateTopic(item.answer_topic.topic_id)">
+								<view>{{item.answer_topic.topic_title}}</view>
+								<view class="cuIcon-right padding-right" style="text-align: right;"></view>
+							</view>
+							<view class=" padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white max-width">
+								<image class="cu-avatar article-avatar avatar-shadow margin-right round avatar-border" :src="item.answer_user.user_avatar"
+								 v-if="!item.answer_anonymity">
+								</image>
+								<image class="cu-avatar article-avatar avatar-shadow margin-right round avatar-border" src="../../static/article/anonymity.png"
+								 style="background-color: #F1F1F1;" v-else>
+								</image>
+								<view class="flex-column justify-center">
+									<text class="aricle-user-name margin-bottom-xs text-bold" v-if="!item.answer_anonymity">{{item.answer_user.user_name}}</text>
+									<text class="aricle-user-name margin-bottom-xs text-bold" v-else>匿名用户</text>
+									<view>
+										<text class="article-create-time">{{item.answer_created}}</text>
+										<text class="article-create-time margin-left" v-if="item.answer_display_location">来自{{item.answer_user.user_school}}</text>
+									</view>
+								</view>
+							</view>
+							<view class="text-content padding-left padding-right text-bold text-black margin-top-xs text-cut" style="font-size: 30rpx;"
+							 v-if="item.answer_title">
+								{{item.answer_title}}
+							</view>
+							<view class="text-content padding-left padding-right margin-top margin-bottom activity_content" style="font-size: 24rpx!important; line-height: 40rpx;">
+								<text decode="true">{{item.answer_content}}</text>
+							</view>
+							<view class="grid flex-sub padding-lr col-3 grid-square margin-bottom padding-bottom-sm">
+								<block v-for="(imgItem,index) in item.answer_images" :key="index">
+									<view class="bg-img" :style="{backgroundImage: 'url('+imgItem.image_url+')'}" @click.stop="viewImage"
+									 :data-url="imgItem.image_url">
+									</view>
+								</block>
+							</view>
+							<view class="max-width flex align-center justify-between">
+								<view class="article-create-time padding-left" style="position: relative; bottom: 30rpx;">{{item.answer_created}}</view>
+								<view class="article-create-time" style="position: relative; right: 30rpx; bottom: 30rpx;">
+									<text class="commodity-other-info margin-right-sm">超赞 ·<text class="margin-left-xs">{{item.answer_likes}}</text></text>
+									<text class="commodity-other-info">浏览 ·<text class="margin-left-xs">{{item.answer_views}}</text></text>
+								</view>
+							</view>
+						</view>
+					</block>
+					<view class="max-width" style="height: 50rpx;"></view>
+				</scroll-view>
+			</swiper-item>
 			<swiper-item>
 				<scroll-view scroll-y :style="{height:scroll_height +'px'}" id="commodities" class="flow-box max-width">
 					<view class="padding-top-sm">
-						<image src="../../static/article/no-collection.png" class="none-default-image" mode="widthFix" v-if="commodityInfo.length==0"></image>
+						<image src="../../static/article/no-collection.png" class="none-default-image" mode="widthFix" v-if="!loading&&commodityInfo.length==0"></image>
 						<waterfall-flow :list="commodityInfo" @click="navigateCommodity" :init="initList"></waterfall-flow>
 					</view>
 				</scroll-view>
@@ -186,14 +270,15 @@
 									</view>
 								</view>
 							</view>
-							<view class="text-content padding-left padding-right margin-bottom-xs text-bold text-theme-color margin-top-xs">
+							<view class="text-content padding-left padding-right margin-bottom-xs text-bold text-theme-color margin-top-xs"
+							 v-if="item.recruit_target">
 								#{{item.recruit_target}}#
 							</view>
 							<view class="text-content padding-left padding-right margin-bottom-xs text-bold text-black margin-top-xs">
 								{{item.recruit_title}}
 							</view>
 							<view class="text-content padding-left padding-right margin-bottom activity_content">
-								{{item.recruit_content}}
+								<text decode="true">{{item.recruit_content}}</text>
 							</view>
 							<view class="grid flex-sub padding-lr col-3 grid-square margin-bottom">
 								<block v-for="(imgItem,index) in item.recruit_images" :key="index">
@@ -237,7 +322,7 @@
 		data() {
 			return {
 				TabCur: 0,
-				menu_list: ['动态', '活动', '头条', '商品', '招募'],
+				menu_list: ['动态', '活动', '头条', '话题', '回答', '商品', '招募'],
 				scroll_left: 0,
 				screen_width: 400,
 				scroll_height: 600,
@@ -246,6 +331,8 @@
 				recruitInfo: [],
 				newsInfo: [],
 				commodityInfo: [],
+				topicInfo: [],
+				answerInfo: [],
 				imageList: [],
 				loading: false,
 			}
@@ -257,6 +344,13 @@
 		},
 		components: {
 			WaterfallFlow: WaterfallFlow
+		},
+		onShareAppMessage(res) {
+			return {
+				title: '快来围观微校～～',
+				path: '/pages/index/index',
+				imageUrl: '/static/user/shareImage.jpg'
+			}
 		},
 		onLoad(option) {
 			this.user_id = option.user_id;
@@ -274,6 +368,10 @@
 				this.formatActivityInfo();
 				this.recruitInfo = res.data.data.recruits;
 				this.formatRecruitInfo();
+				this.topicInfo = res.data.data.topics;
+				this.formatTopicInfo();
+				this.answerInfo = res.data.data.answers;
+				this.formatAnswerInfo();
 				this.newsInfo = res.data.data.news;
 				this.commodityInfo = res.data.data.commodities;
 				this.loading = false;
@@ -282,6 +380,34 @@
 		},
 
 		methods: {
+			navigateTopic(topic_id) {
+				uni.navigateTo({
+					url: '/pages/topic/topic?topic_id=' + topic_id
+				})
+			},
+			navigateAnswer(answer_id) {
+				uni.navigateTo({
+					url: '/pages/answer/answer?answer_id=' + answer_id
+				})
+			},
+			formatTopicInfo() {
+				for (let item in this.topicInfo) {
+					for (let index in this.topicInfo[item].topic_images) {
+						this.imageList.push(this.topicInfo[item].topic_images[index].image_url);
+					}
+					this.topicInfo[item].topic_content = this.topicInfo[item].topic_content.replace(/<br\/\>/g, "\n");
+					this.formatArticleTime(item);
+				}
+			},
+			formatAnswerInfo() {
+				for (let item in this.answerInfo) {
+					for (let index in this.answerInfo[item].answer_images) {
+						this.imageList.push(this.answerInfo[item].answer_images[index].image_url);
+					}
+					this.answerInfo[item].answer_content = this.answerInfo[item].answer_content.replace(/<br\/\>/g, "\n");
+					this.formatArticleTime(item);
+				}
+			},
 			formatArticleInfo() {
 				for (let item in this.articleInfo) {
 					for (let index in this.articleInfo[item].article_images) {
@@ -297,6 +423,9 @@
 						this.imageList.push(this.activityInfo[item].activity_images[index].image_url);
 					}
 					this.activityInfo[item].activity_content = this.activityInfo[item].activity_content.replace(/<br\/\>/g, "\n");
+					if (this.activityInfo[item].activity_attention) {
+						this.activityInfo[item].activity_attention = this.activityInfo[item].activity_attention.replace(/<br\/\>/g, "\n");
+					}
 					this.formatActivityTime(item);
 				}
 

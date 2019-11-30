@@ -56,6 +56,18 @@ export default {
 		ARTICLE_COUNT_INCREMENT(state) {
 			state.user_article_count += 1;
 		},
+		ATTENTION_INCREMENT(state) {
+			state.user_attentions += 1;
+		},
+		ATTENTION_DECREMENT(state) {
+			state.user_attentions -= 1;
+		},
+		FOLLOWER_INCREMENT(state) {
+			state.user_followers += 1;
+		},
+		FOLLOWER_DECREMENT(state) {
+			state.user_followers -= 1;
+		},
 	},
 
 	actions: {
@@ -149,6 +161,34 @@ export default {
 		}) {
 			commit({
 				type: 'ARTICLE_COUNT_INCREMENT',
+			})
+		},
+		attentionIncrement({
+			commit
+		}) {
+			commit({
+				type: 'ATTENTION_INCREMENT',
+			})
+		},
+		attentionDecrement({
+			commit
+		}) {
+			commit({
+				type: 'ATTENTION_DECREMENT',
+			})
+		},
+		followerIncrement({
+			commit
+		}) {
+			commit({
+				type: 'FOLLOWER_INCREMENT',
+			})
+		},
+		followerDecrement({
+			commit
+		}) {
+			commit({
+				type: 'FOLLOWER_DECREMENT',
 			})
 		},
 	}

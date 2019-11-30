@@ -48,7 +48,7 @@
 				</view>
 			</view>
 		</scroll-view>
-		<view class="cu-modal" :class="showInput?'show':''">
+		<view class="cu-modal" :class="showInput?'show':''" @tap="hideModal">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white justify-end">
 					<view class="content user-info-title text-theme-color letter-spacing">添加新成员</view>
@@ -122,6 +122,13 @@
 			...mapState({
 				user: state => state.AuthUser,
 			}),
+		},
+		onShareAppMessage(res) {
+			return {
+				title: '我正在线上报名活动，快来围观～～',
+				path: '/pages/index/index',
+				imageUrl: '/static/user/shareImage.jpg'
+			}
 		},
 		onLoad(option) {
 			this.activity_id = option.activity_id;

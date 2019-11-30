@@ -22,8 +22,8 @@
 								<text class='cuIcon-close'></text>
 							</view>
 						</view>
-						<view class="solids" @tap="ChooseImage" v-if="selectImageList.length<9">
-							<text class='cuIcon-cameraaddfill text-theme-color'></text>
+						<view class="solids flex align-center justify-center" @tap="ChooseImage" v-if="selectImageList.length<9">
+							<view class='cuIcon-cameraaddfill text-theme-color' style="margin: auto; height: 150rpx; font-size: 60rpx; line-height: 150rpx;"></view>
 						</view>
 					</view>
 				</view>
@@ -43,7 +43,7 @@
 					</view>
 					<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;">
 						<view class="title checkbox-title">显示位置</view>
-						<checkbox class='round theme' @click="CheckboxOnclick('location')">
+						<checkbox class='round theme' checked="true" @click="CheckboxOnclick('location')">
 						</checkbox>
 					</view>
 				</view>
@@ -67,7 +67,7 @@
 				</view>
 			</view>
 		</scroll-view>
-		<view class="cu-modal" :class="showToast?'show':''">
+		<view class="cu-modal" :class="showToast?'show':''" @tap="hideToast">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white justify-end">
 					<view class="content">发布提示</view>
@@ -105,7 +105,7 @@
 				selectImageList: [],
 				imageUrlList: [],
 				categoryList: [],
-				isDisplayLocation: false,
+				isDisplayLocation: true,
 				// isAnonymity: false,
 				scroll_height: 700,
 				selectCategory: false,
@@ -121,6 +121,12 @@
 			...mapState({
 				location: state => state.UserLocation,
 			}),
+		},
+		onShareAppMessage(res) {
+			return {
+				title: '我发布了新的商品，快来围观～～',
+				path: '/pages/commodity/commodity'
+			}
 		},
 		mounted() {
 			Vue.prototype.$http.get('/categories/get').then(res => {

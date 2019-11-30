@@ -13,22 +13,29 @@
 						<image :src="item.image_url" mode="aspectFill"></image>
 					</swiper-item>
 				</swiper>
-				<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white">
+				<loading v-if="loading" style="position: relative; top: 450rpx;"></loading>
+				<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white"
+				 v-if="!loading" @click="navigateUserShow">
 					<image class="cu-avatar lg avatar-shadow margin-right" style="border-radius: 20rpx;" :src="commodityInfo.commodity_user.user_avatar">
 					</image>
 					<view class="flex-column ">
-						<text class="view-user-name">{{commodityInfo.commodity_user.user_name}}</text>
-						<text class="view-user-location">发布于{{displayLocation}}</text>
+						<view class="view-user-name">{{commodityInfo.commodity_user.user_name}}</view>
+						<view class="view-user-location padding-top-xs">发布于{{displayLocation}}</view>
 					</view>
+					<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm animation-fade-quick" style="margin-left: auto; margin-right: 0;"
+					 v-if="!commodityInfo.user_follow" @click.stop="tooglrUserFollow">关注</button>
+					<button class="cu-btn bg-grey shadow-blur text-white text-sm animation-fade-quick" style="margin-left: auto; margin-right: 0; background-color: #BBBBBB;"
+					 v-else @click.stop="tooglrUserFollow">已关注</button>
 				</view>
-				<view class="padding-top padding-bottom-sm padding-left padding-right flex align-center bg-white">
+				<view class="padding-top padding-bottom-sm padding-left padding-right flex align-center bg-white" v-if="!loading">
 					<view class="flex-column ">
 						<text class="price-text margin-bottom-sm">¥<text style="font-size: 42rpx;margin-left: 6rpx;">{{commodityInfo.commodity_price}}</text></text>
 						<text class="commodity-name margin-bottom-sm">{{commodityInfo.commodity_name}}</text>
 						<text class="commodity-description" decode="true">{{commodityInfo.commodity_description}}</text>
 					</view>
 				</view>
-				<view class="commodity-image-container flex-column align-center bg-white info-border-bottom padding-left padding-right padding-bottom-sm">
+				<view class="commodity-image-container flex-column align-center bg-white info-border-bottom padding-left padding-right padding-bottom-sm"
+				 v-if="!loading">
 					<view v-for="(item,index) in commodityInfo.commodity_images" :key="index" @click="viewImage" :data-url="commodityInfo.commodity_images[index].image_url"
 					 class="max-width">
 						<image :src="item.image_url" class="commodity-image margin-bottom-sm" mode="widthFix"></image>
@@ -38,7 +45,7 @@
 						<text class="commodity-other-info">浏览 ·<text class="margin-left-xs">{{commodityInfo.commodity_views}}</text></text>
 					</view>
 				</view>
-				<view class="padding-top padding-left padding-right flex align-center bg-white margin-top flex-column">
+				<view class="padding-top padding-left padding-right flex align-center bg-white margin-top flex-column" v-if="!loading">
 					<view class="comment-container-title info-border-bottom">
 						<text>全部留言</text>
 					</view>
@@ -68,7 +75,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="padding-top-xs padding-bottom-sm padding-left padding-right margin-top flex align-center justify-center">
+				<view class="padding-top-xs padding-bottom-sm padding-left padding-right margin-top flex align-center justify-center" v-if="!loading">
 					<view class="left"></view>
 					<view class="margin-left margin-right">
 						<text class="cuIcon-like margin-right-xs text-theme-color commodity-recommend-title"></text>
@@ -152,6 +159,7 @@
 				showToast: false,
 				toastContent: '',
 				fixedHeight: 0,
+				loading: false
 			}
 		},
 		components: {
@@ -171,12 +179,14 @@
 		onShareAppMessage(res) {
 			return {
 				title: '这个商品很不错，快来围观',
-				path: '/pages/commodity/commodity?commodity_id=' + this.commodity_id
+				path: '/pages/commodity/commodity?commodity_id=' + this.commodity_id,
+				imageUrl: '/static/user/shareImage.jpg'
 			}
 		},
 		onLoad(option) {
 			this.commodity_id = option.commodity_id;
 			let that = this;
+			this.loading = true;
 			Vue.prototype.$http.request({
 				url: '/commodities/detail',
 				method: 'POST',
@@ -201,6 +211,9 @@
 						that.displayLocation = res.result.address_component.city + res.result.address_component.district;
 					}
 				})
+				setTimeout(() => {
+					this.loading = false;
+				}, 200)
 			});
 		},
 		mounted() {
@@ -212,6 +225,28 @@
 			}, 200);
 		},
 		methods: {
+			navigateUserShow(user_id) {
+				uni.navigateTo({
+					url: '/pages/user-show/user-show?user_id=' + this.commodityInfo.commodity_user.user_id
+				})
+			},
+			tooglrUserFollow() {
+				Vue.prototype.$http.request({
+					url: '/users/follow',
+					method: 'POST',
+					params: {
+						accept_id: this.commodityInfo.commodity_user.user_id,
+					},
+				}).then(res => {
+					this.commodityInfo.user_follow = !this.commodityInfo.user_follow;
+					this.$refs.notification.open({
+						type: 'success',
+						content: '操作成功',
+						timeout: 1500,
+						isClick: false
+					});
+				})
+			},
 			changeFixedHeight(e) {
 				this.fixedHeight = e.detail.height;
 			},

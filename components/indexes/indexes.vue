@@ -5,9 +5,9 @@
 			<block slot="content">选择学校</block>
 		</cu-custom>
 		<view class="cu-bar search choose-search-bar">
-			<view class="search-form round flex align-center" style="background-color: #fff!important;">
+			<view class="search-form round flex align-center padding-left" style="background-color: #fff!important;">
 				<text class="cuIcon-search"></text>
-				<input :adjust-position="false" type="text" placeholder="请输入关键词搜索" confirm-type="search" v-model="searchText" id="search-input"
+				<input :adjust-position="false" type="text" placeholder="请输入关键词搜索" confirm-type="search" v-model="searchText" id="search-input" class="margin-left-sm"
 				 @confirm="searchStart" @input="searchTips"></input>
 			</view>
 			<button class="cu-btn round bg-white text-white margin-right-sm search-txet-size button-text" role="button"

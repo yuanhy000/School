@@ -16,6 +16,13 @@
 				dataArr: Data
 			}
 		},
+		onShareAppMessage(res) {
+			return {
+				title: '微校期待你的围观～～',
+				path: '/pages/index/index',
+				imageUrl: '/static/user/shareImage.jpg'
+			}
+		},
 		onShow() {
 			var that = this
 			uni.setNavigationBarTitle({

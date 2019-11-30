@@ -23,18 +23,18 @@
 				</view>
 			</view>
 			<view class="user-info-container flex align-center justify-around">
-				<view class="flex-column align-center">
+				<view class="flex-column align-center" @click.stop="navigateUserfollowers(1)">
 					<view class="user-info-title-ftext margin-bottom-sm">关注</view>
 					<view class="text-bold text-theme-color" v-if="user.authentication">{{user.user_attentions}}</view>
 					<view class="text-bold text-theme-color" v-else>0</view>
 				</view>
-				<view class="flex-column align-center">
+				<view class="flex-column align-center" @click.stop="navigateUserfollowers(0)">
 					<view class="user-info-title-ftext margin-bottom-sm">粉丝</view>
 
 					<view class="text-bold text-theme-color" v-if="user.authentication">{{user.user_followers}}</view>
 					<view class="text-bold text-theme-color" v-else>0</view>
 				</view>
-				<view class="flex-column align-center">
+				<view class="flex-column align-center" @click.stop="navigateUserInformation(0)">
 					<view class="user-info-title-ftext margin-bottom-sm">动态</view>
 					<view class="text-bold text-theme-color" v-if="user.authentication">{{user.user_article_count}}</view>
 					<view class="text-bold text-theme-color" v-else>0</view>
@@ -144,6 +144,11 @@
 			}, 200)
 		},
 		methods: {
+			navigateUserInformation(index) {
+				uni.navigateTo({
+					url: '/pages/user-information/user-information?user_id=' + this.user.user_id + '&current_tab=' + index
+				})
+			},
 			getHeight() {
 				let that = this;
 				let height = 0;
@@ -211,6 +216,12 @@
 			navigateAdditionBug() {
 				uni.navigateTo({
 					url: '/pages/addition-bug/addition-bug'
+				})
+			},
+			navigateUserfollowers(index) {
+				uni.navigateTo({
+					url: '/pages/user-follower/user-follower?user_id=' + this.user.user_id + '&type=' +
+						index
 				})
 			}
 		},

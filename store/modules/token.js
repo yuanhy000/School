@@ -36,9 +36,6 @@ export default {
 			Vue.prototype.$http.request({
 				url: '/token/clean',
 				method: 'POST',
-				params: {
-					code: res.code
-				},
 			}).then(res => {
 				jwtToken.removeToken();
 				dispatch('initAuthUser');
@@ -56,9 +53,12 @@ export default {
 					refresh_token: jwtToken.getRefreshToken()
 				},
 			}).then(res => {
-				console.log(res);
-				console.log('9999999')
-				dispatch('getTokenSuccess', res.data);
+				if (res.statusCode == 500) {
+					dispatch('cleanToken');
+					dispatch('getNewToken');
+				} else {
+					dispatch('getTokenSuccess', res.data);
+				}
 			}).catch(error => {
 				dispatch('cleanToken');
 				dispatch('getNewToken');

@@ -10,8 +10,8 @@
 					<input class="margin-left margin-right text-sm max-width" type="text" placeholder="招募标题" v-model="title" />
 				</view>
 				<view class="cu-form-group margin-left margin-top margin-right margin-bottom border-radius bg-white shadow">
-					<textarea class="textarea-font-size" placeholder="招募内容..." v-model="content" maxlength="400" v-if="displayTextarea" auto-focus="true"
-					 warp="" @tap.stop="beginTextareaInput" />
+					<textarea class="textarea-font-size" placeholder="招募内容..." v-model="content" maxlength="400" v-if="displayTextarea"
+					 auto-focus="true" warp="" @tap.stop="beginTextareaInput" />
 					<text class="text-font-size" v-else @tap.stop="beginTextareaInput">{{displayContent}}</text>
 					</view>
 				<view class="cu-form-group margin-left margin-right border-top-radius bg-white shadow apply-title">
@@ -25,8 +25,8 @@
 								<text class='cuIcon-close'></text>
 							</view>
 						</view>
-						<view class="solids" @tap="ChooseImage" v-if="selectImageList.length<9">
-							<text class='cuIcon-cameraaddfill text-theme-color'></text>
+						<view class="solids flex align-center justify-center" @tap="ChooseImage" v-if="selectImageList.length<9">
+							<view class='cuIcon-cameraaddfill text-theme-color' style="margin: auto; height: 150rpx; font-size: 60rpx; line-height: 150rpx;"></view>
 						</view>
 					</view>
 				</view>
@@ -38,7 +38,7 @@
 					</view>
 					<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;">
 						<view class="title checkbox-title">显示位置</view>
-						<checkbox class='round theme' checked="" @click="CheckboxOnclick()">
+						<checkbox class='round theme' checked="true" @click="CheckboxOnclick()">
 						</checkbox>
 					</view>
 				</view>
@@ -47,7 +47,7 @@
 				</view>
 			</view>
 		</scroll-view>
-		<view class="cu-modal" :class="showToast?'show':''">
+		<view class="cu-modal" :class="showToast?'show':''" @tap="hideModal">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white justify-end">
 					<view class="content">发布提示</view>
@@ -95,6 +95,13 @@
 			...mapState({
 				location: state => state.UserLocation,
 			}),
+		},
+		onShareAppMessage(res) {
+			return {
+				title: '我正在呼朋唤友，快来围观～～',
+				path: '/pages/index/index',
+				imageUrl: '/static/user/shareImage.jpg'
+			}
 		},
 		mounted() {
 			setTimeout(() => {

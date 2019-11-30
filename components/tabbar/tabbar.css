@@ -28,8 +28,69 @@
 }
 
 .addition-button {
-	background-image: linear-gradient(45deg, #467385, #343A4F);
+	/* background-image: linear-gradient(45deg, #467385, #343A4F); */
 	color: #FFFFFF;
 	font-size: 60rpx;
+	z-index: 10;
+	border-radius: 50%;
+	position: absolute;
+	width: 80upx !important;
+	height: 80upx !important;
+	top: -70upx;
+	left: 0;
+	right: 0;
+	margin: auto;
 }
 
+.add-text {
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	width: 100%;
+	height: 100%;
+	bottom: -20rpx;
+}
+
+.add-container {
+	position: absolute;
+	padding-top: -80upx;
+	border-radius: 50upx;
+	width: 100upx;
+	height: 100upx;
+	margin: auto;
+	left: 0;
+	right: 0;
+	background-color: transparent !important;
+	/* background: #FFFFFF; */
+	z-index: 1;
+}
+
+.add-container::after {
+	content: "";
+	position: absolute;
+	width: 100upx;
+	height: 100upx;
+	top: -80upx;
+	left: 0;
+	right: 0;
+	margin: auto;
+	box-shadow: 0 -3upx 8upx rgba(0, 0, 0, 0.08);
+	border-radius: 50upx;
+	background-color: inherit;
+	z-index: 0;
+	background-color: #FFFFFF;
+}
+
+.add-container::before {
+	content: "";
+	position: absolute;
+	width: 100upx;
+	height: 30upx;
+	bottom: 30upx;
+	left: 0;
+	right: 0;
+	margin: auto;
+	background-color: inherit;
+	z-index: 2;
+}

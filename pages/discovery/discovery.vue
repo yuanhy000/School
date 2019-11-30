@@ -1,6 +1,11 @@
 <template>
 	<view class="discovery-container">
 		<view class="cu-bar search bg-white flex justify-center align-center">
+			<button class="cu-btn bg-f5-white round  shadow  margin-left" v-if="!display_location" open-type='openSetting'
+			 @opensetting="afterOpenSetting">
+				<text class="location-icon-size text-theme-color cuIcon-locationfill"></text>
+				<text class=" margin-left-xs location-text-color text-sm">{{userLocation}}</text>
+			</button>
 			<button class="cu-btn bg-f5-white round  shadow  margin-left" v-if="display_location">
 				<text class="location-icon-size text-theme-color cuIcon-locationfill"></text>
 				<text class=" margin-left-xs location-text-color text-sm">{{userLocation}}</text>
@@ -169,7 +174,6 @@
 				live_list: [],
 				sport_list: [],
 				search_list: [],
-				display_location: true,
 				scroll_left: 0,
 				scroll_height: 600,
 				screen_height: 800,
@@ -180,7 +184,7 @@
 				liveCurrentPage: 1,
 				sportCurrentPage: 1,
 				searchCurrentPage: 1,
-				loading: false,
+				loading: true,
 			}
 		},
 		computed: {
@@ -190,9 +194,16 @@
 			}),
 			userLocation: function() {
 				if (this.location.user_address == null) {
-					return "定位中...";
+					return "获取定位...";
 				} else {
 					return this.location.user_address_component.district + this.location.user_address_component.street
+				}
+			},
+			display_location: function() {
+				if (this.location.user_address == null) {
+					return false;
+				} else {
+					return true;
 				}
 			},
 		},
@@ -225,6 +236,24 @@
 			this.$store.dispatch('initSearchKeyword');
 		},
 		methods: {
+			afterOpenSetting(event) {
+				if (event.detail.authSetting['scope.userLocation']) {
+					this.$store.dispatch('requestUserLocation').then(res => {
+						this.loading = true;
+						setTimeout(() => {
+							if (this.location.user_location.latitude == 0) {
+								setTimeout(() => {
+									this.initPoi();
+									this.getHeight();
+								}, 500)
+							} else {
+								this.initPoi();
+								this.getHeight();
+							}
+						}, 500)
+					})
+				}
+			},
 			loadNextPage(type) {
 				if (this.loading) {
 					return;
@@ -305,7 +334,6 @@
 				});
 			},
 			initPoi() {
-				this.loading = true;
 				this.$store.dispatch('getAroundPoi', {
 					latitude: this.location.user_location.latitude,
 					longitude: this.location.user_location.longitude,
@@ -368,12 +396,6 @@
 					}
 				}
 				return pois;
-			},
-			InputFocus(e) {
-				this.InputBottom = e.detail.height;
-				this.display_location = false;
-				console.log('click')
-				this.getHeight()
 			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;

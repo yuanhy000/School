@@ -11,7 +11,7 @@
 				</view>
 				<view class="cu-form-group margin-left margin-top margin-right margin-bottom border-radius bg-white shadow">
 					<textarea class="textarea-font-size" placeholder="分享新鲜事..." v-model="content" maxlength="400" v-if="displayTextarea"
-					 warp="" @tap.stop="beginTextareaInput" auto-focus="true"/>
+					 warp="" @tap.stop="beginTextareaInput" auto-focus="true" />
 					<text class="text-font-size" v-else @tap.stop="beginTextareaInput">{{displayContent}}</text>
 					</view>
 				<view class="cu-form-group margin-left margin-right margin-top margin-bottom border-rad ius bg-white border-radius shadow">
@@ -22,15 +22,15 @@
 								<text class='cuIcon-close'></text>
 							</view>
 						</view>
-						<view class="solids" @tap="ChooseImage" v-if="selectImageList.length<9">
-							<text class='cuIcon-cameraaddfill text-theme-color'></text>
+						<view class="solids flex align-center justify-center" @tap="ChooseImage" v-if="selectImageList.length<9">
+							<view class='cuIcon-cameraaddfill text-theme-color' style="margin: auto; height: 150rpx; font-size: 60rpx; line-height: 150rpx;"></view>
 						</view>
 					</view>
 				</view>
 				<view class="cu-form-group margin-left margin-right margin-top margin-bottom border-radius bg-white shadow flex-direction">
 					<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;">
 						<view class="title checkbox-title">显示位置</view>
-						<checkbox class='round theme' @click="CheckboxOnclick('location')">
+						<checkbox class='round theme'  checked="true" @click="CheckboxOnclick('location')">
 						</checkbox>
 					</view>
 					<view class="cu-form-group flex justify-between margin-left-sm margin-right-sm no-padding" style="width: 100%;">
@@ -44,7 +44,7 @@
 				</view>
 			</view>
 		</scroll-view>
-		<view class="cu-modal" :class="showToast?'show':''">
+		<view class="cu-modal" :class="showToast?'show':''" @tap="hideModal">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white justify-end">
 					<view class="content">发布提示</view>
@@ -80,7 +80,7 @@
 				isInput: false,
 				selectImageList: [],
 				imageUrlList: [],
-				isDisplayLocation: false,
+				isDisplayLocation: true,
 				isAnonymity: false,
 				scroll_height: 700,
 				showToast:false,
@@ -93,6 +93,13 @@
 			...mapState({
 				location: state => state.UserLocation,
 			}),
+		},
+		onShareAppMessage(res) {
+			return {
+				title: '我发布了新的动态，快来围观～～',
+				path: '/pages/index/index',
+				imageUrl: '/static/user/shareImage.jpg'
+			}
 		},
 		mounted() {
 			setTimeout(() => {
@@ -153,8 +160,12 @@
 					this.$store.dispatch('articleCountIncrement');
 				})
 			},
-			CheckboxOnclick() {
-				this.isDisplayLocation = !this.isDisplayLocation;
+			CheckboxOnclick(type) {
+				if(type=='anonymity'){
+					this.isAnonymity = !this.isAnonymity;
+				} else{
+					this.isDisplayLocation = !this.isDisplayLocation;
+				}
 			},
 			ChooseImage() {
 				uni.chooseImage({

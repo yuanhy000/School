@@ -1,0 +1,72 @@
+.article-avatar {
+	width: 80rpx;
+	height: 80rpx;
+}
+
+.aricle-user-name {
+	font-size: 26rpx;
+	color: #222;
+	letter-spacing: 1rpx;
+}
+
+.article-create-time {
+	font-size: 24rpx;
+	color: #888888;
+	letter-spacing: 1rpx;
+}
+
+.commodity-other-info {
+	text-align: right;
+	color: #BBBBBB;
+	font-size: 24rpx;
+}
+
+.commodity-icon {
+	font-size: 44rpx !important;
+	margin: 0 !important;
+	/* height: 26px; */
+}
+
+.none-default-image {
+	width: 60%;
+}
+
+.comment-container-title {
+	width: 100%;
+	padding-bottom: 30rpx;
+	font-weight: 700;
+	/* text-align: center; */
+	color: #222222;
+}
+
+.view-user-name {
+	font-weight: 700;
+	color: #222222;
+	font-size: 30rpx;
+	letter-spacing: 1rpx;
+}
+
+.time-text {
+	margin-left: 85rpx;
+	font-size: 24rpx;
+	color: #bbb;
+}
+
+.icon-button {
+	background-color: #fff;
+	border: none;
+	padding-left: 0;
+	margin: 0;
+	line-height: 1;
+	line-height: 1;
+	outline: none;
+	list-style: none;
+	height: 110rpx !important;
+}
+
+.activity_content {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 5;
+	overflow: hidden;
+}

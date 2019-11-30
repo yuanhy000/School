@@ -6,7 +6,8 @@
 		</cu-custom>
 		<scroll-view class="animation-fade" scroll-y id="scroll" :style="{height:scroll_height +'px'}" v-show="display"
 		 @click="cancelInput()" :scroll-top="scroll_top">
-			<view class="max-width bg-white padding-bottom-sm">
+			<loading v-if="loading" style="position: relative; top: 450rpx;"></loading>
+			<view class="max-width bg-white padding-bottom-sm" v-if="!loading">
 				<view class="text-content padding-left padding-right padding-bottom-sm text-bold text-black padding-top-sm text-lg">
 					{{newsInfo.news_title}}
 				</view>
@@ -26,7 +27,7 @@
 					<text class="commodity-other-info">浏览 ·<text class="margin-left-xs">{{newsInfo.news_views}}</text></text>
 				</view>
 			</view>
-			<view class="padding-top padding-left padding-right flex align-center bg-white margin-top flex-column">
+			<view class="padding-top padding-left padding-right flex align-center bg-white margin-top flex-column" v-if="!loading">
 				<view class="comment-container-title info-border-bottom" id="comment">
 					<text>全部留言</text>
 				</view>
@@ -130,6 +131,7 @@
 				showToast: false,
 				toastContent: '',
 				fixedHeight: 0,
+				loading: false,
 			}
 		},
 		computed: {
@@ -146,12 +148,14 @@
 		onShareAppMessage(res) {
 			return {
 				title: '快来围观这条新闻',
-				path: '/pages/news/news?news_id=' + this.news_id
+				path: '/pages/news/news?news_id=' + this.news_id,
+				imageUrl: '/static/user/shareImage.jpg'
 			}
 		},
 		onLoad(option) {
 			this.news_id = option.news_id;
 			let that = this;
+			this.loading = true;
 			Vue.prototype.$http.request({
 				url: '/news/detail',
 				method: 'POST',
@@ -174,6 +178,7 @@
 							this.scroll_top = res.top;
 						}).exec();
 					}
+					this.loading = false;
 				}, 200);
 			});
 		},

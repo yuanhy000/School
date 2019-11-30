@@ -16,7 +16,27 @@
 </template>
 
 <script>
+	import Vue from 'vue';
 	export default {
+		created() {
+			uni.getSystemInfo({
+				success: (e) => {
+					// #ifdef MP-QQ
+					Vue.prototype.StatusBar = e.statusBarHeight;
+					let QCustom = qq.getMenuButtonBoundingClientRect();
+					if (JSON.stringify(QCustom) != "{}") {
+						Vue.prototype.Custom = QCustom;
+						Vue.prototype.CustomBar = QCustom.bottom + QCustom.top - e.statusBarHeight + 5;
+						this.CustomBar = Vue.prototype.CustomBar
+					} else {
+						Vue.prototype.CustomBar = 72;
+						this.CustomBar = Vue.prototype.CustomBar
+					}
+					// #endif
+				}
+			})
+
+		},
 		data() {
 			return {
 				StatusBar: this.StatusBar,

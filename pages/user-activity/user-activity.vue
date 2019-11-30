@@ -64,6 +64,13 @@
 				imageList: [],
 			}
 		},
+		onShareAppMessage(res) {
+			return {
+				title: '快来围观微校～～',
+				path: '/pages/index/index',
+				imageUrl: '/static/user/shareImage.jpg'
+			}
+		},
 		onLoad(option) {
 			this.user_id = option.user_id;
 			this.loading = true;

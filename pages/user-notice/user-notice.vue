@@ -6,7 +6,7 @@
 		</cu-custom>
 		<scroll-view scroll-y :style="{height:scroll_height +'px'}" @scrolltolower="loadNextPage">
 			<view class="cu-list menu-avatar" id="scroll">
-				<image src="../../static/commodity/search-none.png" class="max-width" mode="widthFix" v-if="noticeInfo.length==0"></image>
+				<image src="../../static/commodity/search-none.png" class="max-width" mode="widthFix" v-if="noticeInfo.length==0&&!loading"></image>
 				<view class="cu-item animation-fade" :class="modalName=='move-box-'+ index?'move-cur':''" v-for="(item,index) in noticeInfo"
 				 :key="index" @touchstart="ListTouchStart" @touchmove="ListTouchMove" @touchend="ListTouchEnd" :data-target="'move-box-' + index"
 				 @click="navigateTarget(index)">
@@ -17,6 +17,7 @@
 						<view class="notice-title" v-if="item.notification_type=='activity_comment'">活动评论</view>
 						<view class="notice-title" v-if="item.notification_type=='activity_team'">活动报名</view>
 						<view class="notice-title" v-if="item.notification_type=='recruit_comment'">招募评论</view>
+						<view class="notice-title" v-if="item.notification_type=='answer_comment'">话题评论</view>
 						<view class="text-gray text-sm notice-content">
 							{{item.notification_content}}</view>
 					</view>
@@ -65,6 +66,13 @@
 				this.loading = false;
 				this.$store.dispatch('clearNoticeCount');
 			})
+		},
+		onShareAppMessage(res) {
+			return {
+				title: '快来围观微校～～',
+				path: '/pages/index/index',
+				imageUrl: '/static/user/shareImage.jpg'
+			}
 		},
 		mounted() {
 			this.getHeight();
@@ -148,6 +156,11 @@
 					case 'recruit_comment':
 						uni.navigateTo({
 							url: '/pages/recruit/recruit?recruit_id=' + this.noticeInfo[index].notification_target_id + '&comment=1'
+						})
+						break;
+					case 'answer_comment':
+						uni.navigateTo({
+							url: '/pages/answer/answer?answer_id=' + this.noticeInfo[index].notification_target_id + '&comment=1'
 						})
 						break;
 				}

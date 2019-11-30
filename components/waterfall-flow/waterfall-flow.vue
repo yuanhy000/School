@@ -14,7 +14,7 @@
 						<text class="text-xs cuIcon-likefill price-text" v-if="item.commodity_likes!=0"><text class="margin-left-xs">{{item.commodity_likes}}</text></text>
 					</view>
 				</view>
-				<view class="commodity-user-info flex align-center">
+				<view class="commodity-user-info flex align-center" @click.stop="navigateUserShow(item.commodity_user.user_id)">
 					<image class="cu-avatar avatar-shadow" style="border-radius: 10rpx;" :src="item.commodity_user.user_avatar">
 					</image>
 					<text class="commodity-user-name margin-left-sm">{{item.commodity_user.user_name}}</text>
@@ -126,6 +126,11 @@
 			// 选中
 			choose(commodity_id) {
 				this.$emit('click', commodity_id);
+			},
+			navigateUserShow(user_id) {
+				uni.navigateTo({
+					url: '/pages/user-show/user-show?user_id=' + user_id
+				})
 			}
 		}
 	}

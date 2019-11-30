@@ -6,8 +6,10 @@
 		</cu-custom>
 		<scroll-view class="animation-fade" scroll-y id="scroll" :style="{height:scroll_height +'px'}" v-show="display"
 		 @click="cancelInput()" :scroll-top="scroll_top">
-			<view class="max-width bg-white padding-bottom-sm">
-				<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white max-width">
+			<loading v-if="loading" style="position: relative; top: 450rpx;"></loading>
+			<view class="max-width bg-white padding-bottom-sm" v-if="!loading">
+				<view class="padding-top-sm padding-bottom-sm padding-left padding-right flex align-center info-border-bottom bg-white max-width"
+				 @click="navigateUserShow(articleInfo.article_user.user_id,articleInfo.article_anonymity)">
 					<image class="cu-avatar article-avatar avatar-shadow margin-right round avatar-border" :src="articleInfo.article_user.user_avatar"
 					 v-if="!articleInfo.article_anonymity">
 					</image>
@@ -23,11 +25,11 @@
 						</view>
 					</view>
 					<button class="cu-btn bg-theme-green-black shadow-blur text-white text-sm animation-fade-quick" style="margin-left: auto; margin-right: 0;"
-					 v-if="!articleInfo.user_follow" @click="tooglrUserFollow">关注</button>
+					 v-if="!articleInfo.user_follow&&!articleInfo.article_anonymity" @click.stop="tooglrUserFollow">关注</button>
 					<button class="cu-btn bg-grey shadow-blur text-white text-sm animation-fade-quick" style="margin-left: auto; margin-right: 0; background-color: #BBBBBB;"
-					 v-else @click="tooglrUserFollow">已关注</button>
+					 v-if="articleInfo.user_follow&&!articleInfo.article_anonymity" @click.stop="tooglrUserFollow">已关注</button>
 				</view>
-				<view class="text-content padding-left padding-right padding-bottom-xs text-bold text-black padding-top-xs">
+				<view class="text-content padding-left padding-right padding-bottom-xs text-bold text-black padding-top-xs" v-if="articleInfo.article_title">
 					{{articleInfo.article_title}}
 				</view>
 				<view class="text-content padding-left padding-right padding-bottom">
@@ -45,7 +47,7 @@
 					<text class="commodity-other-info">浏览 ·<text class="margin-left-xs">{{articleInfo.article_views}}</text></text>
 				</view>
 			</view>
-			<view class="padding-top padding-left padding-right flex align-center bg-white margin-top flex-column">
+			<view class="padding-top padding-left padding-right flex align-center bg-white margin-top flex-column" v-if="!loading">
 				<view class="comment-container-title info-border-bottom" id="comment">
 					<text>全部留言</text>
 				</view>
@@ -149,6 +151,7 @@
 				showToast: false,
 				toastContent: '',
 				fixedHeight: 0,
+				loading: false
 			}
 		},
 		computed: {
@@ -165,12 +168,14 @@
 		onShareAppMessage(res) {
 			return {
 				title: '快来围观这条动态',
-				path: '/pages/article/article?article_id=' + this.article_id
+				path: '/pages/article/article?article_id=' + this.article_id,
+				imageUrl: '/static/user/shareImage.jpg'
 			}
 		},
 		onLoad(option) {
 			this.article_id = option.article_id;
 			let that = this;
+			this.loading = true;
 			Vue.prototype.$http.request({
 				url: '/articles/detail',
 				method: 'POST',
@@ -195,6 +200,7 @@
 							this.scroll_top = res.top;
 						}).exec();
 					}
+					this.loading = false;
 				}, 200);
 			});
 
@@ -206,7 +212,15 @@
 			}, 100)
 		},
 		methods: {
-
+			navigateUserShow(user_id, is_anonymity) {
+				if (is_anonymity) {
+					return;
+				} else {
+					uni.navigateTo({
+						url: '/pages/user-show/user-show?user_id=' + user_id
+					})
+				}
+			},
 			changeFixedHeight(e) {
 				this.fixedHeight = e.detail.height;
 			},
